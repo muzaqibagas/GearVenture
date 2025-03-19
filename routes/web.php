@@ -13,7 +13,8 @@ Route::post('/signup', [GearVentureController::class, 'simpan'])->name('signup')
 
 // PENYEWA
 // Route::get('/', [GearVentureController::class, 'signin'])->name('signin');
-Route::get('/index', [GearVentureController::class, 'index'])->name('index');
+Route::get('/', [GearVentureController::class, 'index'])->name('index');
+Route::get('/tes', [GearVentureController::class, 'tes'])->name('tes');
 Route::get('/catalog', [GearVentureController::class, 'catalog'])->name('catalog');
 
 // ADMIN

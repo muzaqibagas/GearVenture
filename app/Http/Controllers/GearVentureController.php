@@ -15,6 +15,11 @@ class GearVentureController extends Controller
         return view('signup');
     }
 
+    public function tes()
+    {
+        return view('tes');
+    }
+
     public function simpan(Request $req)
     {
         $req->validate([
