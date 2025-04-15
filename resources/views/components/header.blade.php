@@ -29,7 +29,7 @@
 
         <!-- Icons -->
         <div>
-            <a href="#" class="text-white me-3"><i class='bx bx-cart fs-4'></i></a>
+            <a href="keranjang" class="text-white me-3"><i class='bx bx-cart fs-4'></i></a>
             <a href="profileuser" class="text-white"><i class='bx bx-user-circle fs-4'></i></a>
         </div>
     </div>
