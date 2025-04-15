@@ -19,7 +19,7 @@
                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6 text-secondary">Info Akun</h6>
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 bg-white text-decoration-none text-dark shadow" href="profileuser">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="profileuser">
                             <div class="anjing active shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="iconamoon--profile-fill green"></span>
                             </div>
@@ -49,7 +49,7 @@
                 </ul>                                                
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="editpw">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark bg-white shadow" href="editpw">
                             <div class="shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="mdi--password"></span>
                             </div>
@@ -90,35 +90,31 @@
         
         <div class="d-flex align-items-center py-4" style="width:80%">
             <div class="row justify-content-center ">
-                <div class="col-8 d-flex justify-content-center flex-column">                    
+                <div class="col-8 d-flex justify-content-center">
                     <div class="card w-70 mb-4 p-4">
-                        <div class="row align-items-center justify-content-center">
+                        <div class="row align-items-center">
                             <!-- Foto Profil -->
-                            <h4 class="mb-3 px-4">Ubah Password</h4>                            
+                            <h4 class="mb-3 px-4">Ubah Password</h4>
 
                             <!-- Informasi Profil -->
-                            <div class="col-md-11">                            
-                                <div class="input-group mb-3 ">                                    
-                                    <input type="text" class="form-control bg-gray-100" placeholder="Password Saat Ini">
+                            <div class="col-md-9 w-100">                            
+                                <div class="row justify-content-center gap-1">
+                                    <div class="col-5 fw-bold rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Password Sekarang</div>:
+                                    <input class="col-7 border rounded w-50 d-flex align-items-center">
+
+                                    <div class="col-5 fw-bold rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">password Baru</div>:
+                                    <input class="col-7 border rounded w-50 d-flex align-items-center">
+
+                                    <div class="col-5 fw-bold rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Konfirmasi Password Baru</div>:
+                                    <input class="col-7 border rounded w-50 d-flex align-items-center">
+
                                 </div>
                             </div>
-                            <div class="col-md-11">                            
-                                <div class="input-group mb-3">                                    
-                                    <input type="text" class="form-control bg-gray-100" placeholder="Password Baru">
-                                </div>
-                            </div>
-                            <div class="col-md-11">                            
-                                <div class="input-group mb-3">                                    
-                                    <input type="text" class="form-control bg-gray-100" placeholder="Konfirmasi Password Baru">
-                                </div>
-                            </div>
-                            
                         </div>
 
                         <!-- Tombol Hapus Akun -->
-                        <div class="text-center mt-4 d-flex justify-content-end align-items-center me-4">
-                            <button class="btn rounded-pill px-4 py-2 d-flex align-items-center" style="height:30px">Cancel</button>
-                            <button class="btn btn-danger rounded-pill px-4 py-2 d-flex  align-items-center" style="height:30px">Simpan</button>                            
+                        <div class="text-center mt-4 d-flex justify-content-end align-items-center me-3" h>
+                            <button class="btn btn-danger rounded-pill px-4 py-2 d-flex align-items-center" style="height:30px">Ubah Password</button>
                         </div>
                     </div>
                 </div>
