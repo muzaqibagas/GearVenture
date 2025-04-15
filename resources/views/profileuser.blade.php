@@ -88,7 +88,7 @@
             </div>
         </aside>
         
-        <div class="d-flex align-items-center py-4" style="width:80%">
+        <div class="d-flex align-items-center py-4 justify-content-center" style="width:80%">
             <div class="row justify-content-center ">
                 <div class="col-8 d-flex justify-content-center">
                     <div class="card w-70 mb-4 p-4">
@@ -101,21 +101,27 @@
 
                             <!-- Informasi Profil -->
                             <div class="col-md-9">                            
-                                <div class="row">
-                                    <div class="col-5 fw-bold border rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Username</div>
-                                    <div class="col-7 border rounded w-50 d-flex align-items-center">MuzaqiBagas</div>
-
-                                    <div class="col-5 mt-2 fw-bold border rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Nama</div>
-                                    <div class="col-7 mt-2 border rounded w-50 d-flex align-items-center">Muzaqi Rangkuti Bagas</div>
-
-                                    <div class="col-5 mt-2 fw-bold border rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Email</div>
-                                    <div class="col-7 mt-2 border rounded w-50 d-flex align-items-center">Muzaqibagas@anjay.com</div>
-
-                                    <div class="col-5 mt-2 fw-bold border rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">No. Telepon</div>
-                                    <div class="col-7 mt-2 border rounded w-50 d-flex align-items-center">08567926382</div>
-
-                                    <div class="col-5 mt-2 fw-bold border rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Jenis Kelamin</div>
-                                    <div class="col-7 mt-2 border rounded w-50 d-flex align-items-center">Pria</div>
+                                <div class="row d-flex align-items-center">
+                                    <div class="d-flex w-100">
+                                        <p class="col-5 fw-bold" style="color: #ABC337;">Username</p>:
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
+                                    </div>
+                                    <div class="d-flex w-100">
+                                        <p class="col-5 fw-bold" style="color: #ABC337;">Nama</p>:
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
+                                    </div>
+                                    <div class="d-flex w-100">
+                                        <p class="col-5 fw-bold" style="color: #ABC337;">Email</p>:
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
+                                    </div>
+                                    <div class="d-flex w-100">
+                                        <p class="col-5 fw-bold" style="color: #ABC337;">No. Tlp</p>:
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
+                                    </div>
+                                    <div class="d-flex w-100">
+                                        <p class="col-5 fw-bold" style="color: #ABC337;">Jenis Kelamin</p>:
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

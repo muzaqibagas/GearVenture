@@ -19,7 +19,7 @@
                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6 text-secondary">Info Akun</h6>
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 bg-white text-decoration-none text-dark shadow" href="profileuser">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="profileuser">
                             <div class="anjing active shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="iconamoon--profile-fill green"></span>
                             </div>
@@ -29,7 +29,7 @@
                 </ul>                                                
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="edituser">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark bg-white shadow" href="edituser">
                             <div class="shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="pen fa6-solid--pen bg-dark"></span>
                             </div>

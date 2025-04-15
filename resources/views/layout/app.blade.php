@@ -19,6 +19,7 @@ if(!isset($_SESSION['users'])) {
     <link rel="stylesheet" href="{{ asset('css/about.css') }}">    
     <link rel="stylesheet" href="{{ asset('css/profileuser.css') }}">
     <link rel="stylesheet" href="{{ asset('css/iconify.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
