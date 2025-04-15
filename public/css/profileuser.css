@@ -1,0 +1,11 @@
+.anjing.active{
+    background-color: #abc337 !important; /* Warna latar belakang */
+    border-radius: 5px; /* Opsional: biar sedikit membulat */
+}
+.green {
+    background-color: white !important;
+}
+
+.bg-gray-100{
+    background-color: #F4F4F5 !important;
+}

@@ -1,302 +1,32 @@
-html, body {
-    margin: 0;
+.border-custom {
+    border: 4px solid #c3d234; /* Warna kuning kehijauan seperti di gambar */
+    border-radius: 10px;
+    overflow: hidden; /* Mencegah gambar keluar dari border */
+}
+
+.banner img, .banner-small img {
     width: 100%;
-    height: auto;
-    font-family: 'Poppins', sans-serif;
+    height: 100%;
+    object-fit: cover;
 }
 
-:root {
-    --text-color:#000000;
-    --background-color: #ffffff;
-    --basic-color: #383d1f;
-    --basic-color1: #ABC337;
-    --basic-color2: #2B4625;
-    --grey-color: #666;
-    --orange-color1: #ff9201;
+.banner {
+    height: 248px; /* Sesuaikan dengan tinggi banner utama */
 }
 
-/* HEADER NAVBAR */
-header {
-    display: flex;
-    background-color: var(--basic-color);
-    padding-left: 80px;
-    height: 70px;
+.banner-small {
+    height: 120px; /* Setengah dari banner utama */
 }
 
-.social-icons {
-    display: flex;
-    align-items: center; 
+.card-img-top {
+    height: 250px;
+    object-fit: cover;
 }
 
-.social-icons p a {
-    font-weight: bold;
-    color: var(--background-color);
-    text-decoration: none;
+.kategori .card:hover {
+  background-color: #383d1f;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
-
-.social-icons a:hover {
-    font-weight: bold;
-    color: var(--basic-color1);
-}
-
-header ul {
-    display: flex;
-    list-style-type: none;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-    height: 50px; 
-}
-
-header ul p {
-    padding-right: 8px;
-    color: var(--background-color);
-    margin: 0;
-    font-size: 14px; 
-}
-
-
-header li a {
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    color: var(--background-color);
-    font-size: 25px;     
-    text-decoration: none; 
-    margin: 15px 10px;
-}
-
-.vertical-line {
-    width: 3px;
-    height: 30px; 
-    background-color: yellow;
-    display: inline-block;
-    margin: 10px 5px; 
-}
-
-.navbar {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    padding: 10px 100px 10px 20px;
-    margin-left: auto;
-    margin-right: 0;
-}
-
-.navbar a {
-    color:var(--background-color);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.navbar a:hover {
-    color: var(--basic-color1); 
-}
-
-.owl-nav {
-    display: none !important;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--background-color);
-    padding: 10px 15px;
-    transition: 0.3s;
-}
-
-.nav-link.active {
-    color: var(--basic-color1);
-    font-weight: bold;
-    border-radius: 5px;
-}
-/* HEADER NAVBAR END */
-
-/* SEARCH */
-.search-section {
-    background-color: var(--basic-color); 
-    padding: 0 20px;
-    max-height: 200px;
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.logo img {
-    width: 200px;
-    height: 200px;
-}
-
-.search-box {
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    border: 1px solid var(--background-color);
-    border-radius: 5px;
-    width: 40%;
-    margin: 0 100px;
-}
-
-.search-box input {
-    border: none;
-    outline: none;
-    padding: 5px;
-    width: 100%;
-    color: var(--background-color);
-    font-size: 16px;
-    background-color: var(--basic-color);
-}
-
-.search-box input::placeholder {
-    color: var(--background-color);
-}
-
-.search-box button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 25px;
-    color: var(--background-color);
-    line-height: 1;
-}
-
-.icons{
-    display: flex;
-}
-
-.icons a{
-    font-size: 40px;
-    color: white;
-    cursor: pointer;
-    text-decoration: none;
-    margin: 0 20px;
-}
-/* SEARCH END */
-
-/* CATALOG */
-.catalog {
-    padding: 20px;
-}
-
-/* Struktur Utama */
-.katalog {
-    display: flex;
-    gap: 20px;
-}
-
-/* Sidebar */
-.sidebar {
-    width: 250px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.categories h3,
-.discounted-products h3,
-.featured-products h3 {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.categories button {
-    display: block;
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid var(--basic-color);
-    color: var(--basic-color);
-    cursor: pointer;
-    border-radius: 5px;
-    text-align: left;
-    font-weight: bold;
-}
-
-.categories button:hover {
-    background: var(--basic-color);
-    color: var(--background-color);
-}
-
-.discounted-products ul,
-.featured-products ul {
-    list-style: none;
-    padding: 0;
-}
-
-.discounted-products li,
-.featured-products li {
-    font-size: 14px;
-    margin-bottom: 8px;
-}
-
-.discount {
-    text-decoration: line-through;
-    color: red;
-}
-
-/* Konten Utama */
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Filter Bar */
-.filter-bar {
-    display: flex;
-    justify-content: space-between;
-    background: #414d29;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.filter-bar select {
-    padding: 8px;
-    border-radius: 5px;
-    border: none;
-    background: white;
-}
-
-.pagination button {
-    background: white;
-    border: none;
-    padding: 5px 10px;
-    margin: 0 2px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-.product {
-    background: white;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.product img {
-    width: 80%;  
-    aspect-ratio: 1 / 1; 
-    object-fit: cover; 
-    border-radius: 5px; 
-}
-
-.product .name {
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.product .price {
-    color: green;
-    font-weight: bold;
-}
-/* CATALOG END */

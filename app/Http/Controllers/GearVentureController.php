@@ -89,6 +89,42 @@ class GearVentureController extends Controller
     public function catalog(){
         return view('catalog');
     }
+    public function detail(){
+        return view('detail');
+    }
+    public function event(){
+        return view('event');
+    }
+    public function detailevent(){
+        return view('detailevent');
+    }
+    public function about(){
+        return view('about');
+    }
+    public function penyewaan(){
+        return view('penyewaan');
+    }
+    public function refund(){
+        return view('refund');
+    }
+    public function jadwal(){
+        return view('jadwal');
+    }
+    public function profileuser(){
+        return view('profileuser');
+    }
+    public function edituser(){
+        return view('edituser');
+    }    
+    public function editpw(){
+        return view('editpw');
+    }    
+    public function hapusakun(){
+        return view('hapusakun');
+    }    
+    public function belum(){
+        return view('belum');
+    }    
 
     // ADMIN
     public function dashboard(){
@@ -142,8 +178,6 @@ class GearVentureController extends Controller
     public function editkatalog(){
         return view('admin.editkatalog');
     }
-
-
 
     public function tambahevent(){
         return view('admin.tambahevent');

@@ -13,9 +13,21 @@ Route::post('/signup', [GearVentureController::class, 'simpan'])->name('signup')
 
 // PENYEWA
 // Route::get('/', [GearVentureController::class, 'signin'])->name('signin');
-Route::get('/', [GearVentureController::class, 'index'])->name('index');
+Route::get('/index', [GearVentureController::class, 'index'])->name('index');
 Route::get('/tes', [GearVentureController::class, 'tes'])->name('tes');
 Route::get('/catalog', [GearVentureController::class, 'catalog'])->name('catalog');
+Route::get('/detail', [GearVentureController::class, 'detail'])->name('detail');
+Route::get('/event', [GearVentureController::class, 'event'])->name('event');
+Route::get('/detailevent', [GearVentureController::class, 'detailevent'])->name('detailevent');
+Route::get('/about', [GearVentureController::class, 'about'])->name('about');
+Route::get('/penyewaan', [GearVentureController::class, 'penyewaan'])->name('penyewaan');
+Route::get('/refund', [GearVentureController::class, 'refund'])->name('refund');
+Route::get('/jadwal', [GearVentureController::class, 'jadwal'])->name('jadwal');
+Route::get('/profileuser', [GearVentureController::class, 'profileuser'])->name('profileuser');
+Route::get('/edituser', [GearVentureController::class, 'edituser'])->name('edituser');
+Route::get('/editpw', [GearVentureController::class, 'editpw'])->name('editpw');
+Route::get('/hapusakun', [GearVentureController::class, 'hapusakun'])->name('hapusakun');
+Route::get('/belum', [GearVentureController::class, 'belum'])->name('belum');
 
 // ADMIN
 Route::get('/admin/dashboard', [GearVentureController::class, 'dashboard'])->name('dashboard');

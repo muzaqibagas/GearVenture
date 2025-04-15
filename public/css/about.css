@@ -1,0 +1,52 @@
+.top-buttons a {
+    background-color: #C3D840;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .top-buttons a.active-button {
+    background-color: #383d1f !important;
+  }
+
+  .top-buttons a:hover {
+    background-color: #b0c53c;
+    color: #000;
+  }
+
+  .section-wrapper {
+    background-color: #383d1f;
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+
+  h1 {
+    padding-top: 3rem;
+  }
+
+  h2, h4 {
+    font-weight: 700;
+  }
+
+  ul, ol {
+    margin-bottom: 1rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  .top-buttons {
+    max-width: 900px;
+    margin: 0 auto 0 auto;
+  }
+
+  @media (max-width: 576px) {
+    .btn-custom {
+      width: 100%;
+      text-align: center;
+    }
+}

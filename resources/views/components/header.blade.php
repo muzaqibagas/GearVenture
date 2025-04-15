@@ -1,37 +1,36 @@
-    <header>        
-        <div class="social-icons">
-            <div class="logo">
-                <img src="{{ asset('img/logo2.png') }}" alt="Logo">
-            </div>
-            <a href="#">GearVenture</a>
-            <!-- <ul>
-                <li><a href="https://www.facebook.com" target="_blank"><i class='bx bxl-facebook'></i></a></li>
-                <li><a href="https://twitter.com" target="_blank"><i class='bx bxl-twitter'></i></a></li>
-                <li><a href="https://www.instagram.com/muzaqibagas" target="_blank"><i class='bx bxl-instagram'></i></a></li>
-            </ul>
-            <div class="vertical-line"></div>
-            <ul>
-                <li><a href="https://wa.me/6281380716742" target="_blank"><i class='bx bxs-phone'></i></a></li>
-                <p><a href="https://wa.me/6281380716742" target="_blank">62 813 8071 6742</a></p>
-            </ul>
-            <div class="vertical-line"></div>
-            <ul>
-                <li><a href="mailto:GearVenture@gmail.com"><i class='bx bxl-gmail'></i></a></li>
-                <p><a href="mailto:GearVenture@gmail.com">GearVenture@gmail.com</a></p>
-            </ul> -->
+<header class="py-2 ">
+    <div class="container d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+            <img src="{{ asset('img/logo2.png') }}" alt="Logo" class="me-2" style="width: 70px; height: 70px;">
+            <a href="#" class="text-white fw-bold text-decoration-none">GearVenture</a>
         </div>
-        <div class="right">
-            <nav class="navbar">
-                <a href="index" class="nav-link active">Home</a>
-                <a href="catalog" class="nav-link">Rental/Sewa</a>
-                <a href="index.html" class="nav-link">Info/Event</a>
-                <a href="index.html" class="nav-link">About</a>
-            </nav>
-            <div class="profile">
-                <div class="icons">
-                    <a href="#"><i class='bx bx-cart' ></i></a>
-                    <a href="#"><i class='bx bx-user-circle'></i></a>                            
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a href="index" class="nav-link text-white active">Home</a></li>
+                        <li class="nav-item"><a href="catalog" class="nav-link text-white">Rental/Sewa</a></li>
+                        <li class="nav-item"><a href="event" class="nav-link text-white">Info/Event</a></li>
+                        <li class="nav-item"><a href="about" class="nav-link text-white">About</a></li>
+                    </ul>
                 </div>
             </div>
+        </nav>
+
+        <!-- Search Box -->
+        <div class="input-group border border-white rounded-pill" style="width: 22%; overflow: hidden;">
+            <input type="text" class=" border-0 text-white rounded-pill ps-3" style="background-color: #383d1f;" placeholder="Apa alat yang kamu butuhkan?" aria-label="Search">
+            <button class="btn border-0 text-white"><i class='bx bx-search-alt-2 fs-5'></i></button>
         </div>
-    </header>
+
+        <!-- Icons -->
+        <div>
+            <a href="#" class="text-white me-3"><i class='bx bx-cart fs-4'></i></a>
+            <a href="profileuser" class="text-white"><i class='bx bx-user-circle fs-4'></i></a>
+        </div>
+    </div>
+</header>

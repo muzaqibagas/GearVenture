@@ -19,8 +19,11 @@ html, body {
 /* HEADER NAVBAR */
 header {
     display: flex;
+    gap: 60px;
     background-color: var(--basic-color);
+    align-items: center;
     height: 70px;
+    
 }
 
 .social-icons {
@@ -31,11 +34,38 @@ header {
     margin-left: 50px;
 }
 
-/* .social-icons p a {
-    font-weight: bold;
+.search-box {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid var(--background-color);
+    border-radius: 20px;
+    height: 20px;
+    width: 22%;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    padding: 5px;
+    width: 100%;
     color: var(--background-color);
-    text-decoration: none;
-} */
+    font-size: 16px;
+    background-color: var(--basic-color);
+}
+
+.search-box input::placeholder {
+    color: var(--background-color);
+}
+
+.search-box button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+    color: var(--background-color);
+    line-height: 1;
+}
 
 .social-icons a {
     font-weight: bold;
@@ -207,7 +237,7 @@ header li a {
     height: auto; 
     justify-content: center;
     align-items: center;
-    padding: 0 100px 20px 100px;
+    padding: 0 30px 20px 30px;
 }
 
 .testimonial {
@@ -508,8 +538,6 @@ header li a {
 }
 
 button {
-    background-color: var(--basic-color);
-    color: var(--background-color);
     border: none;
     padding: 10px;
     cursor: pointer;
@@ -530,6 +558,7 @@ footer {
     gap: 50px;
     padding: 0 20px;
     font-size: 18px;
+    margin-top: 5pc;
 }
 
 .footer-logo {
