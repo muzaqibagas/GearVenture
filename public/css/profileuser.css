@@ -9,3 +9,8 @@
 .bg-gray-100{
     background-color: #F4F4F5 !important;
 }
+
+.custom-table td, .custom-table th {
+    background-color: #393e1d !important;
+    color: white !important; /* biar teksnya kelihatan */
+}

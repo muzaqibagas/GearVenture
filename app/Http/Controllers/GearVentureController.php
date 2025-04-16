@@ -125,6 +125,15 @@ class GearVentureController extends Controller
     public function belum(){
         return view('belum');
     }    
+    public function sewa(){
+        return view('sewa');
+    }    
+    public function selesai(){
+        return view('selesai');
+    }    
+    public function keranjang(){
+        return view('keranjang');
+    }    
 
     // ADMIN
     public function dashboard(){

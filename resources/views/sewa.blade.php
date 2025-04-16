@@ -61,17 +61,17 @@
                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6 pt-3 text-secondary">Status Pesanan</h6>
                 <ul class="nav nav-pills nav-fill">                                                          
                     <li class="nav-item">
-                    <a class="d-flex align-items-center rounded p-2 bg-white text-decoration-none text-dark shadow" href="sewa">
-                    <div class="anjing active shadow border-radius-md rounded bg-white text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
-                                <span class="fluent--wallet-credit-card-32-filled text-danger green"></span>
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark " href="belum">
+                            <div class="shadow border-radius-md rounded bg-white text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
+                                <span class="fluent--wallet-credit-card-32-filled text-danger"></span>
                             </div>                            
                             <span class="nav-link-text ms-1">Belum Dibayar</span>
                         </a>
                     </li>                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="sewa">
-                            <div class="shadow border-radius-md rounded bg-white text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
-                            <span class="mage--clock-fill text-warning"></span>
+                        <a class="d-flex align-items-center rounded p-2 bg-white text-decoration-none text-dark shadow" href="sewa">
+                            <div class="anjing active shadow border-radius-md rounded bg-white text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
+                                <span class="mage--clock-fill text-warning green"></span>
                             </div>                            
                             <span class="nav-link-text ms-1">Disewa</span>
                         </a>
@@ -92,8 +92,8 @@
             <div class="card border-0 shadow rounded-4" style="background-color: #393e1d;">
                 <div class="p-4">
                     <div class="d-flex justify-content-between rounded-pill" style="width:100%; height:50px; background-color: #abc337">
-                        <button class="btn text-white rounded-pill fw-bold" style="width:100%; background-color: #889d30;">Belum Dibayar</button>
-                        <button class="btn text-white rounded-pill fw-bold" style="width:100%;">Disewa</button>
+                        <button class="btn text-white rounded-pill fw-bold" style="width:100%;">Belum Dibayar</button>
+                        <button class="btn text-white rounded-pill fw-bold" style="width:100%; background-color: #889d30;">Disewa</button>
                         <button class="btn text-white rounded-pill fw-bold" style="width:100%;">Selesai</button>  
                     </div>            
                 </div>
@@ -116,7 +116,7 @@
                                 </td>
                                 <td>12/08/2023 s/d 15/08/2023</td>
                                 <td>Rp. 20.000</td>
-                                <td><span class="badge bg-danger rounded-pill px-3 py-2">Menunggu</span></td>
+                                <td><span class="badge bg-danger rounded-pill px-3 py-2">2 Hari</span></td>
                             </tr>
                             <tr class="align-middle border-top">
                                 <td class="d-flex align-items-center gap-3">
@@ -125,7 +125,7 @@
                                 </td>
                                 <td>22/04/2023 s/d 25/04/2023</td>
                                 <td>Rp. 133.000</td>
-                                <td><span class="badge bg-warning rounded-pill px-3 py-2">bayar</span></td>
+                                <td><span class="badge bg-danger rounded-pill px-3 py-2">2 Hari</span></td>
                             </tr>
                         </tbody>
                     </table>
