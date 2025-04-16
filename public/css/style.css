@@ -154,6 +154,11 @@ header li a {
     display: none !important;
 }
 
+.navbar-nav .nav-item.active > .nav-link {
+    color: var(--basic-color3) !important;
+}
+
+
 .nav-link {
     text-decoration: none;
     color: var(--background-color);
@@ -574,6 +579,7 @@ footer {
     background-color: var(--basic-color); 
     color: var(--background-color);
     text-align: left;
+    margin-top: 100px;
 }
 
 .footer-container {
@@ -581,12 +587,12 @@ footer {
     justify-content: center;
     gap: 50px;
     padding: 0 20px;
-    font-size: 18px;
-    margin-top: 5pc;
+    font-size: 12px;
+    margin-top: 3pc;
 }
 
 .footer-logo {
-    position: relative;
+    margin-top: -40px;
     max-width: 250px;
     text-align: center;
 }
@@ -603,7 +609,8 @@ footer {
 }
 
 .footer-section h3 {
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: bolder;
     margin-bottom: 10px;
 }
 
@@ -620,11 +627,17 @@ footer {
     align-items: center; 
     gap: 10px; 
     margin-bottom: 8px; 
+    font-weight: bold;
 }
 
 .footer-section ul li i {
     font-size: 30px; 
     line-height: 1;
+}
+
+.footer-contact h3{
+    font-size: 20px;
+    font-weight: bolder;
 }
 
 .footer-contact ul{

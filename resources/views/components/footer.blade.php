@@ -1,4 +1,4 @@
-    <footer>
+    <footer class="pt-1 pb-5">
         <div class="footer-container">
             <div class="footer-logo">
                 <img src="{{ asset('img/logo2.png') }}" alt="GearVenture Logo">

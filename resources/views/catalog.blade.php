@@ -3,6 +3,7 @@
 @section('title', 'Katalog')
 
 @push('style')
+<link rel="stylesheet" href="{{ asset ('css/background.css')}}?v=1">
 @endpush
 
 @section('main')

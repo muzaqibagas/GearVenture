@@ -12,10 +12,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item m-0"><a href="{{ route('index') }}" class="nav-link text-white active">HOME</a></li>
-                        <li class="nav-item m-0"><a href="{{ route('catalog') }}" class="nav-link text-white">RENTAL/SEWA</a></li>
-                        <li class="nav-item m-0"><a href="{{ route('event') }}" class="nav-link text-white">INFO/EVENT</a></li>
-                        <li class="nav-item m-0"><a href="{{ route('about') }}" class="nav-link text-white">ABOUT</a></li>
+                        <li class="nav-item m-0 {{ $type_menu == 'index' ? 'active' : '' }} "><a href="{{ route('index') }}" class="nav-link text-white active">HOME</a></li>
+                        <li class="nav-item m-0 {{ $type_menu == 'catalog' ? 'active' : '' }}"><a href="{{ route('catalog') }}" class="nav-link text-white">RENTAL/SEWA</a></li>
+                        <li class="nav-item m-0 {{ $type_menu == 'event' ? 'active' : '' }}"><a href="{{ route('event') }}" class="nav-link text-white">INFO/EVENT</a></li>
+                        <li class="nav-item m-0 {{ $type_menu == 'about' ? 'active' : '' }}"><a href="{{ route('about') }}" class="nav-link text-white">ABOUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -29,13 +29,8 @@
 
         <!-- Icons -->
         <div>
-<<<<<<< HEAD
-            <a href="keranjang" class="text-white me-3"><i class='bx bx-cart fs-4'></i></a>
-            <a href="profileuser" class="text-white"><i class='bx bx-user-circle fs-4'></i></a>
-=======
             <a href="#" class="cart-header text-white me-3"><i class='bx bx-cart fs-4'></i></a>
             <a href="profileuser" class="profile-header text-white"><i class='bx bx-user-circle fs-4'></i></a>
->>>>>>> 77f50467fb347775f639fe6048bc16f2c1e4dc31
         </div>
     </div>
 </header>

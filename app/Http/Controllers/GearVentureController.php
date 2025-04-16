@@ -84,55 +84,89 @@ class GearVentureController extends Controller
 
     // PENYEWA
     public function index(){
-        return view('index');
+        return view('index', [
+            'type_menu'=> 'index'
+        ]);
     }
     public function catalog(){
-        return view('catalog');
+        return view('catalog', [
+            'type_menu'=> 'catalog'
+        ]);
     }
     public function detail(){
-        return view('detail');
+        return view('detail', [
+            'type_menu'=> 'detail'
+        ]);
     }
     public function event(){
-        return view('event');
+        return view('event', [
+            'type_menu'=> 'event'
+        ]);
     }
     public function detailevent(){
-        return view('detailevent');
+        return view('detailevent', [
+            'type_menu'=> 'detailevent'
+        ]);
     }
     public function about(){
-        return view('about');
+        return view('about', [
+            'type_menu'=> 'about'
+        ]);
     }
     public function penyewaan(){
-        return view('penyewaan');
+        return view('penyewaan', [
+            'type_menu'=> 'penyewaan'
+        ]);
     }
     public function refund(){
-        return view('refund');
+        return view('refund', [
+            'type_menu'=> 'refund'
+        ]);
     }
     public function jadwal(){
-        return view('jadwal');
+        return view('jadwal', [
+            'type_menu'=> 'jadwal'
+        ]);
     }
     public function profileuser(){
-        return view('profile.profileuser');
+        return view('profile.profileuser', [
+            'type_menu'=> 'user'
+        ]);
     }
     public function edituser(){
-        return view('profile.edituser');
+        return view('profile.edituser', [
+            'type_menu'=> 'edituser'
+        ]);
     }    
     public function editpw(){
-        return view('profile.editpw');
+        return view('profile.editpw', [
+            'type_menu'=> 'editpw'
+        ]);
     }    
     public function hapusakun(){
-        return view('profile.hapusakun');
+        return view('profile.hapusakun', [
+            'type_menu'=> 'hapusakun'
+        ]);
     }    
     public function belum(){
-        return view('belum');
+        return view('belum', [
+            'type_menu'=> 'belum'
+        ]);
     }    
     public function sewa(){
-        return view('sewa');
+        return view('sewa', [
+            'type_menu'=> 'sewa'
+        ]);
     }    
     public function selesai(){
-        return view('selesai');
+        return view('selesai', [
+            'type_menu'=> 'selesai'
+        ]);
     }    
     public function keranjang(){
-        return view('keranjang');
+        return view('keranjang', [
+            'type_menu'=> 'keranjang'
+        ]);
     }    
 
     // ADMIN

@@ -4,7 +4,6 @@
 
 @push('style')
 @endpush
-
 @section('main')
 
 <main>
