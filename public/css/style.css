@@ -240,10 +240,9 @@ header li a {
 /* BANNER END */
 
 .promo {
-    height: 300px; 
+    height: auto; 
     justify-content: center;
     align-items: center;
-    padding: 20px 100px 0 100px;
 }
 
 .catalog {
@@ -261,16 +260,12 @@ header li a {
 }
 
 .contact {
-    position: relative;
     height: auto; 
     justify-content: center;
     align-items: center;
-    padding: 20px 100px;
 }
 
-.promo h2, .catalog h2, .contact h2{
-    padding-left: 70px;
-}
+
 
 .testimonial h2{
     text-align: center;
@@ -279,14 +274,13 @@ header li a {
 /* PROMO */
 .promo-container {
     display: flex;
-    justify-content: center;
-    gap: 50px;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
 .promo-card {
-    width: 450px;
-    border: 2px solid var(--basic-color);
+    width: auto;
+    border: 4px solid var(--basic-color);
     border-radius: 10px;
     overflow: hidden;
     padding: 15px;
@@ -300,27 +294,34 @@ header li a {
 .promo-text {
     padding-right: 10px;
 }
-
+.promo .description {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    line-height: 2px;
+}
 .promo-text h3 {
     font-size: 18px;
     margin: 5px 0;
+    font-weight: bold;
     color: var(--text-color);
 }
 
 .promo-text p {
-    font-size: 14px;
+    font-size: 11px;
+    font-weight: bold;
     color: var(--grey-color);
 }
 
 .promo-text .discount {
     color: var(--basic-color2);
     font-weight: bold;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .promo-image {
-    width: 200px;
-    height: 120px;
+    width: 287px;
+    height: 207px;
     border-radius: 8px;
     object-fit: cover;
 }
@@ -333,7 +334,7 @@ header li a {
     color: var(--background-color);
     text-decoration: none;
     border-radius: 20px;
-    font-size: 14px;
+    font-size: 10px;
 }
 
 .promo-button:hover {
@@ -344,25 +345,28 @@ header li a {
 /* CATALOG POPULAT */
 .catalog-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap;
 }
 
 .catalog-card {
-    width: 200px;
-    border: 2px solid var(--basic-color1);
+    width: auto;
+    border: 4px solid var(--basic-color1);
     border-radius: 10px;
     overflow: hidden;
     padding: 15px;
     text-align: center;
     background-color: var(--background-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
 }
 
 .catalog-image {
-    width: 100%;
-    height: 120px;
+    width: 169px;
+    height: 169px;
     object-fit: fill;
     border-radius: 8px;
 }
@@ -408,12 +412,12 @@ header li a {
 
 .testimonial-item {
     width: 300px; 
-    height: 150px; 
+    height: 160px; 
     justify-content: center;
     background: var(--background-color);
     border: 2px solid var(--basic-color1);
     border-radius: 10px;
-    padding: 10px; 
+    padding: 15px; 
     text-align: center;
     box-shadow: 0 4px 8px var(--text-color);
     margin:  0 20px;
@@ -430,7 +434,8 @@ header li a {
 }
 
 .testimonial-item i {
-    justify-content: left;
+    display: flex;
+    justify-self: flex-start;
 } 
 
 .testimonial-info {
@@ -550,11 +555,17 @@ header li a {
     height: 100px;
 }
 
-button {
+.contact-form button {
+    color: white;
+    font-size: 15px;
     border: none;
     padding: 10px;
     cursor: pointer;
     border-radius: 5px;
+    background-color: var(--basic-color);
+}
+.contact-form button:hover {
+    color: var(--basic-color3);
 }
 /* CONTACT US END*/
 

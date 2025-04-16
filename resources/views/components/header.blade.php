@@ -12,10 +12,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item m-0"><a href="index" class="nav-link text-white active">HOME</a></li>
-                        <li class="nav-item m-0"><a href="catalog" class="nav-link text-white">RENTAL/SEWA</a></li>
-                        <li class="nav-item m-0"><a href="event" class="nav-link text-white">INFO/EVENT</a></li>
-                        <li class="nav-item m-0"><a href="about" class="nav-link text-white">ABOUT</a></li>
+                        <li class="nav-item m-0"><a href="{{ route('index') }}" class="nav-link text-white active">HOME</a></li>
+                        <li class="nav-item m-0"><a href="{{ route('catalog') }}" class="nav-link text-white">RENTAL/SEWA</a></li>
+                        <li class="nav-item m-0"><a href="{{ route('event') }}" class="nav-link text-white">INFO/EVENT</a></li>
+                        <li class="nav-item m-0"><a href="{{ route('about') }}" class="nav-link text-white">ABOUT</a></li>
                     </ul>
                 </div>
             </div>

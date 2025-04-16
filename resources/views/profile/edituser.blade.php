@@ -29,7 +29,7 @@
                 </ul>                                                
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark bg-white shadow" href="edituser">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark bg-white shadow" href="user">
                             <div class="shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="pen fa6-solid--pen bg-dark"></span>
                             </div>

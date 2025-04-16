@@ -111,16 +111,16 @@ class GearVentureController extends Controller
         return view('jadwal');
     }
     public function profileuser(){
-        return view('profileuser');
+        return view('profile.profileuser');
     }
     public function edituser(){
-        return view('edituser');
+        return view('profile.edituser');
     }    
     public function editpw(){
-        return view('editpw');
+        return view('profile.editpw');
     }    
     public function hapusakun(){
-        return view('hapusakun');
+        return view('profile.hapusakun');
     }    
     public function belum(){
         return view('belum');

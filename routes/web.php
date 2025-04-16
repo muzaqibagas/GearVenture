@@ -23,10 +23,10 @@ Route::get('/about', [GearVentureController::class, 'about'])->name('about');
 Route::get('/penyewaan', [GearVentureController::class, 'penyewaan'])->name('penyewaan');
 Route::get('/refund', [GearVentureController::class, 'refund'])->name('refund');
 Route::get('/jadwal', [GearVentureController::class, 'jadwal'])->name('jadwal');
-Route::get('/profileuser', [GearVentureController::class, 'profileuser'])->name('profileuser');
-Route::get('/edituser', [GearVentureController::class, 'edituser'])->name('edituser');
-Route::get('/editpw', [GearVentureController::class, 'editpw'])->name('editpw');
-Route::get('/hapusakun', [GearVentureController::class, 'hapusakun'])->name('hapusakun');
+Route::get('/profile/user', [GearVentureController::class, 'profileuser'])->name('profileuser');
+Route::get('/profile/edituser', [GearVentureController::class, 'edituser'])->name('edituser');
+Route::get('/profile/editpw', [GearVentureController::class, 'editpw'])->name('editpw');
+Route::get('/profile/hapusakun', [GearVentureController::class, 'hapusakun'])->name('hapusakun');
 Route::get('/belum', [GearVentureController::class, 'belum'])->name('belum');
 
 // ADMIN

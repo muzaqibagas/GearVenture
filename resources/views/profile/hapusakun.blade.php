@@ -19,7 +19,7 @@
                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6 text-secondary">Info Akun</h6>
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 bg-white text-decoration-none text-dark shadow" href="profileuser">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="user">
                             <div class="anjing active shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="iconamoon--profile-fill green"></span>
                             </div>
@@ -39,7 +39,7 @@
                 </ul>                                                
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="hapusakun">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark bg-white shadow" href="hapusakun">
                             <div class="shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="mdi--trash-can-empty bg-dark"></span>
                             </div>
@@ -89,47 +89,14 @@
         </aside>
         
         <div class="d-flex align-items-center py-4 justify-content-center" style="width:80%">
-            <div class="row justify-content-center ">
-                <div class="col-8 d-flex justify-content-center">
-                    <div class="card w-70 mb-4 p-4">
-                        <div class="row align-items-center">
-                            <!-- Foto Profil -->
-                            <h4 class="mb-3 px-4">Profil Saya</h4>
-                            <div class="col-md-3 text-center position-relative">
-                                <img src="{{ asset('img/profile.jpg') }}" alt="Foto Profil" class="rounded-circle img-fluid" style="width: 120px; height: 120px; object-fit: cover;">                                                            
-                            </div>
-
-                            <!-- Informasi Profil -->
-                            <div class="col-md-9">                            
-                                <div class="row d-flex align-items-center">
-                                    <div class="d-flex w-100">
-                                        <p class="col-5 fw-bold" style="color: #ABC337;">Username</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
-                                    </div>
-                                    <div class="d-flex w-100">
-                                        <p class="col-5 fw-bold" style="color: #ABC337;">Nama</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
-                                    </div>
-                                    <div class="d-flex w-100">
-                                        <p class="col-5 fw-bold" style="color: #ABC337;">Email</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
-                                    </div>
-                                    <div class="d-flex w-100">
-                                        <p class="col-5 fw-bold" style="color: #ABC337;">No. Tlp</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
-                                    </div>
-                                    <div class="d-flex w-100">
-                                        <p class="col-5 fw-bold" style="color: #ABC337;">Jenis Kelamin</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tombol Hapus Akun -->
-                        <div class="text-center mt-4 d-flex justify-content-end align-items-center me-3" h>
-                            <button class="btn btn-danger rounded-pill px-4 py-2 d-flex  align-items-center" style="height:30px">Hapus Akun</button>
-                        </div>
+            <div class="card mb-4 p-4 text-white" style="width: 66% !important; background-color: #383D1F;">
+                <h4>Hapus Akun</h4>
+                <div class="d-flex justify-content-center align-items-center flex-column gap-4">
+                    <span class="fluent-mdl2--sad text-center"></span>
+                    <p class="m-0">Ingin Menghapus Akun?</p>
+                    <!-- Tombol Hapus Akun -->
+                    <div class="text-center d-flex justify-content-end align-items-center">
+                        <button class="btn btn-danger rounded px-4 py-2 d-flex align-items-center">Hapus Akun</button>
                     </div>
                 </div>
             </div>

@@ -21,32 +21,36 @@
                 </div>
             </div>            
         </section>
-        <section class="promo">
+        <section class="promo px-4 mt-5">
             <h2>Promo Item</h2>
             <div class="promo-container">
-                <div class="promo-card">
+                <div class="promo-card ps-5 pe-4">
                     <div class="promo-text">
-                        <div class="discount">Up to 25%</div>
-                        <h3>Chestnut Dome Tent</h3>
-                        <p>Tenda 4P + Matras + Sleeping Bag</p>
-                        <a href="#" class="promo-button">Lihat Selengkapnya</a>
+                        <div class="discount mb-2">Up to 25%</div>
+                        <div class="description mb-3">
+                            <h3>Chestnut Dome Tent</h3>
+                            <p>Tenda 4P + Matras + Sleeping Bag</p>
+                        </div>
+                        <a href="#" class="promo-button px-4">Lihat Selengkapnya</a>
                     </div>
                     <img src="{{ asset('img/banner-04.jpg') }}" alt="Tenda" class="promo-image">
                 </div>
 
-                <div class="promo-card">
+                <div class="promo-card  ps-5 pe-4">
                     <div class="promo-text">
                         <div class="discount">Up to 55%</div>
-                        <h3>Sundown Shelter</h3>
-                        <p>Tenda 2P + Matras + Set Kursi Piknik</p>
-                        <a href="#" class="promo-button">Lihat Selengkapnya</a>
+                        <div class="description mb-3">
+                            <h3>Sundown Shelter</h3>
+                            <p>Tenda 2P + Matras + Set Kursi Piknik</p>
+                        </div>
+                        <a href="#" class="promo-button px-4">Lihat Selengkapnya</a>
                     </div>
                     <img src="{{ asset('img/banner-04.jpg') }}" alt="Shelter" class="promo-image">
                 </div>
             </div>         
         </section>
 
-        <section class="catalog">
+        <section class="catalog mt-5">
             <h2>Katalog Popular</h2>
             <div class="catalog-container">
                 <div class="catalog-card">
@@ -80,7 +84,7 @@
         </section>
 
         <section class="testimonial">
-            <h2>Apa kata Mereka Tantang GearVenture</h2>
+            <h2 class="mb-4">Apa kata Mereka Tantang GearVenture</h2>
             <div class="testimonial-slider testimonial-carousel owl-carousel">
                 <div class="testimonial-item">
                     <i class='bx bxs-quote-alt-left'></i> 
@@ -120,9 +124,9 @@
             </div>  
         </section>
         
-        <section class="contact">
+        <section class="contact px-4">
             <h2>CONTACT US</h2>
-            <div class="map-container">
+            <div class="map-container mb-4">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.911579667986!2d-74.00601548459438!3d40.71277627933026!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1633155780197" allowfullscreen="" loading="lazy"></iframe>
             </div>
             <div class="pesan">
@@ -140,12 +144,12 @@
                 <!-- Contact Form -->
                 <form class="contact-form">
                     <div class="form-group">
-                        <input type="text" placeholder="Nama *">
-                        <input type="email" placeholder="Email *">
+                        <input class="rounded-0" type="text" placeholder="Nama *">
+                        <input class="rounded-0" type="email" placeholder="Email *">
                     </div>
-                    <input type="text" placeholder="Nomor Hp *">
-                    <textarea placeholder="Tulis Pesanmu Disini"></textarea>
-                    <button type="submit">KIRIM</button>
+                    <input class="rounded-0" type="text" placeholder="Nomor Hp *">
+                    <textarea class="rounded-0" placeholder="Tulis Pesanmu Disini"></textarea>
+                    <button class="rounded fw-bold" type="submit">KIRIM</button>
                 </form>
             </div>
         </section>
