@@ -27,9 +27,9 @@ Route::get('/profile/user', [GearVentureController::class, 'profileuser'])->name
 Route::get('/profile/edituser', [GearVentureController::class, 'edituser'])->name('edituser');
 Route::get('/profile/editpw', [GearVentureController::class, 'editpw'])->name('editpw');
 Route::get('/profile/hapusakun', [GearVentureController::class, 'hapusakun'])->name('hapusakun');
-Route::get('/belum', [GearVentureController::class, 'belum'])->name('belum');
-Route::get('/sewa', [GearVentureController::class, 'sewa'])->name('sewa');
-Route::get('/selesai', [GearVentureController::class, 'selesai'])->name('selesai');
+Route::get('/profile/belum', [GearVentureController::class, 'belum'])->name('belum');
+Route::get('/profile/sewa', [GearVentureController::class, 'sewa'])->name('sewa');
+Route::get('/profile/selesai', [GearVentureController::class, 'selesai'])->name('selesai');
 Route::get('/keranjang', [GearVentureController::class, 'keranjang'])->name('keranjang');
 
 // ADMIN

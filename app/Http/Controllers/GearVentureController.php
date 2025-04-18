@@ -149,17 +149,17 @@ class GearVentureController extends Controller
         ]);
     }    
     public function belum(){
-        return view('belum', [
+        return view('profile.belum', [
             'type_menu'=> 'belum'
         ]);
     }    
     public function sewa(){
-        return view('sewa', [
+        return view('profile.sewa', [
             'type_menu'=> 'sewa'
         ]);
     }    
     public function selesai(){
-        return view('selesai', [
+        return view('profile.selesai', [
             'type_menu'=> 'selesai'
         ]);
     }    

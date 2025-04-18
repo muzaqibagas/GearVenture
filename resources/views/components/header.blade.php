@@ -22,7 +22,7 @@
         </nav>
 
         <!-- Search Box -->
-        <div class="search input-group border border-2 border-white rounded" style="width: 22%; overflow: hidden;">
+        <div class="search input-group border border-2 border-white rounded w-auto" style=" overflow: hidden;">
             <input type="text" class="border-0 mb-1 ps-3" style="background-color: #383d1f;" placeholder="Apa alat yang kamu butuhkan?" aria-label="Search">
             <button class="btn border-0 text-white d-flex"><i class='bx bx-search-alt-2 fs-5'></i></button>
         </div>
@@ -30,7 +30,7 @@
         <!-- Icons -->
         <div>
             <a href="#" class="cart-header text-white me-3"><i class='bx bx-cart fs-4'></i></a>
-            <a href="profileuser" class="profile-header text-white"><i class='bx bx-user-circle fs-4'></i></a>
+            <a href="{{ route ('profileuser')}}" class="profile-header text-white"><i class='bx bx-user-circle fs-4'></i></a>
         </div>
     </div>
 </header>

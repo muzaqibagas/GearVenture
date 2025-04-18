@@ -19,9 +19,9 @@
                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6 text-secondary">Info Akun</h6>
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="user">
-                            <div class="anjing active shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
-                                <span class="iconamoon--profile-fill green"></span>
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('profileuser')}}">
+                            <div class="shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
+                                <span class="iconamoon--profile-fill"></span>
                             </div>
                             <span class="nav-link-text ms-1">Profile</span>
                         </a>
@@ -29,7 +29,7 @@
                 </ul>                                                
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="edituser">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('edituser')}}">
                             <div class="shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="pen fa6-solid--pen bg-dark"></span>
                             </div>
@@ -39,7 +39,7 @@
                 </ul>                                                
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="hapusakun">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('hapusakun')}}">
                             <div class="shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="mdi--trash-can-empty bg-dark"></span>
                             </div>
@@ -49,9 +49,9 @@
                 </ul>                                                
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark bg-white shadow" href="editpw">
-                            <div class="shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
-                                <span class="mdi--password"></span>
+                        <a class="d-flex align-items-center rounded p-2 bg-white text-decoration-none text-dark shadow" href="{{ route ('editpw') }}">
+                            <div class="anjing active shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
+                                <span class="mdi--password green"></span>
                             </div>
                             <span class="nav-link-text ms-1">Ubah Password</span>
                         </a>
@@ -61,7 +61,7 @@
                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6 pt-3 text-secondary">Status Pesanan</h6>
                 <ul class="nav nav-pills nav-fill">                                                          
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="belum">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('belum') }}">
                             <div class="shadow border-radius-md rounded bg-white text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="fluent--wallet-credit-card-32-filled text-danger"></span>
                             </div>                            
@@ -69,7 +69,7 @@
                         </a>
                     </li>                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="sewa">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('sewa') }}">
                             <div class="shadow border-radius-md rounded bg-white text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                             <span class="mage--clock-fill text-warning"></span>
                             </div>                            
@@ -77,7 +77,7 @@
                         </a>
                     </li>                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="selesai">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('selesai') }}">
                             <div class="shadow border-radius-md rounded bg-white text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="mingcute--check-circle-line text-success">
                             </div>                            

@@ -19,7 +19,7 @@
                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6 text-secondary">Info Akun</h6>
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 bg-white text-decoration-none text-dark shadow" href="user">
+                        <a class="d-flex align-items-center rounded p-2 bg-white text-decoration-none text-dark shadow" href="{{ route ('profileuser')}}">
                             <div class="anjing active shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="iconamoon--profile-fill green"></span>
                             </div>
@@ -29,7 +29,7 @@
                 </ul>                                                
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="edituser">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('edituser')}}">
                             <div class="shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="pen fa6-solid--pen bg-dark"></span>
                             </div>
@@ -39,7 +39,7 @@
                 </ul>                                                
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="hapusakun">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('hapusakun')}}">
                             <div class="shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="mdi--trash-can-empty bg-dark"></span>
                             </div>
@@ -61,7 +61,7 @@
                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6 pt-3 text-secondary">Status Pesanan</h6>
                 <ul class="nav nav-pills nav-fill">                                                          
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="belum">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('belum') }}">
                             <div class="shadow border-radius-md rounded bg-white text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="fluent--wallet-credit-card-32-filled text-danger"></span>
                             </div>                            
@@ -69,7 +69,7 @@
                         </a>
                     </li>                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="sewa">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('sewa') }}">
                             <div class="shadow border-radius-md rounded bg-white text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                             <span class="mage--clock-fill text-warning"></span>
                             </div>                            
@@ -77,7 +77,7 @@
                         </a>
                     </li>                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="selesai">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('selesai') }}">
                             <div class="shadow border-radius-md rounded bg-white text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="mingcute--check-circle-line text-success">
                             </div>                            
@@ -104,23 +104,23 @@
                                 <div class="row d-flex align-items-center">
                                     <div class="d-flex w-100">
                                         <p class="col-5 fw-bold" style="color: #ABC337;">Username</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">MuzaqiBagas</p>
                                     </div>
                                     <div class="d-flex w-100">
                                         <p class="col-5 fw-bold" style="color: #ABC337;">Nama</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">Anggito Rangkuti Bagas Muzaqi</p>
                                     </div>
                                     <div class="d-flex w-100">
                                         <p class="col-5 fw-bold" style="color: #ABC337;">Email</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">bagasmuzaqi1614@gmail.com</p>
                                     </div>
                                     <div class="d-flex w-100">
                                         <p class="col-5 fw-bold" style="color: #ABC337;">No. Tlp</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">081380716742</p>
                                     </div>
                                     <div class="d-flex w-100">
                                         <p class="col-5 fw-bold" style="color: #ABC337;">Jenis Kelamin</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">dwadwa</p>
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">Laki-laki</p>
                                     </div>
                                 </div>
                             </div>
