@@ -30,6 +30,7 @@ Route::get('/profile/hapusakun', [GearVentureController::class, 'hapusakun'])->n
 Route::get('/profile/belum', [GearVentureController::class, 'belum'])->name('belum');
 Route::get('/profile/sewa', [GearVentureController::class, 'sewa'])->name('sewa');
 Route::get('/profile/selesai', [GearVentureController::class, 'selesai'])->name('selesai');
+Route::get('/checkout', [GearVentureController::class, 'checkout'])->name('checkout');
 Route::get('/keranjang', [GearVentureController::class, 'keranjang'])->name('keranjang');
 
 // ADMIN

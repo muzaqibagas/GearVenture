@@ -1,0 +1,104 @@
+
+@extends('layout.app')
+
+@section('title', 'Home')
+
+@push('style')
+@endpush
+
+@section('main')
+
+<section class="catalog py-5 d-flex flex-column align-items-center">
+    <a href="javascript:history.back()" class="btn text-white rounded-pill mb-3 align-self-start" style="background-color:#383d1f">&larr; Kembali</a>
+        <div class="card shadow-sm border-0 my-4" style="width:80%">
+            <div class="card-body">
+            <p class="text-center">
+                Silahkan lengkapi data diri untuk mendapatkan <span class="text-danger fw-bold">kode pesanan</span>
+                agar dapat melanjutkan proses pemesanan
+            </p>
+
+            <form>
+                <div class="mb-3">
+                <label class="form-label">Nama</label>
+                <input type="text" class="form-control" placeholder="Nama Lengkap">
+                </div>
+                <div class="mb-3">
+                <label class="form-label">No. HP</label>
+                <input type="text" class="form-control" placeholder="No Handphone">
+                </div>
+                <div class="mb-3">
+                <label class="form-label">Alamat</label>
+                <input type="text" class="form-control" placeholder="Alamat Lengkap">
+                </div>
+                <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" placeholder="Email">
+                </div>
+            </form>
+            </div>
+        </div>
+
+        <!-- Card Pesanan -->
+        <div class="card shadow-sm border-0" style="width:80%">
+            <div class="card-body">
+            <h5 class="mb-3">Pesanan dipesan</h5>
+
+            <!-- Tabel Pesanan -->
+            <div class="table-responsive">
+                <table class="table align-middle">
+                <thead class="text-center bg-light">
+                    <tr>
+                    <th>Produk</th>
+                    <th>Harga Satuan</th>
+                    <th>Durasi</th>
+                    <th>Kuantitas</th>
+                    <th>Subtotal Produk</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr>
+                    <td class="text-start">
+                        <div class="d-flex align-items-center">
+                        <img src="{{ asset('img/banner-02.jpg') }}" class="me-3" width="70" height="70" alt="Produk 1">
+                        <span>Kursi santai piknik outdoor</span>
+                        </div>
+                    </td>
+                    <td>Rp. 85.000</td>
+                    <td>-</td>
+                    <td>1</td>
+                    <td>Rp. 85.000</td>
+                    </tr>
+                    <tr>
+                    <td class="text-start">
+                        <div class="d-flex align-items-center">
+                        <img src="{{ asset('img/banner-02.jpg') }}" class="me-3" width="70" height="70" alt="Produk 2">
+                        <span>1 set Kursi santai piknik outdoor 4P</span>
+                        </div>
+                    </td>
+                    <td>Rp. 115.000</td>
+                    <td>12/01/2024 s/d 15/01/2024</td>
+                    <td>2</td>
+                    <td>Rp. 230.000</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+
+            <!-- Total -->
+            <div class="d-flex justify-content-end mt-4">
+                <div class="text-end">
+                    <p class="mb-1 fw-medium">2 produk</p>
+                    <h5 class="fw-bold">Rp315.000</h5>
+                    <button class="btn rounded mt-2 text-white" style="background-color:#383d1f">Bayar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@endsection
+
+@push('script')
+@endpush

@@ -163,6 +163,11 @@ class GearVentureController extends Controller
             'type_menu'=> 'selesai'
         ]);
     }    
+    public function checkout(){
+        return view('checkout', [
+            'type_menu'=> 'checkout'
+        ]);
+    }    
     public function keranjang(){
         return view('keranjang', [
             'type_menu'=> 'keranjang'

@@ -1,4 +1,3 @@
-
 @extends('layout.app')
 
 @section('title', 'Home')
@@ -8,96 +7,85 @@
 
 @section('main')
 
-<section class="catalog py-4"> 
-    <a href="event" class="text-dark rounded-pill">&larr; Kembali</a>
-    <div class="container m-0 p-0 justify-content-center d-flex flex-column">
-        <div class="card shadow-sm border-0 my-4" style="width:80%">
-            <div class="card-body">
-            <p class="text-center">
-                Silahkan lengkapi data diri untuk mendapatkan <span class="text-danger fw-bold">kode pesanan</span>
-                agar dapat melanjutkan proses pemesanan
-            </p>
 
-            <form>
-                <div class="mb-3">
-                <label class="form-label">Nama</label>
-                <input type="text" class="form-control" placeholder="Nama Lengkap">
-                </div>
-                <div class="mb-3">
-                <label class="form-label">No. HP</label>
-                <input type="text" class="form-control" placeholder="No Handphone">
-                </div>
-                <div class="mb-3">
-                <label class="form-label">Alamat</label>
-                <input type="text" class="form-control" placeholder="Alamat Lengkap">
-                </div>
-                <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" placeholder="Email">
-                </div>
-            </form>
-            </div>
-        </div>
+<section class="catalog py-5 d-flex flex-column align-items-center">
+    <a href="javascript:history.back()" class="btn text-white rounded-pill mb-3 align-self-start" style="background-color:#383d1f">&larr; Kembali</a>
 
-        <!-- Card Pesanan -->
-        <div class="card shadow-sm border-0" style="width:80%">
-            <div class="card-body">
-            <h5 class="mb-3">Pesanan dipesan</h5>
-
-            <!-- Tabel Pesanan -->
-            <div class="table-responsive">
-                <table class="table align-middle">
-                <thead class="text-center bg-light">
+    <!-- Container card -->
+    <div class="card shadow-sm rounded-3 border-0 p-3" style="width:90%;">
+        <!-- Header tabel -->
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="bg-light text-center">
                     <tr>
-                    <th>Produk dipesan</th>
-                    <th>Harga Satuan</th>
-                    <th>Durasi</th>
-                    <th>Kuantitas</th>
-                    <th>Subtotal Produk</th>
+                        <th></th>
+                        <th>Produk</th>
+                        <th>Harga Satuan</th>
+                        <th>Durasi</th>
+                        <th>Kuantitas</th>
+                        <th>Total Harga</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     <tr>
-                    <td class="text-start">
-                        <div class="d-flex align-items-center">
-                        <img src="https://via.placeholder.com/70" class="me-3" width="70" height="70" alt="Produk 1">
-                        <span>Kursi santai piknik outdoor</span>
-                        </div>
-                    </td>
-                    <td>Rp. 85.000</td>
-                    <td>-</td>
-                    <td>1</td>
-                    <td>Rp. 85.000</td>
+                        <td><input type="checkbox"></td>
+                        <td class="text-start">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ asset('img/banner-02.jpg') }}" class="me-3 rounded" width="70" height="70" alt="Produk 1">
+                                <span>Kursi santai piknik outdoor</span>
+                            </div>
+                        </td>
+                        <td>Rp. 85.000</td>
+                        <td>20/12/2024 s/d 23/12/2024 <span class="text-warning">&#9998;</span></td>
+                        <td>
+                            <div class="input-group input-group-sm justify-content-center" style="max-width: 100px;">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                                <input type="text" class="form-control text-center" value="1">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </td>
+                        <td>Rp. 85.000</td>
+                        <td><button class="btn btn-sm btn-white"><i class="mdi--trash-can-empty bg-danger"></i></button></td>
                     </tr>
+
                     <tr>
-                    <td class="text-start">
-                        <div class="d-flex align-items-center">
-                        <img src="https://via.placeholder.com/70" class="me-3" width="70" height="70" alt="Produk 2">
-                        <span>1 set Kursi santai piknik outdoor 4P</span>
-                        </div>
-                    </td>
-                    <td>Rp. 115.000</td>
-                    <td>12/01/2024 s/d 15/01/2024</td>
-                    <td>2</td>
-                    <td>Rp. 230.000</td>
+                        <td><input type="checkbox"></td>
+                        <td class="text-start">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ asset('img/banner-02.jpg') }}" class="me-3 rounded" width="70" height="70" alt="Produk 2">
+                                <span>1 set Kursi santai piknik outdoor 4P</span>
+                            </div>
+                        </td>
+                        <td>Rp. 115.000</td>
+                        <td>12/01/2024 s/d 15/01/2024 <span class="text-warning">&#9998;</span></td>
+                        <td>
+                            <div class="input-group input-group-sm justify-content-center" style="max-width: 100px;">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                                <input type="text" class="form-control text-center" value="2">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </td>
+                        <td>Rp. 230.000</td>
+                        <td><button class="btn btn-sm btn-white"><i class="mdi--trash-can-empty bg-danger"></i></button></td>
                     </tr>
                 </tbody>
-                </table>
-            </div>
+            </table>
+        </div>
 
-            <!-- Total -->
-            <div class="d-flex justify-content-end mt-4">
-                <div class="text-end">
-                <p class="mb-1 fw-medium">2 produk</p>
-                <h5 class="fw-bold">Rp315.000</h5>
-                <button class="btn btn-dark rounded-pill mt-2">Buat Pesanan</button>
-                </div>
+        <!-- Footer -->
+        <div class="d-flex justify-content-between align-items-center p-3 border-top bg-white">
+            <div>
+                <input type="checkbox" id="semua-produk">
+                <label for="semua-produk">Semua Produk</label>
             </div>
+            <div class="text-end">
+                <span class="me-3">Total (2 produk): <strong>Rp. 315.000</strong></span>
+                <button class="btn text-white rounded-pill" style="background-color:#383d1f">Buat Pesanan</button>
             </div>
         </div>
     </div>
 </section>
-
 
 @endsection
 
