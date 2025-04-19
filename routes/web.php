@@ -2,7 +2,40 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\GearVentureController;
+use Illuminate\Support\Facades\Mail;
+
+// Route untuk halaman verifikasi notifikasi
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+// Route untuk verifikasi link email
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/index'); // atau ke dashboard kamu
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+// Route untuk resend email
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Link verifikasi telah dikirim ke email kamu!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/index  ', [GearVentureController::class, 'index'])->name('index');
+    // atau route dashboard lain
+});
+
+Route::get('/test-email', function () {
+    Mail::raw('Email test berhasil terkirim melalui Mailtrap API!', function ($message) {
+        $message->to('dummy@email.com')->subject('Test Mailtrap API');
+    });
+
+    return 'Email terkirim!';
+});
+
 
 
 Route::get('/signin', [GearVentureController::class, 'masuk'])->name('signin.form');
@@ -65,6 +98,8 @@ Route::get('/admin/editevent', [GearVentureController::class, 'editevent'])->nam
 
 Route::get('/admin/profile', [GearVentureController::class, 'profile'])->name('profile');
 Route::get('/admin/editprofile', [GearVentureController::class, 'editprofile'])->name('editprofile');
+
+
 
 
 

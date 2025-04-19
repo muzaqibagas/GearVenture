@@ -64,21 +64,17 @@
                 @enderror
             </div>
 
-            <div class="inputbox">
-                <select class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}" name="role" required>
-                    <option value="">Pilih Role</option>
-                    <option value="admin">Admin</option>
-                    <option value="user">User</option>
+            <div class="inputbox" hidden>
+                <select class="form-control" name="role" required>
+                    <option value="user" selected>User</option>
                 </select>
-                @error('role')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
             </div>
+
 
 
             <button type="submit">Register</button>
             <div class="register">
-                <p>Already have an account? <a href="{{ route('signin') }}">Log in</a></p>
+                <p>Already have an account? <a href="{{ route('signin') }}" class="text-white">Log in</a></p>
             </div>
         </form>
 

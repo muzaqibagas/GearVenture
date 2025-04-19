@@ -9,15 +9,15 @@ use App\Models\User;
 
 class GearVentureController extends Controller
 {
+    public function tes()
+    {
+        return view('tes');
+    }
+
     // REGISTER
     public function form()
     {
         return view('signup');
-    }
-
-    public function tes()
-    {
-        return view('tes');
     }
 
     public function simpan(Request $req)
@@ -26,28 +26,33 @@ class GearVentureController extends Controller
             'nama' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username',
             'email' => 'required|email|max:100|unique:users,email',
-            'password' => 'required|string|min:8|max:255',    
+            'password' => 'required|string|min:8|max:255',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'role' => 'required|in:admin,user',
+            'role' => 'required|in:user',
         ]);
 
         $user = User::create([
             'nama' => $req->nama,
             'username' => $req->username,
             'email' => $req->email,
-            'password' => Hash::make($req->password), 
+            'password' => Hash::make($req->password),
             'jenis_kelamin' => $req->jenis_kelamin,
-            'role' => $req->role
+            'role' => 'user'
         ]);
 
+        // Kirim link verifikasi email
+        $user->sendEmailVerificationNotification();
+
+        // Login dulu supaya bisa ke halaman verifikasi
         Auth::login($user);
-    
-        if ($user->role === 'admin') {
-            return redirect()->route('dashboard')->with('pesan', 'Registrasi berhasil, selamat datang Admin!');
-        } else {
-            return redirect()->route('index')->with('pesan', 'Registrasi berhasil, selamat datang User!');
-        }
+
+        // Kirim email verifikasi
+        $user->sendEmailVerificationNotification();
+
+        return redirect()->route('verification.notice');
+
     }
+
 
     // LOGIN
     public function masuk()

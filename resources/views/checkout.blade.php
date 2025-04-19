@@ -59,7 +59,7 @@
                     <tr>
                     <td class="text-start">
                         <div class="d-flex align-items-center">
-                        <img src="{{ asset('img/banner-02.jpg') }}" class="me-3" width="70" height="70" alt="Produk 1">
+                        <img src="{{ asset('img/banner-02.jpg') }}" class="me-3 rounded-3" width="70" height="70" alt="Produk 1">
                         <span>Kursi santai piknik outdoor</span>
                         </div>
                     </td>
@@ -71,7 +71,7 @@
                     <tr>
                     <td class="text-start">
                         <div class="d-flex align-items-center">
-                        <img src="{{ asset('img/banner-02.jpg') }}" class="me-3" width="70" height="70" alt="Produk 2">
+                        <img src="{{ asset('img/banner-02.jpg') }}" class="me-3 rounded-3" width="70" height="70" alt="Produk 2">
                         <span>1 set Kursi santai piknik outdoor 4P</span>
                         </div>
                     </td>

@@ -72,8 +72,7 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- Footer -->
+        
         <div class="d-flex justify-content-between align-items-center p-3 border-top bg-white">
             <div>
                 <input type="checkbox" id="semua-produk">
