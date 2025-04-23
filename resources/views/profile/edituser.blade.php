@@ -107,37 +107,44 @@
 
                             <!-- Informasi Profil -->
                             <div class="col-md-9">                            
-                                <div class="row">
-                                    <div class="col-5 fw-bold border rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Username</div>
-                                    <div class="col-7 border rounded w-50 d-flex justify-content-between align-items-center">MuzaqiBagas
-                                        <i class="pen1 fa6-solid--pen"></i>
+                                <div class="row gap-2">
+                                    <div class="d-flex w-100"> 
+                                        <div class="col-5 fw-bold border rounded d-flex border-0" style="color:#abc337; height:30px">Username</div>: 
+                                        <div class="col-7 border rounded px-2 ms-1 d-flex justify-content-between align-items-center">MuzaqiBagas
+                                            <i class="pen1 fa6-solid--pen"></i>
+                                        </div>
                                     </div>
-
-                                    <div class="col-5 mt-2 fw-bold border rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Nama</div>
-                                    <div class="col-7 mt-2 border rounded w-50 d-flex justify-content-between align-items-center">Muzaqi Rangkuti Bagas
-                                        <i class="pen1 fa6-solid--pen"></i>
+                                    <div class="d-flex w-100">
+                                        <div class="col-5 fw-bold border rounded d-flex border-0" style="color:#abc337; height:30px">Nama</div>:
+                                        <div class="col-7 border rounded px-2 ms-1 d-flex justify-content-between align-items-center">Anggito Rangkuti Bagas Muzaqi
+                                            <i class="pen1 fa6-solid--pen"></i>
+                                        </div>
                                     </div>
-
-                                    <div class="col-5 mt-2 fw-bold border rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Email</div>
-                                    <div class="col-7 mt-2 border rounded w-50 d-flex justify-content-between align-items-center">Muzaqibagas@anjay.com
-                                        <i class="pen1 fa6-solid--pen"></i>
+                                    <div class="d-flex w-100">
+                                        <div class="col-5 fw-bold border rounded d-flex border-0" style="color:#abc337; height:30px">Email</div>:
+                                        <div class="col-7 border rounded px-2 ms-1 d-flex justify-content-between align-items-center">Muzaqibagas@anjay.com
+                                            <i class="pen1 fa6-solid--pen"></i>
+                                        </div>
                                     </div>
-
-                                    <div class="col-5 mt-2 fw-bold border rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">No. Telepon</div>
-                                    <div class="col-7 mt-2 border rounded w-50 d-flex justify-content-between align-items-center">08567926382
-                                        <i class="pen1 fa6-solid--pen"></i>
+                                    <div class="d-flex w-100">
+                                        <div class="col-5 fw-bold border rounded d-flex border-0" style="color:#abc337; height:30px">No. Telepon</div>:
+                                        <div class="col-7 border rounded px-2 ms-1 d-flex justify-content-between align-items-center">08567926382
+                                            <i class="pen1 fa6-solid--pen"></i>
+                                        </div>
                                     </div>
+                                    <div class="d-flex w-100">
+                                        <div class="col-5 fw-bold border rounded d-flex border-0" style="color:#abc337; height:30px">Jenis Kelamin</div>:
+                                        <div class="col-7 border rounded px-2 ms-1 d-flex justify-content-between align-items-center">
+                                            <label class="text-muted fs-6 fw-normal">
+                                                <input type="radio" name="gender" value="Laki-laki" checked> Laki-laki
+                                            </label>
 
-                                    <div class="col-5 mt-2 fw-bold border rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Jenis Kelamin</div>
-                                    <div class="col-7 mt-2 border rounded w-50 d-flex justify-content-between align-items-center">
-                                        <label class="text-muted fs-6 fw-normal">
-                                            <input type="radio" name="gender" value="Laki-laki" checked> Laki-laki
-                                        </label>
-
-                                        <label class="text-muted fs-6 fw-normal">
-                                            <input type="radio" name="gender" value="Perempuan"> Perempuan
-                                        </label>
+                                            <label class="text-muted fs-6 fw-normal">
+                                                <input type="radio" name="gender" value="Perempuan"> Perempuan
+                                            </label>
+                                        </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
