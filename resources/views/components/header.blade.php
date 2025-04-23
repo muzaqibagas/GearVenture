@@ -29,7 +29,7 @@
 
         <!-- Icons -->
         <div>
-            <a href="#" class="cart-header text-white me-3"><i class='bx bx-cart fs-4'></i></a>
+            <a href="{{ route ('keranjang')}}" class="cart-header text-white me-3"><i class='bx bx-cart fs-4'></i></a>
             <a href="{{ route ('profileuser')}}" class="profile-header text-white"><i class='bx bx-user-circle fs-4'></i></a>
         </div>
     </div>

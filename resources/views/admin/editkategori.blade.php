@@ -147,9 +147,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Manajemen Barang</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Kategori</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Tambah Barang</h6>
+          <h6 class="font-weight-bolder mb-0">Kategori</h6>
         </nav>  
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">          
@@ -172,49 +172,39 @@
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">          
-          <h5 class="card bg-white p-3"><strong>Tambah Data Product</strong></h5>
-          <div class="card mb-4 mt-3">                         
-            <form class="text-xxs p-4" action="{{ route('storebarang') }}" method="POST" enctype="multipart/form-data">
-              @csrf
-              <div class="row">
-                  <div class="col-md-6">
-                      <div class="mb-1">
-                          <label class="form-label">Nama Produk</label>
-                          <input type="text" name="nama" class="form-control" value="Nama produk">
-                      </div>
-                      <div class="mb-1">
-                          <label class="form-label">Kategori</label>
-                          <select class="form-select" name="kategori_id">
-                              <option selected disabled>Pilih Kategori</option>
-                              <option value="1">Tenda dome</option>
-                              <option value="2">Tenda tunel</option>
-                          </select>
-                      </div>
-                      <div class="mb-1">
-                          <label class="form-label">Harga</label>
-                          <input type="text" name="harga_sewa" class="form-control" value="0">
-                      </div>                          
-                      <label class="form-label">Stok</label>
-                      <div class="d-flex stock-container gap-3">
-                          <input type="number" id="stockInput" name="stok" class="form-control" value="0" min="0">
-                      </div>                        
-                      <div class="mb-3">
-                          <label class="form-label">Keterangan</label>
-                          <textarea class="form-control" name="deskripsi" rows="3">Deskripsi Produk .................................</textarea>
-                      </div>
-                  </div>
-                  <div class="col-md-6 text-center">
-                      <label class="form-label">Gambar</label>
-                      <input type="file" name="foto" class="form-control mb-3">
-                      <img src="#" alt="" class="img-fluid border rounded" style="max-height: 200px;">
-                      <div class="text-end d-flex justify-content-center gap-3">
-                          <a href="#" class="btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
-                          <button type="submit" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</button>
-                      </div>
-                  </div>
-              </div>                  
-            </form>         
-          </div>
+            <h5 class="card bg-white p-3"><strong>Edit Kategori</strong></h5>
+            <div class="card mb-4 mt-3">    
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <strong>Oops! Validasi gagal:</strong>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif                                   
+                <form class="text-xxs p-4" action="{{ route('updatekategori', $data->id_kategori) }}" method="POST" enctype="multipart/form-data">                
+                    @csrf
+                    <div class="row">
+                        <div class="w-100">
+                            <div class="mb-1">
+                                <label class="form-label">Nama Produk</label>
+                                <input type="text" name="nama" class="form-control" value="{{ $data->nama }}">
+                            </div> 
+                        </div>                     
+                        <div class="col-md-6">
+                        <!-- kosong -->
+                        </div>
+                        <div class="col-md-6 text-center">                      
+                            <div class="text-end d-flex justify-content-end gap-3 me-3">
+                            <a href="#" class="btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
+                            <button type="submit" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</button>
+                            </div>
+                        </div> 
+                    </div>                  
+                </form>         
+            </div>
         </div>
       </div>      
     </div>
@@ -222,6 +212,7 @@
   <!--   Core JS Files   -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scrollbar/8.6.3/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

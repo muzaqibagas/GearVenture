@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\KategoriProduk;
+use App\Models\Barang;
 use App\Models\User;
 
 class GearVentureController extends Controller
@@ -179,26 +181,135 @@ class GearVentureController extends Controller
         ]);
     }    
 
-    // ADMIN
+// ADMIN
     public function dashboard(){
         return view('admin.dashboard');
     }
 
-
-
+    //BARANG
     public function barang(){
-        return view('admin.barang');
+        $data = Barang::all();
+        return view('admin.barang', compact('data'));
     }
 
+    //FORM TAMBAH
     public function tambahbarang(){
-        return view('admin.tambahbarang');
+        return view('admin.tambahbarang'); 
     }
 
-    public function editbarang(){
-        return view('admin.editbarang');
+    //CREATE BARANG
+    public function store(Request $request) 
+    {        
+        $hargaBersih = str_replace(['Rp', ' ', '.'], '', $request->harga_sewa);
+        $data = new Barang();
+        $data->nama = $request->nama;
+        $data->kategori_id = $request->kategori_id;
+        $data->harga_sewa = $hargaBersih;
+        $data->stok = $request->stok;
+        $data->deskripsi = $request->deskripsi;
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $namaFile = $file->getClientOriginalName();
+            $file->move('pict/', $namaFile);
+            $data->foto = $namaFile; 
+        }
+        $data->save();
+        return redirect()->route('barang')->with('sukses', 'Barang Berhasil Ditambahkan');
+    }
+    
+    //FORM EDIT BARANG
+    public function editbarang($id)
+    {
+        $data = Barang::with('kategori')->find($id); 
+        $kategori = KategoriProduk::all();           
+        return view('admin.editbarang', compact('data', 'kategori'));
+    }
+
+    //UPDATE BARANG
+    public function updatebarang(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'stok' => 'required|integer|min:0',
+            'harga_sewa' => 'required|numeric|min:0',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'kategori_id' => 'required|exists:kategori_produk,id', 
+        ]);
+        
+        $data = Barang::findOrFail($id);
+        $data->nama = $request->nama;
+        $data->deskripsi = $request->deskripsi;
+        $data->stok = $request->stok;
+        $data->harga_sewa = $request->harga_sewa;
+        $data->kategori_id = $request->kategori_id;
+               
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $namaFile = $file->getClientOriginalName();
+            $file->move('pict/', $namaFile);
+            $data->foto = $namaFile;
+        } else {        
+            $data->foto = $data->foto;
+        }        
+        $data->save();        
+        return redirect()->route('barang')->with('Sukses', 'Barang berhasil diperbarui');
+    }
+
+    //DELETE BARANG
+    public function deletebarang($id){
+        $data = Barang::find($id);
+        $data->delete();
+        return redirect()->route('barang')->with('Sukses','Barang Berhasil Dihapus');
     }
 
 
+    //KATEGORI
+    public function kategori(){
+        $data = KategoriProduk::all();
+        return view('admin.kategori', compact('data'));
+    }
+
+    //FORM TAMBAH KATEGORI
+    public function tambahkategori(){
+        return view('admin.tambahkategori');
+    }
+
+    //CREATE KATEGORI
+    public function storekategori(Request $request)
+    {
+        $data = new KategoriProduk();
+        $data->nama = $request->nama;
+
+        $data->save();
+        return redirect()->route('kategori')->with('sukses', 'Kategori Berhasil Ditambahkan');        
+    }
+
+    //FORM EDIT KATEGORI
+    public function editkategori($id)
+    {                    
+        $data = KategoriProduk::find($id);           
+        return view('admin.editkategori', compact('data'));
+    }    
+
+    public function updatekategori(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',            
+        ]);
+        
+        $data = KategoriProduk::findOrFail($id);
+        $data->nama = $request->nama;
+                
+        $data->save();        
+        return redirect()->route('kategori')->with('Sukses', 'Kategori berhasil diperbarui');
+    }
+    
+    public function deletekategori($id){
+        $data = KategoriProduk::find($id);
+        $data->delete();
+        return redirect()->route('kategori')->with('Sukses','Kategori Berhasil Dihapus');
+    }
 
     public function laporan(){
         return view('admin.laporan');
@@ -208,9 +319,21 @@ class GearVentureController extends Controller
         return view('admin.status');
     }
 
-    public function pengaturan(){
-        return view('admin.pengaturan');
+    public function konten(){
+        return view('admin.konten');
     }
+
+    public function katalog(){
+        return view('admin.katalog');
+    }
+
+    public function events(){
+        return view('admin.event');
+    }
+
+    // public function pengaturan(){
+    //     return view('admin.pengaturan');
+    // }
 
 
 

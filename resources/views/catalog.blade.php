@@ -53,28 +53,7 @@
                 </div>
             </div>
             
-            <div class="row g-3">
-                <!-- <div class="col-md-6">
-                    <div class="card flex-row align-items-center px-3 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="fw-bold">Fireplace starterkit mini</h5>
-                            <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>                            
-                            <a href="detail" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
-                        </div>
-                        <img src="img/banner-01.jpg" class="img-fluid rounded" style="width: 120px; height: 120px;" alt="Fireplace starterkit mini">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card flex-row align-items-center px-3 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="fw-bold">Fireplace starterkit mini</h5>
-                            <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>                            
-                            <a href="#" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
-                        </div>                        
-                        <img src="img/banner-01.jpg" class="img-fluid rounded" style="width: 120px; height: 120px;" alt="Fireplace starterkit mini">
-                    </div>
-                </div> -->
-
+            <div class="row g-3">                
                 <div class="col-md-4 p-1">
                     <div class="card">
                         <img src="img/banner-01.jpg" class="card-img-top" alt="Fireplace starterkit mini">
