@@ -96,13 +96,17 @@ class GearVentureController extends Controller
         ]);
     }
     public function catalog(){
+        $data = Barang::all();
         return view('catalog', [
-            'type_menu'=> 'catalog'
-        ]);
+            'type_menu'=> 'catalog', 
+            'data' => $data
+        ]);                
     }
-    public function detail(){
+    public function detail($id){
+        $data = Barang::findOrFail($id);
         return view('detail', [
-            'type_menu'=> 'detail'
+            'type_menu'=> 'detail',
+            'data' => $data
         ]);
     }
     public function event(){

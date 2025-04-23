@@ -51,100 +51,21 @@
                     <button class="btn btn-light">3</button>
                     <button class="btn btn-light">...</button>
                 </div>
-            </div>
-            
+            </div>            
             <div class="row g-3">                
+            @foreach ($data as $dabar)  
                 <div class="col-md-4 p-1">
                     <div class="card">
-                        <img src="img/banner-01.jpg" class="card-img-top" alt="Fireplace starterkit mini">
+                        <img src="{{ asset('pict/'.$dabar->foto)}}" class="card-img-top" alt="Fireplace starterkit mini">
                         <div class="card-body my-0 mx-1">
-                            <p class="fw-bold m-0">Fireplace starterkit mini</p>
-                            <p class="fw-bold" style="color:#c3d234">Rp95.000</p>
-                            <a href="detail" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
+                            <p class="fw-bold m-0">{{$dabar->nama}}</p>
+                            <p class="fw-bold" style="color:#c3d234">Rp {{$dabar->harga_sewa}}</p>
+                            <a href="{{ route('detail', $dabar->id_produk) }}" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 p-1">
-                    <div class="card">
-                        <img src="img/banner-01.jpg" class="card-img-top" alt="Barbeque Portable mini">
-                        <div class="card-body my-0 mx-1">
-                            <p class="fw-bold m-0">Barbeque Portable mini</p>
-                            <p class="fw-bold" style="color:#c3d234">Rp55.000</p>
-                            <a href="detail" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 p-1">
-                    <div class="card">
-                        <img src="img/banner-01.jpg" class="card-img-top" alt="AstaGear Camping Tent">
-                        <div class="card-body my-0 mx-1">
-                            <p class="fw-bold m-0">AstaGear Camping Tent</p>
-                            <p class="fw-bold" style="color:#c3d234">Rp135.000</p>
-                            <a href="detail" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 p-1">
-                    <div class="card">
-                        <img src="img/banner-01.jpg" class="card-img-top" alt="Kalibre Tenda">
-                        <div class="card-body my-0 mx-1">
-                            <p class="fw-bold m-0">Kalibre Tenda</p>
-                            <p class="fw-bold" style="color:#c3d234">Rp115.000</p>
-                            <a href="detail" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 p-1">
-                    <div class="card">
-                        <img src="img/banner-01.jpg" class="card-img-top" alt="AVTECH - Flysheet 2x3 Meter">
-                        <div class="card-body my-0 mx-1">
-                            <p class="fw-bold m-0">AVTECH - Flysheet 2x3 Meter</p>
-                            <p class="fw-bold" style="color:#c3d234">Rp75.000</p>
-                            <a href="detail" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 p-1">
-                    <div class="card">
-                        <img src="img/banner-01.jpg" class="card-img-top" alt="Portable Triangle Hammock">
-                        <div class="card-body my-0 mx-1">
-                            <p class="fw-bold m-0">Portable Triangle Hammock</p>
-                            <p class="fw-bold" style="color:#c3d234">Rp55.000</p>
-                            <a href="detail" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 p-1">
-                    <div class="card">
-                        <img src="img/banner-01.jpg" class="card-img-top" alt="Kalibre Tenda">
-                        <div class="card-body my-0 mx-1">
-                            <p class="fw-bold m-0">Kalibre Tenda</p>
-                            <p class="fw-bold" style="color:#c3d234">Rp115.000</p>
-                            <a href="detail" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 p-1">
-                    <div class="card">
-                        <img src="img/banner-01.jpg" class="card-img-top" alt="AVTECH - Flysheet 2x3 Meter">
-                        <div class="card-body my-0 mx-1">
-                            <p class="fw-bold m-0">AVTECH - Flysheet 2x3 Meter</p>
-                            <p class="fw-bold" style="color:#c3d234">Rp75.000</p>
-                            <a href="detail" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 p-1">
-                    <div class="card">
-                        <img src="img/banner-01.jpg" class="card-img-top" alt="Portable Triangle Hammock">
-                        <div class="card-body my-0 mx-1">
-                            <p class="fw-bold m-0">Portable Triangle Hammock</p>
-                            <p class="fw-bold" style="color:#c3d234">Rp55.000</p>
-                            <a href="detail" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </div>                
+            @endforeach 
+            </div>            
         </div>
 
         <!-- Sidebar -->
@@ -152,24 +73,11 @@
             <div class="sidebar p-3 pt-0 shadow-sm bg-white rounded">
                 <h5 class="fw-bold">KATEGORI PRODUK</h5>
                 <div class="kategori d-grid gap-2">
+                @foreach ($data as $dabar)  
                     <div class="card px-3 py-2 fw-bold" style="border: 1px solid #383d1f;">
-                        <span>Sleeping Gear</span>
-                    </div>
-                    <div class="card px-3 py-2 fw-bold" style="border: 1px solid #383d1f;">
-                        <span>Tenda & Shelter</span>
-                    </div>
-                    <div class="card px-3 py-2 fw-bold" style="border: 1px solid #383d1f;">
-                        <span>Masak & Makan</span>
-                    </div>
-                    <div class="card px-3 py-2 fw-bold" style="border: 1px solid #383d1f;">
-                        <span>Keamanan & Survival</span>
-                    </div>
-                    <div class="card px-3 py-2 fw-bold" style="border: 1px solid #383d1f;">
-                        <span>Aksesoris & Peralatan Tambahan</span>
-                    </div>
-                    <div class="card px-3 py-2 fw-bold" style="border: 1px solid #383d1f;">
-                        <span>Peralatan Hiking & Trekking</span>
-                    </div>
+                        <span>{{ $dabar->kategori->nama ?? 'Tidak ada kategori' }}</span>
+                    </div>                    
+                @endforeach 
                 </div>            
 
                 <h5 class="fw-bold mt-5">PRODUK DISKON</h5>

@@ -6,6 +6,10 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\GearVentureController;
 use Illuminate\Support\Facades\Mail;
 
+
+//Get untuk mengambil
+//Post untuk mengirim
+//Delete
 // Route untuk halaman verifikasi notifikasi
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
@@ -49,7 +53,8 @@ Route::post('/signup', [GearVentureController::class, 'simpan'])->name('signup')
 Route::get('/index', [GearVentureController::class, 'index'])->name('index');
 Route::get('/tes', [GearVentureController::class, 'tes'])->name('tes');
 Route::get('/catalog', [GearVentureController::class, 'catalog'])->name('catalog');
-Route::get('/detail', [GearVentureController::class, 'detail'])->name('detail');
+Route::get('/detail/{id}', [GearVentureController::class, 'detail'])->name('detail');
+
 Route::get('/event', [GearVentureController::class, 'event'])->name('event');
 Route::get('/detailevent', [GearVentureController::class, 'detailevent'])->name('detailevent');
 Route::get('/about', [GearVentureController::class, 'about'])->name('about');

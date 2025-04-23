@@ -12,7 +12,7 @@
     <a href="#" class="text-dark rounded-pill">&larr; Kembali</a>
     <div class="row mt-3 d-flex justify-content-center gap-3">
         <div class="col-lg-4">
-            <img src="{{ asset('img/banner-02.jpg') }}" class="rounded" style="width:100%; height:400px" alt="Tenda Camping">
+            <img src="{{ asset('pict/'.$data->foto)}}" class="rounded" style="width:100%; height:400px" alt="Tenda Camping">
             <div class="mt-3 d-flex thumbnail-container gap-3">
                 <img src="{{ asset('img/banner-02.jpg') }}" class="rounded" style="width:80px; height:80px" alt="Thumbnail">                
                 <img src="{{ asset('img/banner-02.jpg') }}" class="rounded" style="width:80px; height:80px" alt="Thumbnail">                
@@ -50,14 +50,13 @@
                     <p class="mb-0 fw-bold" style="color:#c3d234">Rp125.000</p>
                 </div>
             </div>
-        </div>
-
+        </div>    
         <div class="col-lg-4 product-container">
-            <h3>Tenda Camping LWY Compass</h3>
-            <p class="price" style="color:#929c3b">Rp130.000</p>
-            <p><strong>Kategori:</strong> Tenda</p>
+            <h3>{{$data->nama}}</h3>
+            <p class="price" style="color:#929c3b">Rp {{$data->harga_sewa}}</p>
+            <p><strong>Kategori:</strong> {{ $data->kategori->nama ?? 'Tidak ada kategori' }}</p>
             <p class="border-2 border-bottom border-dark pb-1 mb-2"><strong>Ketersediaan:</strong> <span class="fw-bold" style="color:#c3d234">Tersedia</span></p>            
-            <p class="text-justify">Tenda dome berkapasitas 4 orang dengan material waterproof dan ventilasi optimal. Dilengkapi dengan rangka kuat, mudah dipasang, serta cocok untuk camping di berbagai kondisi cuaca. Ideal untuk keluarga atau grup kecil yang ingin pengalaman outdoor nyaman dan aman.</p>
+            <p class="text-justify">{{$data->deskripsi}}</p>
             <div class="d-flex justify-content-between">
                 <p class="border-2 border-bottom border-dark border-top"><strong>Jam diambil:</strong> 09.00 WIB</p>
                 <p class="border-2 border-bottom border-dark border-top"><strong>Jam kembali:</strong> 18.00 WIB</p>

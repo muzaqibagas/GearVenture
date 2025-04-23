@@ -24,5 +24,5 @@ class KategoriProduk extends Model
     ];
 
     // Jika ingin timestamps otomatis
-    public $timestamps = true;
+    public $timestamps = false;
 }
