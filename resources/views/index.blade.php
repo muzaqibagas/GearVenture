@@ -3,6 +3,8 @@
 @section('title', 'Home')
 
 @push('style')
+
+<link rel="stylesheet" href="{{ asset('template/assets/css/index-responsive.css') }}">
 @endpush
 @section('main')
 

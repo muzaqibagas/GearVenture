@@ -345,6 +345,46 @@ header li a {
 .promo-button:hover {
     background-color: #4C7B2C;
 }
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .promo-container {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .promo-card {
+    }
+
+    .promo-text {
+        padding-right: 0;
+    }
+
+    .promo-image {
+        width: 100%;
+        height: auto;
+        max-width: 350px;
+    }
+
+    .promo-button {
+        font-size: 12px;
+        padding: 10px 20px;
+    }
+
+    .promo-text h3 {
+        font-size: 16px;
+    }
+
+    .promo-text p {
+        font-size: 12px;
+    }
+
+    .promo-text .discount {
+        font-size: 18px;
+    }
+}
+
+
 /* PROMO END */
 
 /* CATALOG POPULAT */
@@ -397,6 +437,15 @@ header li a {
 
 .rating span {
     color: var(--grey-color);
+}
+
+@media (max-width: 1200px) {
+    .catalog-container {
+        justify-content: center;
+    }
+    .catalog-card {
+        height: auto;
+    }
 }
 /* CATALOG POPULAT END */
 
@@ -659,3 +708,8 @@ footer {
 }
 
 /* FOOTER END */
+
+.event .text-center img{
+    width: 400px !important;
+    width: 350px !important;
+}

@@ -12,7 +12,7 @@
         <h1>Jelajahi! Destinasi Petualangan Terbaik</br>Anda Bersama Kami</h1>
     </div>
     <div class="container mt-3">
-        <div class="row g-3 justify-content-center">            
+        <div class="event row g-3 justify-content-center">            
             <div class="col-md-4 d-flex justify-content-center">
                 <div class="text-center">
                     <img src="img/banner-01.jpg" class="rounded" style="width:300px; height:300px" alt="Fireplace starterkit mini">
