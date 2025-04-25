@@ -2604,7 +2604,7 @@ progress {
 .table th:nth-child(4), .table td:nth-child(4) { width: 10%; } /* Kategori */
 .table th:nth-child(5), .table td:nth-child(5) { width: 10%; } /* Harga */
 .table th:nth-child(6), .table td:nth-child(6) { width: 10%; } /* Stok */
-.table th:nth-child(7), .table td:nth-child(7) { width: 10%; } /* Keterangan */
+.table th:nth-child(7), .table td:nth-child(7) { width: 20%; } /* Keterangan */
 .table th:nth-child(8), .table td:nth-child(8) { width: 10%; } /* action */
 
 th, td {

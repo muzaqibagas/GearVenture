@@ -25,29 +25,26 @@
         <section class="promo px-4 mt-5">
             <h2>Promo Item</h2>
             <div class="promo-container">
+            @foreach ($dakon as $dabar)   
                 <div class="promo-card ps-5 pe-4">
                     <div class="promo-text">
-                        <div class="discount mb-2">Up to 25%</div>
+                        <div class="discount mb-2">Up to {{ $dabar->konten->diskon ?? 'Tidak ada diskon' }}%</div>
                         <div class="description mb-3">
-                            <h3>Chestnut Dome Tent</h3>
-                            <p>Tenda 4P + Matras + Sleeping Bag</p>
-                        </div>
-                        <a href="#" class="promo-button px-4">Lihat Selengkapnya</a>
-                    </div>
-                    <img src="{{ asset('img/banner-04.jpg') }}" alt="Tenda" class="promo-image">
-                </div>
+                            <h3>{{$dabar->nama}}</h3>                            
+                            <p class="text-xs font-weight-bold mb-0">Rp 
+                                @php
+                                    // Ambil harga sewa dan diskon
+                                    $hargaDiskon = $dabar->harga_sewa * (100 - ($dabar->konten->diskon ?? 0)) / 100;
+                                @endphp
+                                {{ number_format($hargaDiskon, 0, ',', '.') }} <!-- format harga untuk pemisah ribuan -->
+                            </p>
 
-                <div class="promo-card  ps-5 pe-4">
-                    <div class="promo-text">
-                        <div class="discount">Up to 55%</div>
-                        <div class="description mb-3">
-                            <h3>Sundown Shelter</h3>
-                            <p>Tenda 2P + Matras + Set Kursi Piknik</p>
                         </div>
                         <a href="#" class="promo-button px-4">Lihat Selengkapnya</a>
                     </div>
-                    <img src="{{ asset('img/banner-04.jpg') }}" alt="Shelter" class="promo-image">
+                    <img src="{{ asset('pict/'.$dabar->foto)}}" alt="Tenda" class="promo-image">
                 </div>
+            @endforeach                      
             </div>         
         </section>
 

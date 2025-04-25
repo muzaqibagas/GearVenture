@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\KategoriProduk;
+use App\Models\Konten;
 use App\Models\Barang;
 use App\Models\User;
 
@@ -91,10 +92,17 @@ class GearVentureController extends Controller
 
     // PENYEWA
     public function index(){
+        $dakon = Barang::with('konten')
+            ->whereHas('konten', function($q){
+                $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
+            })->get();
+    
         return view('index', [
-            'type_menu'=> 'index'
+            'type_menu' => 'index',
+            'dakon' => $dakon
         ]);
     }
+    
     public function catalog(){
         $data = Barang::with('kategori')->get();
         $kategori = $data->pluck('kategori')->unique('nama');
@@ -302,8 +310,7 @@ class GearVentureController extends Controller
     }
 
     //CREATE KATEGORI
-    public function storekategori(Request $request)
-    {
+    public function storekategori(Request $request){
         $data = new KategoriProduk();
         $data->nama = $request->nama;
 
@@ -349,18 +356,63 @@ class GearVentureController extends Controller
 
     //KONTEN
     public function konten(){
-        $data = 
-        return view('admin.konten');
-    }
+        $dakon = Barang::with('konten')->whereHas('konten', function($q){
+            $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
+        })->get();
+    
+        return view('admin.konten', compact('dakon'));
+    }    
 
     //FORM TAMBAH KONTEN
-    public function tambahkonten(){
-        return view('admin.tambahkonten');
+    public function tambahkonten(){   
+        $dakon = Barang::all();     
+        return view('admin.tambahkonten', compact('dakon'));
     }
 
+    //CREATE KONTEN
+    public function storekonten(Request $request){
+        $dakon = new Konten();
+        $dakon->produk_id = $request->produk_id;
+        $dakon->diskon = $request->diskon;
+    
+        $dakon->save();
+    
+        return redirect()->route('konten')->with('sukses', 'Konten Berhasil Ditambahkan');
+    }
+    
+
     //FORM EDIT KONTEN
-    public function editkonten(){
-        return view('admin.editkonten');
+    public function editkonten($id){
+        $dakon = Konten::find($id);
+        return view('admin.editkonten', compact('data'));        
+    }
+
+    //UPDATE KONTEN
+    public function updatekonten(Request $request, $id)
+    {        
+        $request->validate([
+            'diskon' => 'required|integer|min:0|max:100', 
+        ]);        
+        $dakon = Konten::findOrFail($id);        
+        $dakon->diskon = $request->diskon;
+        if (!$konten) {
+            return response()->json(['message' => 'Konten tidak ditemukan'], 404);
+        }                
+
+        $dakon->save();
+
+        return response()->json([
+            'message' => 'Konten berhasil diupdate',
+            'data' => $konten,
+        ], 200);
+        return redirect()->route('konten')->with('Sukses', 'konten berhasil diperbarui');
+    }
+
+    //DELETE KONTEN
+    public function deletekonten($id){
+        $dakon = Konten::find($id);  
+        $dakon->delete();
+        return redirect()->route('konten')->with('Sukses','konten Berhasil Dihapus');    
     }
 
     //KATALOG POPULER

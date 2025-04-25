@@ -203,6 +203,11 @@
           <div class="card mb-4">                  
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
+              @if ($message = Session::get('success')) 
+                  <div class="alert alert-success" role="alert">
+                      {{ $message }}
+                  </div>
+              @endif 
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
@@ -217,27 +222,32 @@
                     </tr>
                   </thead>
                   <tbody>
+                  @php
+                      $no = 1;
+                  @endphp
+                  @foreach ($dakon as $dabar)   
                     <tr>
                       <td>
-                        <p class="ps-3">1</p>
+                        <p class="ps-3">{{ $no++ }}</p>
+                      </td>
+                      <td>                        
+                        <img src="{{ asset('pict/'.$dabar->foto)}}" class="rounded" style="height:100px; width:100px" alt="user1">
                       </td>
                       <td>
-                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                        <p class="text-xs font-weight-bold mb-0">{{$dabar->nama}}</p>                        
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Chesnut Dome Tent</p>                        
+                        <p class="text-xs font-weight-bold mb-0">Up to {{ $dabar->konten->diskon ?? 'Tidak ada diskon' }}%</p>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Up to 25%</p>
-                      </td>
-                      <td>
-                      <p class="text-xs font-weight-bold mb-0">Tenda 4P + Matras + Sleeping Bag</p>
+                      <p class="text-xs font-weight-bold mb-0">{{$dabar->deskripsi}}</p>
                       </td>                
                       <td class="tombol align-middle d-flex flex-column gap-1">                                                
                         <a href="editkonten" class="btn text-center text-white btn-sm w-100 btn-warning rounded mb-0">Edit</a>
-                        <a href="" class="btn text-center text-white btn-sm w-100 btn-danger rounded mb-0">Hapus</a>                        
+                        <a href="{{ route('deletekonten', $dabar->id) }}" class="btn text-center text-white btn-sm w-100 btn-danger rounded mb-0">Hapus</a>                        
                       </td>
-                    </tr>                
+                    </tr>  
+                  @endforeach              
                   </tbody>
                 </table>
               </div>

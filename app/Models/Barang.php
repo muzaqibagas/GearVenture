@@ -38,4 +38,10 @@ class Barang extends Model
     {
         return $this->belongsTo(KategoriProduk::class, 'kategori_id', 'id');
     }
+
+    public function konten()
+    {
+        return $this->hasOne(Konten::class, 'produk_id');
+    }
+
 }

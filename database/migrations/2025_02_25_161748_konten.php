@@ -6,21 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
         Schema::create('konten', function (Blueprint $table) {
-            $table->id('id');
-            $table->unsignedBigInteger('admin_id');
-            $table->string('judul');
-            $table->text('deskripsi');
-            $table->date('tanggal');
-            $table->string('tipe');
-            $table->timestamps();
+            $table->id();
+            $table->unsignedBigInteger('produk_id');
+            $table->integer('diskon');            
+
+            // Foreign key constraint ke tabel produk
+            $table->foreign('produk_id')->references('id')->on('produk')->onDelete('cascade');            
         });
     }
+
     public function down()
     {
         Schema::dropIfExists('konten');

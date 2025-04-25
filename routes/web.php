@@ -96,9 +96,16 @@ Route::get('/admin/kategori/{id}', [GearVentureController::class, 'deletekategor
 Route::get('/admin/laporan', [GearVentureController::class, 'laporan'])->name('laporan');
 Route::get('/admin/status', [GearVentureController::class, 'status'])->name('status');
 
+Route::get('/api/produk/{id}', function($id) {
+    return App\Models\Barang::findOrFail($id);
+});
+
 Route::get('/admin/konten', [GearVentureController::class, 'konten'])->name('konten');//semua konten ada dsini
 Route::get('/admin/tambahkonten', [GearVentureController::class, 'tambahkonten'])->name('tambahkonten');//form tambah konten
-Route::get('/admin/editkonten', [GearVentureController::class, 'editkonten'])->name('editkonten');// form edit konten
+Route::post('/admin/konten', [GearVentureController::class, 'storekonten'])->name('storekonten'); //create kategori
+Route::get('/admin/editkonten/{id}', [GearVentureController::class, 'editkonten'])->name('editkonten');// form edit konten
+Route::post('/admin/updatekonten/{id}', [GearVentureController::class, 'updatekonten'])->name('updatekonten'); //update kategori
+Route::get('/admin/konten/{id}', [GearVentureController::class, 'deletekonten'])->name('deletekonten'); //delete kategori
 
 Route::get('/admin/katalog', [GearVentureController::class, 'katalog'])->name('katalog');//semua katalog populer ada dsini
 Route::get('/admin/tambahkatalog', [GearVentureController::class, 'tambahkatalog'])->name('tambahkatalog');//form tambah katalog populer 

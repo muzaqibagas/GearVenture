@@ -89,7 +89,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link   active" href="pengaturan">
+          <a class="nav-link   active" href="{{ route('konten') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>box-3d-50</title>
@@ -173,33 +173,77 @@
         <div class="col-12">          
           <h5 class="card bg-white p-3"><strong>Tambah Konten</strong></h5>
           <div class="card mb-4 mt-3">                         
-              <form class="text-xxs p-4">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <div class="mb-1">
-                              <label class="form-label">Nama Produk</label>
-                              <input type="text" class="form-control" value="Nama Produk">
-                          </div>                          
-                          <div class="mb-1">
-                              <label class="form-label">Diskon</label>
-                              <input type="text" class="form-control" value="...">
-                          </div>                                                                     
-                          <div class="mb-3">
-                              <label class="form-label">Keterangan</label>
-                              <textarea class="form-control" rows="3">Deskripsi Produk .................................</textarea>
-                          </div>
+            <form class="text-xxs p-4" action="{{ route('storekonten') }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              <div class="row">
+                  <div class="col-md-6">
+                      <!-- Dropdown Produk -->
+                      <div class="mb-1">
+                          <label class="form-label">Nama Konten</label>
+                          <select id="produkSelect" name="produk_id" class="form-control">
+                              <option value="">Pilih Konten</option>
+                              @foreach ($dakon as $dabar)
+                                  <option value="{{ $dabar->id }}">{{ $dabar->nama }}</option>
+                              @endforeach
+                          </select>
                       </div>
-                      <div class="col-md-6 text-center">
-                          <label class="form-label">Gambar</label>
-                          <input type="file" class="form-control mb-3">
-                          <img src="#" alt="" class="img-fluid border rounded" style="max-height: 200px;">
-                          <div class="text-end d-flex justify-content-center gap-3">
-                            <a href="#" class=" btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
-                            <a href="#" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</a>
-                        </div>
+                      <!-- Input Diskon -->
+                      <div class="mb-1">
+                          <label class="form-label">Diskon</label>
+                          <input type="text" name="diskon" class="form-control" value="">
                       </div>
-                  </div>                  
-              </form>            
+
+                      <!-- Deskripsi Otomatis -->
+                      <div class="mb-3">
+                          <label class="form-label">Keterangan</label>
+                          <textarea class="form-control" name="deskripsi" id="deskripsi" rows="3"></textarea>
+                      </div>
+                  </div>
+
+                  <div class="col-md-6 text-center">
+                      <!-- Gambar Otomatis -->
+                      <label class="form-label">Gambar</label>
+                      <input type="file" class="form-control mb-3" name="gambar">
+                      <img src="#" alt="" class="img-fluid border rounded" id="gambarPreview" style="max-height: 200px;">
+                      
+                      <div class="text-end d-flex justify-content-center gap-3">
+                          <a href="#" class="btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
+                          <button type="submit" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</button>
+                      </div>
+                  </div>
+              </div>
+            </form>
+            @push('scripts')
+            
+            @endpush    
+            <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const produkSelect = document.getElementById('produkSelect');
+                const deskripsiField = document.getElementById('deskripsi');
+                const gambarPreview = document.getElementById('gambarPreview');
+
+                produkSelect.addEventListener('change', function () {
+                    const produkId = this.value;
+                    console.log("Produk ID dipilih:", produkId);
+
+                    if (produkId) {
+                        fetch(`/api/produk/${produkId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log("Data yang diterima:", data);
+                                deskripsiField.value = data.deskripsi || '';
+                                gambarPreview.src = '/pict/' + data.foto;
+                            })
+                            .catch(err => {
+                                console.error('Error ambil data produk:', err);
+                            });
+                    } else {
+                        deskripsiField.value = '';
+                        gambarPreview.src = '#';
+                    }
+                });
+            });
+            </script>   
           </div>
         </div>
       </div>      
