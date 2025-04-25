@@ -185,9 +185,11 @@
                       <div class="mb-1">
                           <label class="form-label">Kategori</label>
                           <select class="form-select" name="kategori_id">
-                              <option selected disabled>Pilih Kategori</option>
-                              <option value="1">Tenda dome</option>
-                              <option value="2">Tenda tunel</option>
+                            @foreach($kategori as $k)
+                                <option value="{{ $k->id}}">
+                                    {{ $k->nama }}
+                                </option>
+                            @endforeach
                           </select>
                       </div>
                       <div class="mb-1">

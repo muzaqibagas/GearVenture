@@ -238,8 +238,8 @@
                         <p class="text-xs font-weight-bold mb-0">{{$dabar->deskripsi}}</p>
                       </td>
                       <td class="text-center">                                                
-                        <a href="{{ route('editbarang', $dabar->id_produk) }}" class="fa6-solid--pen"></a>
-                        <a href="{{ route('deletebarang', $dabar->id_produk) }}" class="mdi--trash-can-empty"></a>                  
+                        <a href="{{ route('editbarang', $dabar->id) }}" class="fa6-solid--pen"></a>
+                        <a href="{{ route('deletebarang', $dabar->id) }}" class="mdi--trash-can-empty"></a>                  
                       </td>
                     </tr>  
                   @endforeach              

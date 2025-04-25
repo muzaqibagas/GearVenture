@@ -72,7 +72,7 @@
                 </div>
             </div>
             <label for="jumlah">Jumlah:</label>
-            <input type="number" id="jumlah" class="form-control mb-3" value="1">
+            <input type="number" id="jumlah" class="form-control mb-3" value="0">
             <h5>Layanan Tambahan</h5>            
             <div class="card p-3">
                 <div class="mb-3">

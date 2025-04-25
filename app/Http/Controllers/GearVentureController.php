@@ -96,12 +96,33 @@ class GearVentureController extends Controller
         ]);
     }
     public function catalog(){
-        $data = Barang::all();
+        $data = Barang::with('kategori')->get();
+        $kategori = $data->pluck('kategori')->unique('nama');
         return view('catalog', [
             'type_menu'=> 'catalog', 
-            'data' => $data
+            'data' => $data, 
+            'kategori' => $kategori
         ]);                
     }
+
+    public function filterByKategori($nama) {
+        $data = Barang::whereHas('kategori', function($query) use ($nama) {
+            $query->where('nama', $nama);
+        })->with('kategori')->get();
+    
+        // Ambil semua kategori (tetap ditampilkan)
+        $allData = Barang::with('kategori')->get();
+        $kategori = $allData->pluck('kategori')->unique('nama');
+    
+        return view('catalog', [
+            'type_menu' => 'catalog',
+            'data' => $data,
+            'kategori' => $kategori,
+            'selectedKategori' => $nama
+        ]);
+    }
+    
+
     public function detail($id){
         $data = Barang::findOrFail($id);
         return view('detail', [
@@ -196,9 +217,10 @@ class GearVentureController extends Controller
         return view('admin.barang', compact('data'));
     }
 
-    //FORM TAMBAH
-    public function tambahbarang(){
-        return view('admin.tambahbarang'); 
+    //FORM TAMBAH BARANG
+    public function tambahbarang(){        
+        $kategori = KategoriProduk::all();     
+        return view('admin.tambahbarang',  compact('kategori')); 
     }
 
     //CREATE BARANG
@@ -225,7 +247,7 @@ class GearVentureController extends Controller
     public function editbarang($id)
     {
         $data = Barang::with('kategori')->find($id); 
-        $kategori = KategoriProduk::all();           
+        $kategori = KategoriProduk::all();             
         return view('admin.editbarang', compact('data', 'kategori'));
     }
 
@@ -296,6 +318,7 @@ class GearVentureController extends Controller
         return view('admin.editkategori', compact('data'));
     }    
 
+    //UPDATE KATEGORI
     public function updatekategori(Request $request, $id)
     {
         $request->validate([
@@ -309,6 +332,7 @@ class GearVentureController extends Controller
         return redirect()->route('kategori')->with('Sukses', 'Kategori berhasil diperbarui');
     }
     
+    //DELETE KATEGORI
     public function deletekategori($id){
         $data = KategoriProduk::find($id);
         $data->delete();
@@ -323,46 +347,48 @@ class GearVentureController extends Controller
         return view('admin.status');
     }
 
+    //KONTEN
     public function konten(){
+        $data = 
         return view('admin.konten');
     }
 
-    public function katalog(){
-        return view('admin.katalog');
-    }
-
-    public function events(){
-        return view('admin.event');
-    }
-
-    // public function pengaturan(){
-    //     return view('admin.pengaturan');
-    // }
-
-
-
+    //FORM TAMBAH KONTEN
     public function tambahkonten(){
         return view('admin.tambahkonten');
     }
 
+    //FORM EDIT KONTEN
     public function editkonten(){
         return view('admin.editkonten');
     }
 
+    //KATALOG POPULER
+    public function katalog(){
+        return view('admin.katalog');
+    }
 
-
+    //FORM TAMBAH KATALOG POPULER
     public function tambahkatalog(){
         return view('admin.tambahkatalog');
     }
 
+    //FORM EDIT KATALOG POPULER
     public function editkatalog(){
         return view('admin.editkatalog');
     }
 
+    //EVENTS
+    public function events(){
+        return view('admin.event');
+    }    
+
+    //FORM TAMBAH EVENT
     public function tambahevent(){
         return view('admin.tambahevent');
     }
 
+    //FORM EDIT EVENT
     public function editevent(){
         return view('admin.editevent');
     }

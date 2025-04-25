@@ -184,7 +184,7 @@
                     </ul>
                 </div>
             @endif                       
-            <form class="text-xxs p-4" action="{{ route('updatebarang', $data->id_produk) }}" method="POST" enctype="multipart/form-data">
+            <form class="text-xxs p-4" action="{{ route('updatebarang', $data->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf                
                 <div class="row">
                     <div class="col-md-6">
@@ -196,7 +196,7 @@
                             <label class="form-label">Kategori</label>
                             <select class="form-select" name="kategori_id">
                                 @foreach($kategori as $k)
-                                    <option value="{{ $k->id_kategori }}" {{ $data->kategori_id == $k->id_kategori ? 'selected' : '' }}>
+                                    <option value="{{ $k->id}}" {{ $data->kategori_id == $k->id? 'selected' : '' }}>
                                         {{ $k->nama }}
                                     </option>
                                 @endforeach

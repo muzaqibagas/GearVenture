@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\KategoriProduk;
+
 
 class Barang extends Model
 {
@@ -10,7 +12,7 @@ class Barang extends Model
     protected $table = 'produk';
 
     // Primary key
-    protected $primaryKey = 'id_produk';
+    protected $primaryKey = 'id';
 
     // Kolom yang bisa diisi (mass assignable)
     protected $fillable = [
@@ -34,6 +36,6 @@ class Barang extends Model
     // Relasi ke tabel kategori (asumsi relasi many-to-one)
     public function kategori()
     {
-        return $this->belongsTo(KategoriProduk::class, 'kategori_id', 'id_kategori');
+        return $this->belongsTo(KategoriProduk::class, 'kategori_id', 'id');
     }
 }

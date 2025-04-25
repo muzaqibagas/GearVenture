@@ -12,7 +12,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable;
 
     protected $table = 'users'; // Nama tabel di database
-    protected $primaryKey = 'user_id'; // Ubah primary key agar sesuai dengan database
+    protected $primaryKey = 'id'; // Ubah primary key agar sesuai dengan database
     public $incrementing = true; // Primary key auto-increment
     protected $keyType = 'int'; // Tipe data primary key
 

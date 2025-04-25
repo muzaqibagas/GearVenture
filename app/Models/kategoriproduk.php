@@ -10,7 +10,7 @@ class KategoriProduk extends Model
     protected $table = 'kategori_produk';
 
     // Primary key custom
-    protected $primaryKey = 'id_kategori';
+    protected $primaryKey = 'id';
 
     // Auto-increment harus true jika menggunakan id biasa
     public $incrementing = true;

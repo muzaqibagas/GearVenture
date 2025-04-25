@@ -209,8 +209,8 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">id</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Gambar</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Diskon</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Keterangan</th>                      
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Bintang</th>                      
                       <th class="text-secondary text-center">
                         <a class="btn text-center text-white btn-sm w-100 btn-primary rounded mb-0 px-0" href="tambahkonten">Tambah+</a>
                       </th>

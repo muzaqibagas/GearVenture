@@ -53,6 +53,9 @@ Route::post('/signup', [GearVentureController::class, 'simpan'])->name('signup')
 Route::get('/index', [GearVentureController::class, 'index'])->name('index');
 Route::get('/tes', [GearVentureController::class, 'tes'])->name('tes');
 Route::get('/catalog', [GearVentureController::class, 'catalog'])->name('catalog');
+Route::get('/catalog/{nama}', [GearVentureController::class, 'filterByKategori'])->name('catalog.kategori');
+
+
 Route::get('/detail/{id}', [GearVentureController::class, 'detail'])->name('detail');
 
 Route::get('/event', [GearVentureController::class, 'event'])->name('event');
@@ -76,7 +79,7 @@ Route::get('/admin/dashboard', [GearVentureController::class, 'dashboard'])->nam
 
 //BARANG
 Route::get('/admin/barang', [GearVentureController::class, 'barang'])->name('barang'); //semua produk dsini
-Route::get('/admin/tambahbarang', [GearVentureController::class, 'tambahbarang'])->name('tambahbarang'); //form tambah
+Route::get('/admin/tambahbarang', [GearVentureController::class, 'tambahbarang'])->name('tambahbarang'); //form tambah barang
 Route::post('/admin/barang', [GearVentureController::class, 'store'])->name('storebarang'); //create barang
 Route::get('/admin/editbarang/{id}', [GearVentureController::class, 'editbarang'])->name('editbarang'); //form edit barang
 Route::post('/admin/updatebarang/{id}', [GearVentureController::class, 'updatebarang'])->name('updatebarang'); //update barang
@@ -93,13 +96,13 @@ Route::get('/admin/kategori/{id}', [GearVentureController::class, 'deletekategor
 Route::get('/admin/laporan', [GearVentureController::class, 'laporan'])->name('laporan');
 Route::get('/admin/status', [GearVentureController::class, 'status'])->name('status');
 
-Route::get('/admin/konten', [GearVentureController::class, 'konten'])->name('konten');
-Route::get('/admin/tambahkonten', [GearVentureController::class, 'tambahkonten'])->name('tambahkonten');
-Route::get('/admin/editkonten', [GearVentureController::class, 'editkonten'])->name('editkonten');
+Route::get('/admin/konten', [GearVentureController::class, 'konten'])->name('konten');//semua konten ada dsini
+Route::get('/admin/tambahkonten', [GearVentureController::class, 'tambahkonten'])->name('tambahkonten');//form tambah konten
+Route::get('/admin/editkonten', [GearVentureController::class, 'editkonten'])->name('editkonten');// form edit konten
 
-Route::get('/admin/katalog', [GearVentureController::class, 'katalog'])->name('katalog');
-Route::get('/admin/tambahkatalog', [GearVentureController::class, 'tambahkatalog'])->name('tambahkatalog');
-Route::get('/admin/editkatalog', [GearVentureController::class, 'editkatalog'])->name('editkatalog');
+Route::get('/admin/katalog', [GearVentureController::class, 'katalog'])->name('katalog');//semua katalog populer ada dsini
+Route::get('/admin/tambahkatalog', [GearVentureController::class, 'tambahkatalog'])->name('tambahkatalog');//form tambah katalog populer 
+Route::get('/admin/editkatalog', [GearVentureController::class, 'editkatalog'])->name('editkatalog');//form edit katalog populer 
 
 Route::get('/admin/events', [GearVentureController::class, 'events'])->name('events');
 Route::get('/admin/tambahevent', [GearVentureController::class, 'tambahevent'])->name('tambahevent');

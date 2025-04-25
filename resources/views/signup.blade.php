@@ -53,12 +53,20 @@
                 <label>Password</label>
             </div>
 
-            <div class="inputbox">
-                <select class="form-control{{ $errors->has('jenis_kelamin') ? ' is-invalid' : '' }}" name="jenis_kelamin" required>
-                    <option value="">Pilih jenis kelamin</option>
-                    <option value="Laki-laki">Laki-laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                </select>
+            <div class="form-group" style="color:white !important;">
+                <label>Jenis Kelamin:</label><br>
+
+                <div style="display: flex !important; gap: 30px !important;">
+                    <div>
+                        <input type="radio" name="jenis_kelamin" id="laki-laki" value="Laki-laki" checked required>
+                        <label for="laki-laki">Laki-laki</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="jenis_kelamin" id="perempuan" value="Perempuan" required>
+                        <label for="perempuan">Perempuan</label>
+                    </div>                    
+                </div>
+
                 @error('jenis_kelamin')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

@@ -60,7 +60,7 @@
                         <div class="card-body my-0 mx-1">
                             <p class="fw-bold m-0">{{$dabar->nama}}</p>
                             <p class="fw-bold" style="color:#c3d234">Rp {{$dabar->harga_sewa}}</p>
-                            <a href="{{ route('detail', $dabar->id_produk) }}" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
+                            <a href="{{ route('detail', $dabar->id) }}" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
                         </div>
                     </div>
                 </div>                
@@ -73,11 +73,17 @@
             <div class="sidebar p-3 pt-0 shadow-sm bg-white rounded">
                 <h5 class="fw-bold">KATEGORI PRODUK</h5>
                 <div class="kategori d-grid gap-2">
-                @foreach ($data as $dabar)  
-                    <div class="card px-3 py-2 fw-bold" style="border: 1px solid #383d1f;">
-                        <span>{{ $dabar->kategori->nama ?? 'Tidak ada kategori' }}</span>
-                    </div>                    
-                @endforeach 
+                    <a href="{{ route('catalog') }}" class="card px-3 py-2 fw-bold text-decoration-none" style="border: 1px solid #383d1f; 
+                            {{ !isset($selectedKategori) ? 'background-color: #383d1f; color: white;' : '' }}">
+                        <span>Semua Kategori</span>
+                    </a>
+
+                @foreach ($kategori as $kat)  
+                    <a href="{{ route('catalog.kategori', ['nama' => $kat->nama]) }}" class="card px-3 py-2 fw-bold text-decoration-none" style="border: 1px solid #383d1f; 
+                            {{ isset($selectedKategori) && $selectedKategori == $kat->nama ? 'background-color: #383d1f; color: white;' : '' }}">
+                        <span>{{ $kat->nama ?? 'Tidak ada kategori' }}</span>                        
+                    </a>                     
+                @endforeach
                 </div>            
 
                 <h5 class="fw-bold mt-5">PRODUK DISKON</h5>
