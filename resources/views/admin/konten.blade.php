@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
   <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link id="pagestyle" href="{{ asset('css/pengaturan.css?v=1.1.0') }}" rel="stylesheet" >
   <link id="pagestyle" href="{{ asset('css/iconify.css?v=1.1.0') }}" rel="stylesheet" >
@@ -22,7 +23,7 @@
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">      
         <img src="{{ asset('img/logo1.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">HI, Admin</span>
+        <span class="ms-1 font-weight-bold">HI, {{ Auth::guard('admin')->user()->username}}</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -151,7 +152,10 @@
       </ul>
     </div>
     <div class="sidenav-footer mx-3 ">
-      <a class="btn btn-primary mt-3 w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree">Logout</a>
+      <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn btn-primary mt-3 w-100">Logout</button>
+      </form>      
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -202,12 +206,7 @@
           </div>
           <div class="card mb-4">                  
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-              @if ($message = Session::get('success')) 
-                  <div class="alert alert-success" role="alert">
-                      {{ $message }}
-                  </div>
-              @endif 
+              <div class="table-responsive p-0">              
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
@@ -243,8 +242,8 @@
                       <p class="text-xs font-weight-bold mb-0">{{$dabar->deskripsi}}</p>
                       </td>                
                       <td class="tombol align-middle d-flex flex-column gap-1">                                                
-                        <a href="editkonten" class="btn text-center text-white btn-sm w-100 btn-warning rounded mb-0">Edit</a>
-                        <a href="{{ route('deletekonten', $dabar->id) }}" class="btn text-center text-white btn-sm w-100 btn-danger rounded mb-0">Hapus</a>                        
+                        <a href="{{ route('editkonten', $dabar->konten->id) }}" class="btn text-center text-white btn-sm w-100 btn-warning rounded mb-0">Edit</a>                       
+                        <a href="{{ route('deletekonten', $dabar->konten->id) }}" class="btn text-center text-white btn-sm w-100 btn-danger rounded mb-0">Hapus</a>                        
                       </td>
                     </tr>  
                   @endforeach              

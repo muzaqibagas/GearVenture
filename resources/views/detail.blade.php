@@ -9,7 +9,7 @@
 @section('main')
 
 <section class="catalog py-4"> 
-    <a href="#" class="text-dark rounded-pill">&larr; Kembali</a>
+    <a href="javascript:history.back()" class="btn text-white rounded-pill mb-3 align-self-start" style="background-color:#383d1f">&larr; Kembali</a>
     <div class="row mt-3 d-flex justify-content-center gap-3">
         <div class="col-lg-4">
             <img src="{{ asset('pict/'.$data->foto)}}" class="rounded" style="width:100%; height:400px" alt="Tenda Camping">
@@ -52,9 +52,21 @@
             </div>
         </div>    
         <div class="col-lg-4 product-container">
-            <h3>{{$data->nama}}</h3>
-            <p class="price" style="color:#929c3b">Rp {{$data->harga_sewa}}</p>
-            <p><strong>Kategori:</strong> {{ $data->kategori->nama ?? 'Tidak ada kategori' }}</p>
+            <h3>{{$data->nama}}</h3>            
+            <p class="price" style="color:#929c3b">                
+                @php
+                    // Periksa apakah ada diskon
+                    $hargaDiskon = $data->harga_sewa * (100 - ($data->konten->diskon ?? 0)) / 100;
+                @endphp
+                <!-- Jika ada diskon, tampilkan harga setelah diskon -->
+                @if($data->konten && $data->konten->diskon > 0)
+                    <span class="text-decoration-line-through text-danger">Rp {{ number_format($data->harga_sewa, 0, ',', '.') }}</span>
+                    Rp {{ number_format($hargaDiskon, 0, ',', '.') }}
+                @else
+                    <!-- Jika tidak ada diskon, tampilkan harga biasa -->
+                    Rp {{ number_format($data->harga_sewa, 0, ',', '.') }}
+                @endif
+            </p>
             <p class="border-2 border-bottom border-dark pb-1 mb-2"><strong>Ketersediaan:</strong> <span class="fw-bold" style="color:#c3d234">Tersedia</span></p>            
             <p class="text-justify">{{$data->deskripsi}}</p>
             <div class="d-flex justify-content-between">

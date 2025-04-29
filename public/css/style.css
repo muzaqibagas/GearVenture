@@ -390,13 +390,15 @@ header li a {
 /* CATALOG POPULAT */
 .catalog-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
 }
 
 .catalog-card {
-    width: auto;
+    width: 300px; /* Lebar tetap */
+    height: 350px; /* Tinggi tetap */
+    overflow: hidden; /* Menghindari konten melampaui batas */
     border: 4px solid var(--basic-color1);
     border-radius: 10px;
     overflow: hidden;

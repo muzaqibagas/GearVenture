@@ -13,7 +13,7 @@
             <div class="sidebar d-flex flex-column text-dark">
                 <div class="text-center mb-4">
                     <img src="{{ asset('img/profile.jpg') }}" alt="logo" class="logo mb-2 rounded-circle" style="width:100px; height:100px">
-                    <div class="fw-semibold border-bottom pb-3">Hi, Admin</div>
+                    <div class="fw-semibold border-bottom pb-3">Hi, {{ Auth::guard('web')->user()->username }}</div>
                 </div>
 
                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6 text-secondary">Info Akun</h6>
@@ -94,10 +94,12 @@
                 <div class="d-flex justify-content-center align-items-center flex-column gap-4">
                     <span class="fluent-mdl2--sad text-center"></span>
                     <p class="m-0">Ingin Menghapus Akun?</p>
-                    <!-- Tombol Hapus Akun -->
-                    <div class="text-center d-flex justify-content-end align-items-center">
+                    <!-- Tombol Hapus Akun -->                    
+                    <form class="text-center d-flex justify-content-end align-items-center" action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus akun ini?')">
+                        @csrf
+                        @method('DELETE')
                         <button class="btn btn-danger rounded px-4 py-2 d-flex align-items-center">Hapus Akun</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

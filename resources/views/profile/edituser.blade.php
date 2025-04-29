@@ -13,7 +13,7 @@
             <div class="sidebar d-flex flex-column text-dark">
                 <div class="text-center mb-4">
                     <img src="{{ asset('img/profile.jpg') }}" alt="logo" class="logo mb-2 rounded-circle" style="width:100px; height:100px">
-                    <div class="fw-semibold border-bottom pb-3">Hi, Admin</div>
+                    <div class="fw-semibold border-bottom pb-3">Hi, {{ Auth::guard('web')->user()->username }}</div>
                 </div>
 
                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6 text-secondary">Info Akun</h6>

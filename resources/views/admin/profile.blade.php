@@ -20,9 +20,9 @@
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">      
+      <a class="navbar-brand m-0" href="{{ route('profile') }}">      
         <img src="{{ asset('img/logo1.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">HI, Admin</span>
+        <span class="ms-1 font-weight-bold">HI, {{ Auth::guard('admin')->user()->username}}</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -151,7 +151,10 @@
       </ul>
     </div>
     <div class="sidenav-footer mx-3 ">
-      <a class="btn btn-primary mt-3 w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree">Logout</a>
+      <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn btn-primary mt-3 w-100">Logout</button>
+      </form>      
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -204,19 +207,16 @@
                         <div class="col-md-9">                            
                             <div class="row">
                                 <div class="col-5 fw-bold text-success">Username</div>
-                                <div class="col-7">MuzaqiBagas</div>
+                                <div class="col-7">{{ Auth::guard('admin')->user()->username }}</div>
 
                                 <div class="col-5 mt-3 fw-bold text-success">Nama</div>
-                                <div class="col-7 mt-3">Muzaqi Rangkuti Bagas</div>
+                                <div class="col-7 mt-3">{{ Auth::guard('admin')->user()->nama }}</div>
 
                                 <div class="col-5 mt-3 fw-bold text-success">Email</div>
-                                <div class="col-7 mt-3">Muzaqibagas@anjay.com</div>
-
-                                <div class="col-5 mt-3 fw-bold text-success">No. Telepon</div>
-                                <div class="col-7 mt-3">08567926382</div>
+                                <div class="col-7 mt-3">{{ Auth::guard('admin')->user()->email }}</div>                                
 
                                 <div class="col-5 mt-3 fw-bold text-success">Jenis Kelamin</div>
-                                <div class="col-7 mt-3">Pria</div>
+                                <div class="col-7 mt-3">{{ Auth::guard('admin')->user()->jenis_kelamin }}</div>
                             </div>
                         </div>
                     </div>

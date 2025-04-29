@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\KategoriProduk;
+use App\Models\ProdukPopuler;
+use App\Models\Admin;
 use App\Models\Konten;
 use App\Models\Barang;
 use App\Models\User;
@@ -23,8 +25,7 @@ class GearVentureController extends Controller
         return view('signup');
     }
 
-    public function simpan(Request $req)
-    {
+    public function simpan(Request $req){
         $req->validate([
             'nama' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username',
@@ -53,9 +54,7 @@ class GearVentureController extends Controller
         $user->sendEmailVerificationNotification();
 
         return redirect()->route('verification.notice');
-
     }
-
 
     // LOGIN
     public function masuk()
@@ -63,79 +62,125 @@ class GearVentureController extends Controller
         return view('signin');
     }
 
-    public function signin(Request $request)
-    {
+    public function signin(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         $credentials = $request->validate([
             'username' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        if (Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']])) {
-            $user = Auth::user();
+        $user = User::where('username', $credentials['username'])->first();
 
-            if ($user->role === 'admin') {
-                return redirect()->route('dashboard');
-            } else {
-                return redirect()->route('index');
-            }
+        if (!$user) {
+            return back()->withErrors(['loginError' => 'Akun belum terdaftar.']);
         }
 
-        return back()->withErrors(['loginError' => 'Username atau password salah!']);
+        if (!Hash::check($credentials['password'], $user->password)) {
+            return back()->withErrors(['loginError' => 'Username atau password salah!']);
+        }
+
+        if ($user->role === 'admin') {
+            Auth::guard('admin')->login($user);
+            return redirect()->route('dashboard');
+        } else {
+            Auth::guard('web')->login($user);
+            return redirect()->route('index');
+        }
     }
 
 
-    public function logout()
+
+    public function logout(Request $request)
     {
-        Auth::logout();
-        return redirect()->route('signin');
+        if (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->logout();
+        } else {
+            Auth::guard('web')->logout();
+        }
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('signin.form');
+    }
+
+    public function destroy($id){
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->back()->with('success', 'Akun berhasil dihapus');
     }
 
     // PENYEWA
     public function index(){
+        $data = Barang::all();
         $dakon = Barang::with('konten')
             ->whereHas('konten', function($q){
                 $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
             })->get();
-    
+        $dakats = ProdukPopuler::all();        
+        $dakat = ProdukPopuler::with('produk')->get();    
         return view('index', [
             'type_menu' => 'index',
-            'dakon' => $dakon
+            'data' => $data,
+            'dakon' => $dakon,
+            'dakat' => $dakat,
         ]);
     }
     
     public function catalog(){
-        $data = Barang::with('kategori')->get();
+        $data = Barang::with('kategori')->paginate(9);
         $kategori = $data->pluck('kategori')->unique('nama');
+        $dakon = Barang::with('konten')
+            ->whereHas('konten', function($q){
+                $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
+            })->get();
+        $dakat = ProdukPopuler::with('produk')->get();    
         return view('catalog', [
             'type_menu'=> 'catalog', 
             'data' => $data, 
-            'kategori' => $kategori
+            'kategori' => $kategori,
+            'dakon' => $dakon,
+            'dakat' => $dakat,
         ]);                
     }
 
     public function filterByKategori($nama) {
         $data = Barang::whereHas('kategori', function($query) use ($nama) {
             $query->where('nama', $nama);
-        })->with('kategori')->get();
+        })->with('kategori')->paginate(9);
     
         // Ambil semua kategori (tetap ditampilkan)
         $allData = Barang::with('kategori')->get();
         $kategori = $allData->pluck('kategori')->unique('nama');
+        $dakon = Barang::with('konten')
+            ->whereHas('konten', function($q){
+                $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
+            })->get();
+        $dakat = ProdukPopuler::with('produk')->get();    
     
         return view('catalog', [
             'type_menu' => 'catalog',
             'data' => $data,
             'kategori' => $kategori,
-            'selectedKategori' => $nama
+            'selectedKategori' => $nama,
+            'dakon' => $dakon,
+            'dakat' => $dakat,
         ]);
     }
-    
 
     public function detail($id){
         $data = Barang::findOrFail($id);
+        $dakon = Barang::with('konten')
+            ->whereHas('konten', function($q){
+                $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
+            })->get();
         return view('detail', [
             'type_menu'=> 'detail',
-            'data' => $data
+            'data' => $data,
+            'dakon' => $dakon,
         ]);
     }
     public function event(){
@@ -169,8 +214,10 @@ class GearVentureController extends Controller
         ]);
     }
     public function profileuser(){
+        $penyewa = Auth::user();        
         return view('profile.profileuser', [
-            'type_menu'=> 'user'
+            'type_menu'=> 'user',
+            'penyewa' => $penyewa,
         ]);
     }
     public function edituser(){
@@ -182,12 +229,25 @@ class GearVentureController extends Controller
         return view('profile.editpw', [
             'type_menu'=> 'editpw'
         ]);
-    }    
+    }        
     public function hapusakun(){
-        return view('profile.hapusakun', [
-            'type_menu'=> 'hapusakun'
-        ]);
-    }    
+        $user = Auth::user(); // atau Auth::guard('web')->user();
+
+        if ($user) {
+            $user->delete();
+
+            // Logout otomatis setelah akun dihapus
+            Auth::logout();
+
+            return view('profile.hapusakun', [
+                'type_menu' => 'hapusakun',
+                'message' => 'Akun berhasil dihapus.'
+            ]);
+        }
+
+        return redirect()->route('signin.form')->withErrors(['error' => 'Tidak ada user yang login.']);
+    }
+  
     public function belum(){
         return view('profile.belum', [
             'type_menu'=> 'belum'
@@ -234,6 +294,11 @@ class GearVentureController extends Controller
     //CREATE BARANG
     public function store(Request $request) 
     {        
+        $cekBarang = Barang::where('nama', $request->nama)->first();
+        if ($cekBarang) {
+            // Jika sudah ada, kembalikan dengan pesan error
+            return redirect()->back()->with('error', 'Barang dengan nama tersebut sudah ada.');
+        }
         $hargaBersih = str_replace(['Rp', ' ', '.'], '', $request->harga_sewa);
         $data = new Barang();
         $data->nama = $request->nama;
@@ -297,7 +362,6 @@ class GearVentureController extends Controller
         return redirect()->route('barang')->with('Sukses','Barang Berhasil Dihapus');
     }
 
-
     //KATEGORI
     public function kategori(){
         $data = KategoriProduk::all();
@@ -358,7 +422,7 @@ class GearVentureController extends Controller
     public function konten(){
         $dakon = Barang::with('konten')->whereHas('konten', function($q){
             $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
-        })->get();
+        })->get();       
     
         return view('admin.konten', compact('dakon'));
     }    
@@ -383,30 +447,29 @@ class GearVentureController extends Controller
 
     //FORM EDIT KONTEN
     public function editkonten($id){
-        $dakon = Konten::find($id);
-        return view('admin.editkonten', compact('data'));        
+        $dakon = Konten::find($id);            
+        return view('admin.editkonten', compact('dakon'));        
     }
+    
 
     //UPDATE KONTEN
-    public function updatekonten(Request $request, $id)
-    {        
+    public function updatekonten(Request $request, $id){        
         $request->validate([
             'diskon' => 'required|integer|min:0|max:100', 
         ]);        
-        $dakon = Konten::findOrFail($id);        
-        $dakon->diskon = $request->diskon;
-        if (!$konten) {
-            return response()->json(['message' => 'Konten tidak ditemukan'], 404);
-        }                
 
+        $dakon = Konten::find($id);        
+
+        if (!$dakon) {
+            return response()->json(['message' => 'Konten tidak ditemukan'], 404);
+        }
+
+        $dakon->diskon = $request->diskon;
         $dakon->save();
 
-        return response()->json([
-            'message' => 'Konten berhasil diupdate',
-            'data' => $konten,
-        ], 200);
-        return redirect()->route('konten')->with('Sukses', 'konten berhasil diperbarui');
+        return redirect()->route('konten')->with('Sukses', 'Konten berhasil diperbarui');
     }
+
 
     //DELETE KONTEN
     public function deletekonten($id){
@@ -417,17 +480,76 @@ class GearVentureController extends Controller
 
     //KATALOG POPULER
     public function katalog(){
-        return view('admin.katalog');
+        $dakat = ProdukPopuler::with('produk')->get();
+        return view('admin.katalog', compact('dakat'));
     }
+    
 
     //FORM TAMBAH KATALOG POPULER
     public function tambahkatalog(){
-        return view('admin.tambahkatalog');
+        $dakat = Barang::all();
+        return view('admin.tambahkatalog', compact('dakat'));
+    }
+
+    //CREATE KATALOG POPULER
+    public function storekatalog(Request $request){
+        $barang = Barang::find($request->produk_id);
+
+        if (!$barang) {
+            return redirect()->route('katalog')->with('error', 'Produk tidak ditemukan');
+        }
+
+        $rating = $this->calculateRating($barang->sold); // <- hitung rating otomatis
+
+        $dakat = new ProdukPopuler();
+        $dakat->produk_id = $request->produk_id;
+        $dakat->Rating = $rating;
+        $dakat->save();
+
+        return redirect()->route('katalog')->with('sukses', 'Katalog Berhasil Ditambahkan');
     }
 
     //FORM EDIT KATALOG POPULER
-    public function editkatalog(){
-        return view('admin.editkatalog');
+    public function editkatalog($id){
+        $dakat = ProdukPopuler::find($id);
+        return view('admin.editkatalog', compact('dakat'));
+    }
+
+    //UPDATE KATALOG POPULER
+    public function updatekatalog(Request $request, $id){
+        $dakat = ProdukPopuler::find($id);
+
+        if (!$dakat) {
+            return response()->json(['message' => 'Katalog tidak ditemukan'], 404);
+        }        
+
+        $rating = $this->calculateRating($barang->sold); // <- hitung ulang rating otomatis
+
+        $dakat->Rating = $rating;
+        $dakat->save();
+
+        return redirect()->route('katalog')->with('sukses', 'Katalog berhasil diperbarui');
+    }
+
+    private function calculateRating($sold){
+        if ($sold >= 50) {
+            return 5;
+        } elseif ($sold >= 20) {
+            return 4;
+        } elseif ($sold >= 10) {
+            return 3;
+        } elseif ($sold >= 5) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    //DELETE KATALOG POPULER
+    public function deletekatalog($id){
+        $dakat = ProdukPopuler::find($id);
+        $dakat->delete();
+        return redirect()->route('katalog')->with('Sukses','Katalog Berhasil Dihapus');    
     }
 
     //EVENTS
@@ -448,7 +570,8 @@ class GearVentureController extends Controller
 
 
     public function profile(){
-        return view('admin.profile');
+        $profile = Auth::user();
+        return view('admin.profile', compact('profile'));
     }
 
     public function editprofile(){

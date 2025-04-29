@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
   <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link id="pagestyle" href="{{ asset('css/pengaturan.css?v=1.1.0') }}" rel="stylesheet" >
   <link id="pagestyle" href="{{ asset('css/iconify.css?v=1.1.0') }}" rel="stylesheet" >
@@ -21,7 +22,7 @@
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">      
         <img src="{{ asset('img/logo1.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">HI, Admin</span>
+        <span class="ms-1 font-weight-bold">HI, {{ Auth::guard('admin')->user()->username}}</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -48,25 +49,39 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="barang">
+          <a class="nav-link" data-bs-toggle="collapse" href="#menuBarang" role="button" aria-expanded="false" aria-controls="menuBarang">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <title>box-3d-50</title>
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g transform="translate(-2319.000000, -291.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                      <g transform="translate(1716.000000, 291.000000)">
-                        <g transform="translate(603.000000, 0.000000)">
-                          <path class="color-background" d="M22.7597136,19.3090182 L38.8987031,11.2395234 C39.3926816,10.9925342 39.592906,10.3918611 39.3459167,9.89788265 C39.249157,9.70436312 39.0922432,9.5474453 38.8987261,9.45068056 L20.2741875,0.1378125 L20.2741875,0.1378125 C19.905375,-0.04725 19.469625,-0.04725 19.0995,0.1378125 L3.1011696,8.13815822 C2.60720568,8.38517662 2.40701679,8.98586148 2.6540352,9.4798254 C2.75080129,9.67332903 2.90771305,9.83023153 3.10122239,9.9269862 L21.8652864,19.3090182 C22.1468139,19.4497819 22.4781861,19.4497819 22.7597136,19.3090182 Z"></path>
-                          <path class="color-background opacity-6" d="M23.625,22.429159 L23.625,39.8805372 C23.625,40.4328219 24.0727153,40.8805372 24.625,40.8805372 C24.7802551,40.8805372 24.9333778,40.8443874 25.0722402,40.7749511 L41.2741875,32.673375 L41.2741875,32.673375 C41.719125,32.4515625 42,31.9974375 42,31.5 L42,14.241659 C42,13.6893742 41.5522847,13.241659 41,13.241659 C40.8447549,13.241659 40.6916418,13.2778041 40.5527864,13.3472318 L24.1777864,21.5347318 C23.8390024,21.7041238 23.625,22.0503869 23.625,22.429159 Z"></path>
-                          <path class="color-background opacity-6" d="M20.4472136,21.5347318 L1.4472136,12.0347318 C0.953235098,11.7877425 0.352562058,11.9879669 0.105572809,12.4819454 C0.0361450918,12.6208008 6.47121774e-16,12.7739139 0,12.929159 L0,30.1875 L0,30.1875 C0,30.6849375 0.280875,31.1390625 0.7258125,31.3621875 L19.5528096,40.7750766 C20.0467945,41.0220531 20.6474623,40.8218132 20.8944388,40.3278283 C20.963859,40.1889789 21,40.0358742 21,39.8806379 L21,22.429159 C21,22.0503869 20.7859976,21.7041238 20.4472136,21.5347318 Z"></path>
-                        </g>
+                <title>box-3d-50</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-2319.000000, -291.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g transform="translate(603.000000, 0.000000)">
+                        <path class="color-background" d="M22.7597136,19.3090182 L38.8987031,11.2395234 C39.3926816,10.9925342 39.592906,10.3918611 39.3459167,9.89788265 C39.249157,9.70436312 39.0922432,9.5474453 38.8987261,9.45068056 L20.2741875,0.1378125 L20.2741875,0.1378125 C19.905375,-0.04725 19.469625,-0.04725 19.0995,0.1378125 L3.1011696,8.13815822 C2.60720568,8.38517662 2.40701679,8.98586148 2.6540352,9.4798254 C2.75080129,9.67332903 2.90771305,9.83023153 3.10122239,9.9269862 L21.8652864,19.3090182 C22.1468139,19.4497819 22.4781861,19.4497819 22.7597136,19.3090182 Z"></path>
+                        <path class="color-background opacity-6" d="M23.625,22.429159 L23.625,39.8805372 C23.625,40.4328219 24.0727153,40.8805372 24.625,40.8805372 C24.7802551,40.8805372 24.9333778,40.8443874 25.0722402,40.7749511 L41.2741875,32.673375 L41.2741875,32.673375 C41.719125,32.4515625 42,31.9974375 42,31.5 L42,14.241659 C42,13.6893742 41.5522847,13.241659 41,13.241659 C40.8447549,13.241659 40.6916418,13.2778041 40.5527864,13.3472318 L24.1777864,21.5347318 C23.8390024,21.7041238 23.625,22.0503869 23.625,22.429159 Z"></path>
+                        <path class="color-background opacity-6" d="M20.4472136,21.5347318 L1.4472136,12.0347318 C0.953235098,11.7877425 0.352562058,11.9879669 0.105572809,12.4819454 C0.0361450918,12.6208008 6.47121774e-16,12.7739139 0,12.929159 L0,30.1875 L0,30.1875 C0,30.6849375 0.280875,31.1390625 0.7258125,31.3621875 L19.5528096,40.7750766 C20.0467945,41.0220531 20.6474623,40.8218132 20.8944388,40.3278283 C20.963859,40.1889789 21,40.0358742 21,39.8806379 L21,22.429159 C21,22.0503869 20.7859976,21.7041238 20.4472136,21.5347318 Z"></path>
                       </g>
                     </g>
                   </g>
-                </svg>
+                </g>
+              </svg>
             </div>
             <span class="nav-link-text ms-1">Manajemen Barang</span>
           </a>
+          <div class="collapse" id="menuBarang">
+            <ul class="nav ms-4 ps-3">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('kategori') }}">
+                  <span class="sidenav-normal">Kategori</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('barang') }}">
+                  <span class="sidenav-normal">Barang</span>
+                </a>
+              </li>
+            </ul>
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link  " href="laporan">
@@ -136,7 +151,10 @@
       </ul>
     </div>
     <div class="sidenav-footer mx-3 ">
-      <a class="btn btn-primary mt-3 w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree">Logout</a>
+      <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn btn-primary mt-3 w-100">Logout</button>
+      </form>      
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -173,39 +191,72 @@
         <div class="col-12">          
           <h5 class="card bg-white p-3"><strong>Tambah Katalog Populer</strong></h5>
           <div class="card mb-4 mt-3">                         
-              <form class="text-xxs p-4">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <div class="mb-1">
-                              <label class="form-label">Nama Produk</label>
-                              <input type="text" class="form-control" value="Nama Produk">
-                          </div>                          
-                          <div class="mb-1">
-                              <label class="form-label">Harga</label>
-                              <input type="text" class="form-control" value="Rp">
-                          </div>                                                                     
-                          <div class="mb-3">
-                              <label class="form-label">Peringkat</label>
-                              <textarea class="form-control rating" rows="3">★★☆☆☆</textarea>
-                          </div>
+          <form class="text-xxs p-4" action="{{ route('storekatalog') }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="mb-1">
+                          <label class="form-label">Nama Produk</label>
+                          <select id="produkSelect" name="produk_id" class="form-control">
+                              <option value="">Pilih Katalog</option>
+                              @foreach ($dakat as $barang)
+                                  <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
+                              @endforeach
+                          </select>
+                      </div>                          
+                      <div class="mb-1">
+                          <label class="form-label">Harga Sewa</label>
+                          <input type="text" name="harga_sewa" class="form-control" value="Rp">
+                      </div>                                                                     
+                  </div>
+                  <div class="col-md-6 text-center">                          
+                      <label class="form-label">Gambar</label>
+                      <input type="file" class="form-control mb-3" name="foto">
+                      <img src="#" alt="" class="img-fluid border rounded" id="gambarPreview" style="max-height: 200px;">
+                      <div class="text-end d-flex justify-content-center gap-3">                          
+                          <a href="#" class="btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
+                          <button type="submit" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</button>
                       </div>
-                      <div class="col-md-6 text-center">
-                          <label class="form-label">Gambar</label>
-                          <input type="file" class="form-control mb-3">
-                          <img src="#" alt="" class="img-fluid border rounded" style="max-height: 200px;">
-                          <div class="text-end d-flex justify-content-center gap-3">
-                            <a href="#" class=" btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
-                            <a href="#" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</a>
-                        </div>
-                      </div>
-                  </div>                  
-              </form>            
-          </div>
+                  </div>
+              </div>                  
+          </form>              
         </div>
       </div>      
     </div>
   </main>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const produkSelect = document.getElementById('produkSelect');
+          const hargaField = document.querySelector('input[name="harga_sewa"]');
+          const gambarPreview = document.getElementById('gambarPreview');
+
+          produkSelect.addEventListener('change', function () {
+              const produkId = this.value;
+              console.log("Produk ID dipilih:", produkId);
+
+              if (produkId) {
+                  fetch(`/api/produk/${produkId}`)
+                      .then(response => response.json())
+                      .then(data => {
+                          console.log("Data yang diterima:", data);
+                          // Menampilkan harga sewa
+                          hargaField.value = 'Rp ' + (data.harga_sewa || '');
+                          // Menampilkan gambar produk
+                          gambarPreview.src = '/pict/' + data.foto;
+                      })
+                      .catch(err => {
+                          console.error('Error ambil data produk:', err);
+                      });
+              } else {
+                  // Reset form jika produk tidak dipilih
+                  hargaField.value = 'Rp';
+                  gambarPreview.src = '#';
+              }
+          });
+      });
+  </script>
+ 
     <script>
     $(document).ready(function() {
         $('.nav-link').click(function() {

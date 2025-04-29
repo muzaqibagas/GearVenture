@@ -11,32 +11,31 @@
 </head>
 <body>
 <!-- partial:index.partial.html -->
-<body style="background-image: url('{{ asset('img/night.gif') }}');">
-
-    <section>
-        @if ($message = Session::get('success')) 
-            <div class="alert alert-success" role="alert">
-                {{ $message }}
+<body style="background-image: url('{{ asset('img/night.gif') }}');">    
+    <section>            
+        <form action="{{ route('signin') }}" method="post">          
+            @if ($errors->has('loginError'))
+                <div class="alert alert-danger" role="alert">
+                    {{ $errors->first('loginError') }}
+                </div>
+            @endif        
+            @csrf
+            <h1>Login</h1>
+            <div class="inputbox">
+                <ion-icon name="mail-outline"></ion-icon>
+                <input type="text" required placeholder=" " name="username">
+                <label for="">Username</label>
             </div>
-        @endif   
-        <form action="{{ route('signin') }}" method="post">
-    @csrf
-    <h1>Login</h1>
-    <div class="inputbox">
-        <ion-icon name="mail-outline"></ion-icon>
-        <input type="text" required placeholder=" " name="username">
-        <label for="">Username</label>
-    </div>
-    <div class="inputbox">
-        <ion-icon name="lock-closed-outline"></ion-icon>
-        <input type="password" required placeholder=" " name="password">
-        <label for="">Password</label>
-    </div>
-    <button type="submit">Log in</button>
-    <div class="register">
-        <p>Don't have an account? <a href="{{ route('signup.form') }}">Register</a></p>
-    </div>
-</form>
+            <div class="inputbox">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input type="password" required placeholder=" " name="password">
+                <label for="">Password</label>
+            </div>
+            <button type="submit">Log in</button>
+            <div class="register">
+                <p>Don't have an account? <a href="{{ route('signup.form') }}">Register</a></p>
+            </div>
+        </form>
 
     </section>
 </body>

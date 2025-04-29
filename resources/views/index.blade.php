@@ -40,7 +40,7 @@
                             </p>
 
                         </div>
-                        <a href="#" class="promo-button px-4">Lihat Selengkapnya</a>
+                        <a href="{{ route('detail', $dabar->id) }}" class="promo-button px-4">Lihat Selengkapnya</a>
                     </div>
                     <img src="{{ asset('pict/'.$dabar->foto)}}" alt="Tenda" class="promo-image">
                 </div>
@@ -51,33 +51,37 @@
         <section class="catalog mt-5">
             <h2>Katalog Popular</h2>
             <div class="catalog-container">
-                <div class="catalog-card">
-                    <img src="{{ asset('img/banner-04.jpg') }}" alt="Kursi Kramat" class="catalog-image">
-                    <div class="catalog-title">Kursi Kramat</div>
-                    <div class="catalog-price">Rp75.000</div>
-                    <div class="rating">★★☆☆☆</div>
-                </div>
-
-                <div class="catalog-card">
-                    <img src="{{ asset('img/banner-04.jpg') }}" alt="Kursi Ijab Kabul" class="catalog-image">
-                    <div class="catalog-title">Kursi Ijab Kabul</div>
-                    <div class="catalog-price">Rp115.000</div>
-                    <div class="rating">★★★☆☆</div>
-                </div>
-
-                <div class="catalog-card">
-                    <img src="{{ asset('img/banner-04.jpg') }}" alt="Lampu Kehidupan" class="catalog-image">
-                    <div class="catalog-title">Lampu Kehidupan</div>
-                    <div class="catalog-price">Rp65.000</div>
-                    <div class="rating">★★★☆☆</div>
-                </div>
-
-                <div class="catalog-card">
-                    <img src="{{ asset('img/banner-04.jpg') }}" alt="Minum Doa" class="catalog-image">
-                    <div class="catalog-title">Minum Doa</div>
-                    <div class="catalog-price">Rp95.000</div>
-                    <div class="rating">★★★☆☆</div>
-                </div>
+                @foreach($dakat as $item)
+                    <div class="catalog-card">
+                        <img src="{{ asset('pict/'.$item->produk->foto) }}" alt="Kursi Kramat" class="catalog-image">
+                        <div class="catalog-title">
+                            <a href="{{ route('detail', $dabar->id) }}" class="catalog-title text-decoration-none">{{ $item->produk->nama ?? 'Nama tidak tersedia' }}</a>
+                        </div>                        
+                        <div class="catalog-price">
+                            @php
+                                // Periksa apakah ada diskon
+                                $hargaDiskon = $item->produk->harga_sewa * (100 - ($item->produk->konten->diskon ?? 0)) / 100;
+                            @endphp
+                            <!-- Jika ada diskon, tampilkan harga setelah diskon -->
+                            @if($item->produk->konten && $item->produk->konten->diskon > 0)
+                                <span class="text-decoration-line-through text-danger">Rp {{ number_format($item->produk->harga_sewa, 0, ',', '.') }}</span>
+                                Rp {{ number_format($hargaDiskon, 0, ',', '.') }}
+                            @else
+                                <!-- Jika tidak ada diskon, tampilkan harga biasa -->
+                                Rp {{ number_format($item->produk->harga_sewa, 0, ',', '.') }}
+                            @endif
+                        </div>
+                        <div class="rating">
+                            @for ($i = 1; $i <= 5; $i++)
+                            @if ($i <= $item->Rating)
+                                <i class="fas fa-star text-yellow-400"></i> <!-- bintang penuh -->
+                            @else
+                                <i class="far fa-star text-gray-400"></i> <!-- bintang kosong -->
+                            @endif
+                            @endfor
+                        </div>
+                    </div>
+                @endforeach  
             </div>
         </section>
 

@@ -18,7 +18,7 @@ Route::get('/email/verify', function () {
 // Route untuk verifikasi link email
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect('/index'); // atau ke dashboard kamu
+    return redirect('index'); // atau ke dashboard kamu
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 // Route untuk resend email
@@ -28,7 +28,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/index  ', [GearVentureController::class, 'index'])->name('index');
+    Route::get('/verified  ', [GearVentureController::class, 'index'])->name('index');
     // atau route dashboard lain
 });
 
@@ -47,14 +47,16 @@ Route::post('/signin', [GearVentureController::class, 'signin'])->name('signin')
 
 Route::get('/signup', [GearVentureController::class, 'form'])->name('signup.form'); // Form pendaftaran
 Route::post('/signup', [GearVentureController::class, 'simpan'])->name('signup'); // Proses pendaftaran
+Route::post('/logout', [GearVentureController::class, 'logout'])->name('logout');
+route::delete('/user/{id}', [GearVentureController::class, 'destroy'])->name('user.destroy');
 
 // PENYEWA
 // Route::get('/', [GearVentureController::class, 'signin'])->name('signin');
 Route::get('/index', [GearVentureController::class, 'index'])->name('index');
 Route::get('/tes', [GearVentureController::class, 'tes'])->name('tes');
-Route::get('/catalog', [GearVentureController::class, 'catalog'])->name('catalog');
-Route::get('/catalog/{nama}', [GearVentureController::class, 'filterByKategori'])->name('catalog.kategori');
 
+Route::get('/catalog', [GearVentureController::class, 'catalog'])->name('catalog');
+Route::get('/catalog/{nama?}', [GearVentureController::class, 'filterByKategori'])->name('catalog.kategori');
 
 Route::get('/detail/{id}', [GearVentureController::class, 'detail'])->name('detail');
 
@@ -109,7 +111,10 @@ Route::get('/admin/konten/{id}', [GearVentureController::class, 'deletekonten'])
 
 Route::get('/admin/katalog', [GearVentureController::class, 'katalog'])->name('katalog');//semua katalog populer ada dsini
 Route::get('/admin/tambahkatalog', [GearVentureController::class, 'tambahkatalog'])->name('tambahkatalog');//form tambah katalog populer 
-Route::get('/admin/editkatalog', [GearVentureController::class, 'editkatalog'])->name('editkatalog');//form edit katalog populer 
+Route::post('/admin/katalog', [GearVentureController::class, 'storekatalog'])->name('storekatalog'); //create kategori
+Route::get('/admin/editkatalog/{id}', [GearVentureController::class, 'editkatalog'])->name('editkatalog');//form edit katalog populer 
+Route::post('/admin/updatekatalog/{id}', [GearVentureController::class, 'updatekatalog'])->name('updatekatalog'); //update katalog populer 
+Route::get('/admin/katalog/{id}', [GearVentureController::class, 'deletekatalog'])->name('deletekatalog'); //delete katalog populer 
 
 Route::get('/admin/events', [GearVentureController::class, 'events'])->name('events');
 Route::get('/admin/tambahevent', [GearVentureController::class, 'tambahevent'])->name('tambahevent');

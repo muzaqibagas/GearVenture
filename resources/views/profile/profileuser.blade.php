@@ -13,7 +13,7 @@
             <div class="sidebar d-flex flex-column text-dark">
                 <div class="text-center mb-4">
                     <img src="{{ asset('img/profile.jpg') }}" alt="logo" class="logo mb-2 rounded-circle" style="width:100px; height:100px">
-                    <div class="fw-semibold border-bottom pb-3">Hi, Admin</div>
+                    <div class="fw-semibold border-bottom pb-3">Hi, {{ Auth::guard('web')->user()->username }}</div>
                 </div>
 
                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6 text-secondary">Info Akun</h6>
@@ -84,7 +84,13 @@
                             <span class="nav-link-text ms-1">Selesai</span>
                         </a>
                     </li>                    
-                </ul>                                  
+                </ul>      
+                <div class="sidenav-footer mx-3 ">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn mt-3 text-white w-100" style="background-color:#abc337; font-weight:bold">Logout</button>
+                    </form>      
+                </div>                            
             </div>
         </aside>
         
@@ -104,32 +110,23 @@
                                 <div class="row d-flex align-items-center">
                                     <div class="d-flex w-100">
                                         <p class="col-5 fw-bold" style="color: #ABC337;">Username</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">MuzaqiBagas</p>
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">{{ Auth::guard('web')->user()->username }}</p>
                                     </div>
                                     <div class="d-flex w-100">
                                         <p class="col-5 fw-bold" style="color: #ABC337;">Nama</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">Anggito Rangkuti Bagas Muzaqi</p>
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">{{ Auth::guard('web')->user()->nama }}</p>
                                     </div>
                                     <div class="d-flex w-100">
                                         <p class="col-5 fw-bold" style="color: #ABC337;">Email</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">bagasmuzaqi1614@gmail.com</p>
-                                    </div>
-                                    <div class="d-flex w-100">
-                                        <p class="col-5 fw-bold" style="color: #ABC337;">No. Tlp</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">081380716742</p>
-                                    </div>
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">{{ Auth::guard('web')->user()->email }}</p>
+                                    </div>                                    
                                     <div class="d-flex w-100">
                                         <p class="col-5 fw-bold" style="color: #ABC337;">Jenis Kelamin</p>:
-                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">Laki-laki</p>
+                                        <p class="col-7 border rounded d-flex align-items-center px-2 ms-1">{{ Auth::guard('web')->user()->jenis_kelamin }}</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Tombol Hapus Akun -->
-                        <div class="text-center mt-4 d-flex justify-content-end align-items-center me-3" h>
-                            <button class="btn btn-danger rounded-pill px-4 py-2 d-flex  align-items-center" style="height:30px">Hapus Akun</button>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
             </div>

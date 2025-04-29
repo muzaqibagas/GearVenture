@@ -14,9 +14,8 @@ class Konten extends Model
 
     // Kolom yang bisa diisi (mass assignment)
     protected $fillable = [
-        'judul',
-        'deskripsi',
-        'tanggal',        
+        'diskon',
+        'produk_id'       
     ];
 
     // (opsional) Format tanggal yang digunakan Laravel
@@ -25,10 +24,6 @@ class Konten extends Model
     public function barang()
     {
         return $this->belongsTo(Barang::class, 'produk_id', 'id');
-    }
-    public function produk()
-{
-    return $this->belongsTo(Barang::class, 'produk_id');
-}
+    }    
 
 }

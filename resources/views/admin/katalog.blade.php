@@ -10,11 +10,13 @@
   <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
   <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link id="pagestyle" href="{{ asset('css/pengaturan.css?v=1.1.0') }}" rel="stylesheet" >
   <link id="pagestyle" href="{{ asset('css/iconify.css?v=1.1.0') }}" rel="stylesheet" >
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="g-sidenav-show  bg-gray-100">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
@@ -22,7 +24,7 @@
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">      
         <img src="{{ asset('img/logo1.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">HI, Admin</span>
+        <span class="ms-1 font-weight-bold">HI, {{ Auth::guard('admin')->user()->username}}</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -151,7 +153,10 @@
       </ul>
     </div>
     <div class="sidenav-footer mx-3 ">
-      <a class="btn btn-primary mt-3 w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree">Logout</a>
+      <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn btn-primary mt-3 w-100">Logout</button>
+      </form>      
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -210,34 +215,50 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Gambar</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Bintang</th>                      
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Rating</th>                      
                       <th class="text-secondary text-center">
-                        <a class="btn text-center text-white btn-sm w-100 btn-primary rounded mb-0 px-0" href="tambahkonten">Tambah+</a>
+                        <a class="btn text-center text-white btn-sm w-100 btn-primary rounded mb-0 px-0" href="{{ route('tambahkatalog') }}">Tambah+</a>
                       </th>
                     </tr>
                   </thead>
                   <tbody>
+                  @php
+                      $no = 1;
+                  @endphp
+                  @foreach($dakat as $item)
                     <tr>
                       <td>
-                        <p class="ps-3">1</p>
+                        <p class="ps-3">{{ $no++ }}</p>
                       </td>
                       <td>
-                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                          @if ($item->produk)
+                              <img src="{{ asset('pict/'.$item->produk->foto) }}" class="rounded" style="height:100px; width:100px" alt="user1">
+                          @else
+                              <span class="text-danger">Foto tidak tersedia</span>
+                          @endif
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Chesnut Dome Tent</p>                        
+                          <p class="text-xs font-weight-bold mb-0">{{ $item->produk->nama ?? 'Nama tidak tersedia' }}</p>                        
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Up to 25%</p>
+                          <p class="text-xs font-weight-bold mb-0">Rp {{ number_format($item->produk->harga_sewa, 0, ',', '.') ?? 'Harga tidak tersedia' }}</p>
                       </td>
+
                       <td>
-                      <p class="text-xs font-weight-bold mb-0">Tenda 4P + Matras + Sleeping Bag</p>
+                        @for ($i = 1; $i <= 5; $i++)
+                          @if ($i <= $item->Rating)
+                            <i class="fas fa-star text-yellow-400"></i> <!-- bintang penuh -->
+                          @else
+                            <i class="far fa-star text-gray-400"></i> <!-- bintang kosong -->
+                          @endif
+                        @endfor
+                        <p class="text-xs font-weight-bold mb-0">({{ $item->Rating }}/5)</p>
                       </td>                
-                      <td class="tombol align-middle d-flex flex-column gap-1">                                                
-                        <a href="editkonten" class="btn text-center text-white btn-sm w-100 btn-warning rounded mb-0">Edit</a>
-                        <a href="" class="btn text-center text-white btn-sm w-100 btn-danger rounded mb-0">Hapus</a>                        
+                      <td class="tombol">                                                                        
+                        <a href="{{ route('deletekatalog', $item->id) }}" class="btn text-center text-white btn-sm w-100 btn-danger rounded mb-0">Hapus</a>                        
                       </td>
-                    </tr>                
+                    </tr>    
+                  @endforeach            
                   </tbody>
                 </table>
               </div>

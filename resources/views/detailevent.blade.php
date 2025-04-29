@@ -8,7 +8,7 @@
 @section('main')
 
 <section class="catalog py-4"> 
-    <a href="event" class="text-dark rounded-pill">&larr; Kembali</a>
+    <a href="javascript:history.back()" class="btn text-white rounded-pill mb-3 align-self-start" style="background-color:#383d1f">&larr; Kembali</a>
     <div class="d-flex justify-content-center">
         <div class="col-lg-8 d-inline-block">
             <img src="{{ asset('img/banner-02.jpg') }}" alt="Camping Easy Peasy" class="img-fluid rounded mb-3">

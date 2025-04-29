@@ -27,6 +27,7 @@ if(!isset($_SESSION['users'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     @stack('style')
 </head>
 <body class="bg-gray-100">
@@ -43,6 +44,7 @@ if(!isset($_SESSION['users'])) {
     {{-- FOOTER --}}
 
     <!-- Link FontAwesome (Untuk Ikon) -->
+    
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
 
 

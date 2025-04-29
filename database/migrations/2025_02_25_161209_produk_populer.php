@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('produk_populer', function (Blueprint $table) {
             $table->id(); // id otomatis
-            $table->unsignedBigInteger('produk_id'); // FK ke tabel produk            
-            $table->decimal('harga', 10, 2); // harga produk
-            $table->integer('Rating'); // rating bintang (1 - 5)
+            $table->unsignedBigInteger('produk_id'); // FK ke tabel produk                        
+            $table->integer('Rating')->default(5); // rating bintang (1 - 5)
             $table->timestamps(); // created_at & updated_at
 
             // Menambahkan foreign key constraint

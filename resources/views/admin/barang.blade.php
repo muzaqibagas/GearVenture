@@ -22,7 +22,7 @@
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">      
         <img src="{{ asset('img/logo1.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">HI, Admin</span>
+        <span class="ms-1 font-weight-bold">HI, {{ Auth::guard('admin')->user()->username}}</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -152,7 +152,10 @@
       </ul>
     </div>
     <div class="sidenav-footer mx-3 ">
-      <a class="btn btn-primary mt-3 w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree">Logout</a>
+      <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn btn-primary mt-3 w-100">Logout</button>
+      </form>      
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -229,7 +232,7 @@
                         <p class="text-xs font-weight-bold mb-0">{{ $dabar->kategori->nama ?? 'Tidak ada kategori' }}</p>                        
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Rp {{$dabar->harga_sewa}}</p>
+                        <p class="text-xs font-weight-bold mb-0">Rp {{ number_format($dabar->harga_sewa, 0, ',', '.') ?? 'Harga tidak tersedia' }}</p>
                       </td>
                       <td>
                       <p class="text-xs font-weight-bold mb-0">{{$dabar->stok}}</p>

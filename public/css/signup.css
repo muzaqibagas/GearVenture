@@ -141,3 +141,27 @@ button:hover {
 .register p a:hover {
     text-decoration: none;
 }
+
+.alert {
+    position: absolute;
+    padding: 15px 20px;
+    margin-bottom: 3px;
+    border-radius: 5px;
+    font-weight: bold;        
+    border: 1px solid transparent;
+    transition: 0.3s ease;
+}
+
+.alert-success {
+    position: absolute;
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    position: relative !important;
+    color: #ff0019;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}

@@ -15,41 +15,36 @@
 
     <section>
         <form action="{{ route('signup') }}" method="POST">
+            @if ($errors->has('username'))
+                <div class="alert alert-danger" style="top: 50px;">{{ $errors->first('username') }}</div>
+            @endif
+
+            @if ($errors->has('email'))
+                <div class="alert alert-danger" style="top: 55px;">{{ $errors->first('email') }}</div>
+            @endif
             @csrf
             <h1>Create a new account</h1>
             <div class="inputbox">
                 <input type="text" class="form-control{{ $errors->has('nama')? 'is-invalid' : '' }}"
-                    name="nama" required placeholder=" ">
-                @error('nama')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                    name="nama" required placeholder=" ">                
                 <label>Nama Lengkap</label>
             </div>
 
             <div class="inputbox">
                 <input type="text" class="form-control{{ $errors->has('username')? 'is-invalid' : '' }}"
-                    name="username" required placeholder=" ">
-                @error('username')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                    name="username" required placeholder=" ">                
                 <label>Username</label>
             </div>
             
             <div class="inputbox">
                 <input type="email" class="form-control{{ $errors->has('email')? 'is-invalid' : '' }}"
-                    name="email" required placeholder=" ">
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                    name="email" required placeholder=" ">            
                 <label>Email</label>
             </div>
 
             <div class="inputbox">
                 <input type="password" class="form-control{{ $errors->has('password')? 'is-invalid' : '' }}"
-                    name="password" required placeholder=" ">
-                @error('password')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                    name="password" required placeholder=" ">                
                 <label>Password</label>
             </div>
 

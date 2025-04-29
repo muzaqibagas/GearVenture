@@ -43,5 +43,9 @@ class Barang extends Model
     {
         return $this->hasOne(Konten::class, 'produk_id');
     }
+    public function ProdukPopuler()
+    {
+        return $this->hasOne(ProdukPopuler::class, 'produk_id');
+    }
 
 }
