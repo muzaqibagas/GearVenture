@@ -33,6 +33,7 @@ class GearVentureController extends Controller
             'password' => 'required|string|min:8|max:255',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'role' => 'required|in:user',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $user = User::create([
@@ -41,7 +42,8 @@ class GearVentureController extends Controller
             'email' => $req->email,
             'password' => Hash::make($req->password),
             'jenis_kelamin' => $req->jenis_kelamin,
-            'role' => 'user'
+            'role' => 'user',
+            'foto' => 'default.jpg'
         ]);
 
         // Kirim link verifikasi email
@@ -352,7 +354,7 @@ class GearVentureController extends Controller
             $data->foto = $data->foto;
         }        
         $data->save();        
-        return redirect()->route('barang')->with('Sukses', 'Barang berhasil diperbarui');
+        return redirect()->route('barang')->with('sukses', 'Barang berhasil diperbarui');
     }
 
     //DELETE BARANG
@@ -375,12 +377,22 @@ class GearVentureController extends Controller
 
     //CREATE KATEGORI
     public function storekategori(Request $request){
+        $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+    
+        $cekKategori = KategoriProduk::where('nama', $request->nama)->first();
+        if ($cekKategori) {
+            return redirect()->back()->with('error', 'Kategori dengan nama tersebut sudah ada.');
+        }
+    
         $data = new KategoriProduk();
         $data->nama = $request->nama;
-
         $data->save();
+    
         return redirect()->route('kategori')->with('sukses', 'Kategori Berhasil Ditambahkan');        
     }
+    
 
     //FORM EDIT KATEGORI
     public function editkategori($id)
@@ -400,7 +412,7 @@ class GearVentureController extends Controller
         $data->nama = $request->nama;
                 
         $data->save();        
-        return redirect()->route('kategori')->with('Sukses', 'Kategori berhasil diperbarui');
+        return redirect()->route('kategori')->with('sukses', 'Kategori berhasil diperbarui');
     }
     
     //DELETE KATEGORI
@@ -435,6 +447,17 @@ class GearVentureController extends Controller
 
     //CREATE KONTEN
     public function storekonten(Request $request){
+        $request->validate([
+            'produk_id' => 'required|exists:produk,id',
+            'diskon' => 'required|numeric|min:0',
+        ]);
+    
+        // Cek apakah konten dengan produk_id yang sama sudah ada
+        $cekKonten = Konten::where('produk_id', $request->produk_id)->first();
+        if ($cekKonten) {
+            return redirect()->back()->with('error', 'Konten untuk produk tersebut sudah ada.');
+        }
+
         $dakon = new Konten();
         $dakon->produk_id = $request->produk_id;
         $dakon->diskon = $request->diskon;
@@ -467,7 +490,7 @@ class GearVentureController extends Controller
         $dakon->diskon = $request->diskon;
         $dakon->save();
 
-        return redirect()->route('konten')->with('Sukses', 'Konten berhasil diperbarui');
+        return redirect()->route('konten')->with('sukses', 'Konten berhasil diperbarui');
     }
 
 
@@ -570,13 +593,70 @@ class GearVentureController extends Controller
 
 
     public function profile(){
-        $profile = Auth::user();
+        $profile = Auth::user();        
         return view('admin.profile', compact('profile'));
+    
     }
 
     public function editprofile(){
-        return view('admin.editprofile');
+        $profile = Auth::guard('admin')->user();
+        return view('admin.editprofile',compact('profile'));
     }
+
+    public function updateprofile(Request $request){        
+        $profile = Auth::guard('admin')->user();
+
+        if ($request->hasFile('foto')) {            
+            $request->validate([
+                'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+                
+            $file = $request->file('foto');
+                        
+            $path = 'foto/user/' . $file->getClientOriginalName();                
+            $file->move(public_path('foto/user'), $path);
+                
+            $profile->foto = $path;
+        }
+
+        $request->validate([
+            'username' => 'required',
+            'nama' => 'required',
+            'email' => 'required|email',
+            'jenis_kelamin' => 'required',
+        ]);
+
+        $profile->username = $request->username;
+        $profile->nama = $request->nama;
+        $profile->email = $request->email;
+        $profile->jenis_kelamin = $request->jenis_kelamin;
+
+        if ($request->filled('password')) {
+            $profile->password = bcrypt($request->password);
+        }
+
+        $profile->save();
+
+        return redirect()->back()->with('sukses', 'Profil berhasil diperbarui.');
+    }
+
+    public function updatepassword(Request $request) {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed|min:8',
+        ]);
+    
+        $admin = Auth::guard('admin')->user();
+    
+        if (!Hash::check($request->current_password, $admin->password)) {
+            return back()->withErrors(['current_password' => 'Password saat ini salah.']);
+        }
+    
+        $admin->password = bcrypt($request->new_password);
+        $admin->save();
+    
+        return back()->with('success', 'Password berhasil diperbarui.');
+    }    
 }
 
 

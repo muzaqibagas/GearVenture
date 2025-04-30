@@ -190,7 +190,18 @@
       <div class="row">
         <div class="col-12">          
           <h5 class="card bg-white p-3"><strong>Tambah Konten</strong></h5>
-          <div class="card mb-4 mt-3">                         
+          <div class="card mb-4 mt-3">    
+            @if (session('sukses'))
+                <div class="alert alert-success text-white">
+                    {{ session('sukses') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger text-white">
+                    {{ session('error') }}
+                </div>
+            @endif                     
             <form class="text-xxs p-4" action="{{ route('storekonten') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <div class="row">

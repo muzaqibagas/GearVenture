@@ -122,6 +122,9 @@ Route::get('/admin/editevent', [GearVentureController::class, 'editevent'])->nam
 
 Route::get('/admin/profile', [GearVentureController::class, 'profile'])->name('profile');
 Route::get('/admin/editprofile', [GearVentureController::class, 'editprofile'])->name('editprofile');
+Route::post('/admin/updateprofile', [GearVentureController::class, 'updateprofile'])->name('updateprofile');
+Route::post('/admin/updatepassword', [GearVentureController::class, 'updatepassword'])->name('updatepassword');
+
 
 
 

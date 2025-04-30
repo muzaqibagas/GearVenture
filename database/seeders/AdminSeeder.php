@@ -14,6 +14,7 @@ class AdminSeeder extends Seeder
             'nama' => 'Admin GearVenture',
             'username' => 'admingearventure',
             'email' => 'admin@gearventure.com',
+            'foto' => '',
             'password' => Hash::make('adminpassword'),
             'jenis_kelamin' => 'Laki-laki',
             'role' => 'admin'

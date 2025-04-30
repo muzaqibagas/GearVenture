@@ -201,7 +201,7 @@
                         </ul>
                     </div>
                 @endif                                   
-                <form class="text-xxs p-4" action="{{ route('updatekategori', $data->id_kategori) }}" method="POST" enctype="multipart/form-data">                
+                <form class="text-xxs p-4" action="{{ route('updatekategori', $data->id) }}" method="POST" enctype="multipart/form-data">                
                     @csrf
                     <div class="row">
                         <div class="w-100">

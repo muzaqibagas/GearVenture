@@ -104,7 +104,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="pengaturan">
+          <a class="nav-link  " href="{{ route('konten') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>box-3d-50</title>
@@ -188,55 +188,89 @@
     <!-- End Navbar -->
     <div class="container-fluid py-4">
         <div class="row">
-            <div class="col-12 d-flex justify-content-center">
+            <div class="col-12 d-flex justify-content-center flex-column">
+              <form action="{{ route('updateprofile') }}" class="col-12 d-flex justify-content-center" method="POST" enctype="multipart/form-data">              
+                @csrf
                 <div class="card w-70 mb-4 p-4">
+                  @if (session('sukses'))
+                      <div class="alert alert-success text-white">
+                          {{ session('sukses') }}
+                      </div>
+                  @endif
+
+                  @if (session('error'))
+                      <div class="alert alert-danger text-white">
+                          {{ session('error') }}
+                      </div>
+                  @endif
+
+                  {{-- Menampilkan error validasi jika ada --}}
+                  @if ($errors->any())
+                      <div class="alert alert-danger text-white">
+                          <ul class="mb-0">
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      </div>
+                  @endif
                     <div class="row align-items-center">
                         <!-- Foto Profil -->
                         <h4 class="mb-3 px-4">Edit Profile</h4>
                         <div class="col-md-3 text-center position-relative">
-                            <img src="{{ asset('img/profile.jpg') }}" alt="Foto Profil" class="rounded-circle img-fluid" style="width: 120px; height: 120px; object-fit: cover;">                                                                            
-
-                            <!-- Tombol Edit Profil -->
-                            <a href="editprofile" class="edit d-flex align-items-center justify-content-center gap-2 text-decoration-none text-dark p-2 rounded" style="background: #f8f9fa;">
-                                <i class="fa6-solid--pen pen2"></i> <!-- Ikon Pena -->
-                                <span>Edit Foto</span>
-                            </a>
-
+                          <label for="fotoInput" style="cursor: pointer; position: relative; display: inline-block;">                  
+                            <img src="{{ asset(Auth::guard('admin')->user()->foto) }}" alt="Foto Profil" style="width: 120px; height: 120px; object-fit: cover;" class="rounded-circle mb-2">                            
+                            <div class="position-absolute top-50 start-50 translate-middle bg-success text-white rounded-circle d-flex align-items-center justify-content-center" 
+                                style="width: 36px; height: 36px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
+                                <i class="material-symbols--photo-camera"></i> <!-- Ikon Pena -->
+                            </div>
+                            <!-- <div class="position-absolute top-50 start-50 translate-middle bg-success">
+                                <i class="material-symbols--photo-camera" style="background-color: black; padding: 10px; border-radius: 50%;"></i>
+                            </div> -->
+                          </label>
+                            <input type="file" name="foto" id="fotoInput" class="d-none" onchange="previewImage(this)">                            
                         </div>
 
                         <!-- Informasi Profil -->
                         <div class="col-md-9">                            
                             <div class="row">
-                                <div class="col-5 fw-bold text-success">Username</div>
-                                <div class="col-7">MuzaqiBagas
-                                    <i class="pen1 fa6-solid--pen"></i>
+                                <div class="d-flex w-100 align-items-center">
+                                  <div class="col-5 fw-bold text-success">Username</div>:
+                                  <div class="col-7 ms-1">
+                                    <input type="text" name="username" class="form-control" value="{{ Auth::guard('admin')->user()->username }}">
+                                  </div>
                                 </div>
 
-                                <div class="col-5 mt-3 fw-bold text-success">Nama</div>
-                                <div class="col-7 mt-3">Muzaqi Rangkuti Bagas
-                                    <i class="pen1 fa6-solid--pen"></i>
+                                <div class="d-flex w-100 align-items-center mt-3">
+                                  <div class="col-5 fw-bold text-success">Nama</div>:
+                                  <div class="col-7 ms-1">
+                                    <input type="text" name="nama" class="form-control" value="{{ Auth::guard('admin')->user()->nama }}">                                    
+                                  </div>
                                 </div>
 
-                                <div class="col-5 mt-3 fw-bold text-success">Email</div>
-                                <div class="col-7 mt-3">Muzaqibagas@anjay.com
-                                    <i class="pen1 fa6-solid--pen"></i>
+                                <div class="d-flex w-100 align-items-center mt-3">
+                                  <div class="col-5 fw-bold text-success">Email</div>:
+                                  <div class="col-7 ms-1">
+                                    <input type="text" name="email" class="form-control" value="{{ Auth::guard('admin')->user()->email }}">                                    
+                                  </div>
                                 </div>
 
-                                <div class="col-5 mt-3 fw-bold text-success">No. Telepon</div>
-                                <div class="col-7 mt-3">08567926382
-                                    <i class="pen1 fa6-solid--pen"></i>
-                                </div>
+                                <!-- <div class="d-flex w-100 align-items-center mt-3">
+                                  <div class="col-5 fw-bold text-success">Password</div>:
+                                  <div class="col-7 ms-1">
+                                    <input type="text" name="password" class="form-control" value="{{ Auth::guard('admin')->user()->password }}">                                    
+                                  </div>
+                                </div> -->
 
-                                <div class="col-5 mt-3 fw-bold text-success">Jenis Kelamin</div>
-                                <div class="col-71 mt-3">
-                                    <label class="text-muted fs-6 fw-normal">
-                                        <input type="radio" name="gender" value="Laki-laki" checked> Laki-laki
-                                    </label>
-
-                                    <label class="text-muted fs-6 fw-normal">
-                                        <input type="radio" name="gender" value="Perempuan"> Perempuan
-                                    </label>
-                                </div>
+                                <div class="d-flex w-100 align-items-center mt-3">                                
+                                  <div class="col-5 fw-bold text-success">Jenis Kelamin</div>:
+                                  <div class="col-7 ms-1">                                    
+                                    <select name="jenis_kelamin" class="form-control">
+                                      <option value="Laki-laki" {{ Auth::guard('admin')->user()->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                      <option value="Perempuan" {{ Auth::guard('admin')->user()->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                    </select>                                    
+                                  </div>
+                                </div>                                                                                                                          
                             </div>
                         </div>
                     </div>
@@ -246,6 +280,55 @@
                         <button class="btn btn-primary px-4 py-2">Simpan Perubahan</button>
                     </div>
                 </div>
+              </form>
+                
+              <form action="{{ route('updatepassword') }}" class="col-12 d-flex justify-content-center" method="POST">                
+                @csrf
+                <div class="card w-70 mb-4 p-4">
+                  @if (session('success'))
+                      <div class="alert alert-success text-white">
+                          {{ session('success') }}
+                      </div>
+                  @endif
+
+                  @if (session('error'))
+                      <div class="alert alert-danger text-white">
+                          {{ session('error') }}
+                      </div>
+                  @endif
+
+                  {{-- Menampilkan error validasi jika ada --}}
+                  @if ($errors->any())
+                      <div class="alert alert-danger text-white">
+                          <ul class="mb-0">
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      </div>
+                  @endif   
+                    <h4>Ganti Password</h4>
+
+                    <div class="mb-3">
+                        <label>Password Saat Ini</label>
+                        <input type="password" name="current_password" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Password Baru</label>
+                        <input type="password" name="new_password" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Konfirmasi Password Baru</label>
+                        <input type="password" name="new_password_confirmation" class="form-control" required>
+                    </div>
+                    <div class="text-center mt-4">
+                      <button class="btn btn-primary px-4 py-2">Ganti Password</button>
+                    </div>
+                </div>
+              </form>
+
             </div>
         </div>
     </div>
@@ -256,6 +339,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scrollbar/8.6.3/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+  function previewImage(input) {
+      if (input.files && input.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+              document.querySelector('img[alt="Foto Profil"]').src = e.target.result;
+          }
+          reader.readAsDataURL(input.files[0]);
+      }
+  }
+  </script>
 
   <script>
     var ctx2 = document.getElementById("chart-line").getContext("2d");

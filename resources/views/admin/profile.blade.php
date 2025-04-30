@@ -190,14 +190,14 @@
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <div class="card w-70 mb-4 p-4">
-                    <div class="row align-items-center">
+                    <div class="row align-items-center pb-4">
                         <!-- Foto Profil -->
                         <h4 class="mb-3 px-4">Profil Saya</h4>
                         <div class="col-md-3 text-center position-relative">
                             <img src="{{ asset('img/profile.jpg') }}" alt="Foto Profil" class="rounded-circle img-fluid" style="width: 120px; height: 120px; object-fit: cover;">
                             
                             <!-- Tombol Edit Profil -->
-                            <a href="editprofile" class="position-absolute top-50 start-50 translate-middle bg-success text-white rounded-circle d-flex align-items-center justify-content-center" 
+                            <a href="{{ route('editprofile') }}" class="position-absolute top-50 start-50 translate-middle bg-success text-white rounded-circle d-flex align-items-center justify-content-center" 
                                 style="width: 36px; height: 36px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
                                 <i class="pen fa6-solid--pen"></i> <!-- Ikon Pena -->
                             </a>
@@ -206,25 +206,32 @@
                         <!-- Informasi Profil -->
                         <div class="col-md-9">                            
                             <div class="row">
-                                <div class="col-5 fw-bold text-success">Username</div>
-                                <div class="col-7">{{ Auth::guard('admin')->user()->username }}</div>
+                                <div class="d-flex w-100">
+                                  <div class="col-5 fw-bold text-success">Username</div>:
+                                  <div class="col-7 border rounded d-flex align-items-center px-2 ms-1">{{ Auth::guard('admin')->user()->username }}</div>
+                                </div>
 
-                                <div class="col-5 mt-3 fw-bold text-success">Nama</div>
-                                <div class="col-7 mt-3">{{ Auth::guard('admin')->user()->nama }}</div>
+                                <div class="d-flex w-100 mt-3">
+                                  <div class="col-5 fw-bold text-success">Nama</div>:
+                                  <div class="col-7 border rounded d-flex align-items-center px-2 ms-1">{{ Auth::guard('admin')->user()->nama }}</div>
+                                </div>
 
-                                <div class="col-5 mt-3 fw-bold text-success">Email</div>
-                                <div class="col-7 mt-3">{{ Auth::guard('admin')->user()->email }}</div>                                
+                                <div class="d-flex w-100 mt-3">
+                                  <div class="col-5 fw-bold text-success">Email</div>:
+                                  <div class="col-7 border rounded d-flex align-items-center px-2 ms-1">{{ Auth::guard('admin')->user()->email }}</div>                                
+                                </div>
 
-                                <div class="col-5 mt-3 fw-bold text-success">Jenis Kelamin</div>
-                                <div class="col-7 mt-3">{{ Auth::guard('admin')->user()->jenis_kelamin }}</div>
+                                <div class="d-flex w-100 mt-3">
+                                  <div class="col-5 fw-bold text-success">Jenis Kelamin</div>:
+                                  <div class="col-7 border rounded d-flex align-items-center px-2 ms-1">{{ Auth::guard('admin')->user()->jenis_kelamin }}</div>
+                                </div>                                                                                          
                             </div>
                         </div>
                     </div>
-
-                    <!-- Tombol Hapus Akun -->
+                    <!-- Tombol Hapus Akun
                     <div class="text-center mt-4">
                         <button class="btn btn-danger px-4 py-2">Hapus Akun</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

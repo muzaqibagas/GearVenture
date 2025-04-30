@@ -193,14 +193,14 @@
           <div class="card mb-4 mt-3">   
             {{-- Untuk pesan sukses --}}
             @if (session('sukses'))
-                <div class="alert alert-success">
+                <div class="alert alert-success text-white">
                     {{ session('sukses') }}
                 </div>
             @endif
 
             {{-- Untuk pesan error --}}
             @if (session('error'))
-                <div class="alert alert-danger">
+                <div class="alert alert-danger text-white">
                     {{ session('error') }}
                 </div>
             @endif                      

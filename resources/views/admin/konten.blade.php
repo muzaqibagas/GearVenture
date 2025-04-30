@@ -206,7 +206,29 @@
           </div>
           <div class="card mb-4">                  
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">              
+              <div class="table-responsive p-0">                   
+                @if (session('sukses'))
+                    <div class="alert alert-success text-white">
+                        {{ session('sukses') }}
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger text-white">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                {{-- Menampilkan error validasi jika ada --}}
+                @if ($errors->any())
+                    <div class="alert alert-danger text-white">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif         
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
