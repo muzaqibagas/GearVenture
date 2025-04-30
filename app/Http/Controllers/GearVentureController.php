@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Models\KategoriProduk;
-use App\Models\ProdukPopuler;
 use App\Models\Admin;
-use App\Models\Konten;
 use App\Models\Barang;
+use App\Models\Event;
+use App\Models\KategoriProduk;
+use App\Models\Konten;
+use App\Models\ProdukPopuler;
 use App\Models\User;
 
 class GearVentureController extends Controller
@@ -294,8 +295,7 @@ class GearVentureController extends Controller
     }
 
     //CREATE BARANG
-    public function store(Request $request) 
-    {        
+    public function store(Request $request) {        
         $cekBarang = Barang::where('nama', $request->nama)->first();
         if ($cekBarang) {
             // Jika sudah ada, kembalikan dengan pesan error
@@ -577,7 +577,8 @@ class GearVentureController extends Controller
 
     //EVENTS
     public function events(){
-        return view('admin.event');
+        $data = Event::all();
+        return view('admin.event', compact('data'));
     }    
 
     //FORM TAMBAH EVENT
@@ -585,12 +586,70 @@ class GearVentureController extends Controller
         return view('admin.tambahevent');
     }
 
-    //FORM EDIT EVENT
-    public function editevent(){
-        return view('admin.editevent');
+    //CREATE EVENT
+    public function storeevent(Request $request){
+        $request->validate([
+            'judul' => 'required|string|max:255|unique:event,judul',
+            'lokasi' => 'required|string|max:255',
+            'isi_artikel' => 'required|string',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $data = new Event();
+        $data->judul = $request->judul;
+        $data->lokasi = $request->lokasi;
+        $data->isi_artikel = $request->isi_artikel;
+
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $namaFile = time() . '_' . $file->getClientOriginalName(); // Hindari nama sama
+            $file->move('pict/', $namaFile);
+            $data->gambar = $namaFile;
+        }
+
+        $data->save();
+
+        return redirect()->route('events')->with('sukses', 'Event berhasil ditambahkan.');
     }
 
+    //FORM EDIT EVENT
+    public function editevent($id){
+        $data = Event::find($id);
+        return view('admin.editevent', compact('data'));
+    }
 
+    //UPDATE EVENT
+    public function updateevent(Request $request, $id){
+        $request->validate([
+            'judul' => 'required|string|max:255|unique:event,judul,' . $id,
+            'lokasi' => 'required|string|max:255',
+            'isi_artikel' => 'required|string',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $event = Event::findOrFail($id);
+        $event->judul = $request->judul;
+        $event->lokasi = $request->lokasi;
+        $event->isi_artikel = $request->isi_artikel;
+
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $namaFile = time() . '_' . $file->getClientOriginalName();
+            $file->move('pict/', $namaFile);
+            $event->gambar = $namaFile;
+        }
+
+        $event->save();
+
+        return redirect()->route('events')->with('sukses', 'Event berhasil diperbarui.');
+    }
+
+    //DELETE EVENT
+    public function deleteevent($id){
+        $data = Event::find($id);
+        $data->delete();
+        return redirect()->route('events')->with('sukses','Barang Berhasil Dihapus');
+    }
 
     public function profile(){
         $profile = Auth::user();        

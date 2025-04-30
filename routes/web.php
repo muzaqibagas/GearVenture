@@ -98,10 +98,6 @@ Route::get('/admin/kategori/{id}', [GearVentureController::class, 'deletekategor
 Route::get('/admin/laporan', [GearVentureController::class, 'laporan'])->name('laporan');
 Route::get('/admin/status', [GearVentureController::class, 'status'])->name('status');
 
-Route::get('/api/produk/{id}', function($id) {
-    return App\Models\Barang::findOrFail($id);
-});
-
 Route::get('/admin/konten', [GearVentureController::class, 'konten'])->name('konten');//semua konten ada dsini
 Route::get('/admin/tambahkonten', [GearVentureController::class, 'tambahkonten'])->name('tambahkonten');//form tambah konten
 Route::post('/admin/konten', [GearVentureController::class, 'storekonten'])->name('storekonten'); //create kategori
@@ -118,7 +114,10 @@ Route::get('/admin/katalog/{id}', [GearVentureController::class, 'deletekatalog'
 
 Route::get('/admin/events', [GearVentureController::class, 'events'])->name('events');
 Route::get('/admin/tambahevent', [GearVentureController::class, 'tambahevent'])->name('tambahevent');
-Route::get('/admin/editevent', [GearVentureController::class, 'editevent'])->name('editevent');
+Route::post('/admin/events', [GearVentureController::class, 'storeevent'])->name('storeevent'); //create kategori
+Route::get('/admin/editevent/{id}', [GearVentureController::class, 'editevent'])->name('editevent');
+Route::post('/admin/updateevent/{id}', [GearVentureController::class, 'updateevent'])->name('updateevent'); //update katalog populer 
+Route::get('/admin/events/{id}', [GearVentureController::class, 'deleteevent'])->name('deleteevent'); //delete katalog populer 
 
 Route::get('/admin/profile', [GearVentureController::class, 'profile'])->name('profile');
 Route::get('/admin/editprofile', [GearVentureController::class, 'editprofile'])->name('editprofile');

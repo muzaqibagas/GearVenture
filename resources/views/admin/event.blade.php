@@ -216,32 +216,37 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Map</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Isi Artkel</th>                      
                       <th class="text-secondary text-center">
-                        <a class="btn text-center text-white btn-sm w-100 btn-primary rounded mb-0 px-0" href="tambahkonten">Tambah+</a>
+                        <a class="btn text-center text-white btn-sm w-100 btn-primary rounded mb-0 px-0" href="{{ route('tambahevent') }}">Tambah+</a>
                       </th>
                     </tr>
                   </thead>
                   <tbody>
+                  @php
+                      $no = 1;
+                  @endphp
+                  @foreach ($data as $davent)    
                     <tr>
                       <td>
-                        <p class="ps-3">1</p>
+                        <p class="ps-3">{{ $no++ }}</p>
                       </td>
                       <td>
-                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                        <img src="{{ asset('pict/'.$davent->gambar)}}" class="rounded" style="height:100px; width:100px" alt="user1">
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Chesnut Dome Tent</p>                        
+                        <p class="text-xs font-weight-bold mb-0">{{$davent->judul}}</p>                        
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Up to 25%</p>
+                        <p class="text-xs font-weight-bold mb-0">{{$davent->lokasi}}</p>
                       </td>
                       <td>
-                      <p class="text-xs font-weight-bold mb-0">Tenda 4P + Matras + Sleeping Bag</p>
+                      <p class="text-xs font-weight-bold mb-0">{{$davent->isi_artikel}}</p>
                       </td>                
                       <td class="tombol align-middle d-flex flex-column gap-1">                                                
-                        <a href="{{ route('editevent') }}" class="btn text-center text-white btn-sm w-100 btn-warning rounded mb-0">Edit</a>
-                        <a href="" class="btn text-center text-white btn-sm w-100 btn-danger rounded mb-0">Hapus</a>                        
+                        <a href="{{ route('editevent', $davent->id) }}" class="btn text-center text-white btn-sm w-100 btn-warning rounded mb-0">Edit</a>
+                        <a href="{{ route('deleteevent', $davent->id) }}" class="btn text-center text-white btn-sm w-100 btn-danger rounded mb-0">Hapus</a>                        
                       </td>
-                    </tr>                
+                    </tr>    
+                  @endforeach            
                   </tbody>
                 </table>
               </div>

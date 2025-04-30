@@ -191,32 +191,46 @@
         <div class="col-12">          
           <h5 class="card bg-white p-3"><strong>Tambah Info Event</strong></h5>
           <div class="card mb-4 mt-3">                         
-              <form class="text-xxs p-4">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <div class="mb-1">
-                              <label class="form-label">Judul</label>
-                              <input type="text" class="form-control" value="....">
-                          </div>                          
-                          <div class="mb-1">
-                              <label class="form-label">Alamat</label>
-                              <input type="text" class="form-control" value=".....">
-                          </div>                                                                     
-                          <div class="mb-3">
-                              <label class="form-label">Artikel</label>
-                              <textarea class="form-control" rows="3">Artikel .................................</textarea>
-                          </div>
-                      </div>
-                      <div class="col-md-6 text-center">
-                          <label class="form-label">Gambar</label>
-                          <input type="file" class="form-control mb-3">
-                          <img src="#" alt="" class="img-fluid border rounded" style="max-height: 200px;">
-                          <div class="text-end d-flex justify-content-center gap-3">
-                            <a href="#" class=" btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
-                            <a href="#" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</a>
+            {{-- Untuk pesan sukses --}}
+              @if (session('sukses'))
+                  <div class="alert alert-success text-white">
+                      {{ session('sukses') }}
+                  </div>
+              @endif
+
+              {{-- Untuk pesan error --}}
+              @if (session('error'))
+                  <div class="alert alert-danger text-white">
+                      {{ session('error') }}
+                  </div>
+              @endif   
+              <form class="text-xxs p-4" action="{{ route('storeevent') }}" method="POST" enctype="multipart/form-data">              
+                @csrf
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-1">
+                            <label class="form-label">Judul</label>
+                            <input type="text" name="judul" class="form-control" placeholder="Judul Event">
+                        </div>                          
+                        <div class="mb-1">
+                            <label class="form-label">Alamat</label>
+                            <input type="text" name="lokasi" class="form-control" placeholder="Alamat">
+                        </div>                                                                     
+                        <div class="mb-3">
+                            <label class="form-label">Artikel</label>
+                            <textarea class="form-control" name="isi_artikel" rows="3" placeholder="Artikel"></textarea>
                         </div>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <label class="form-label">Gambar</label>
+                        <input type="file" name="gambar" class="form-control mb-3" multiple>
+                        <img src="#" alt="" class="img-fluid border rounded" style="max-height: 200px;">
+                        <div class="text-end d-flex justify-content-center gap-3">
+                          <a href="#" class=" btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
+                          <button type="submit" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</button>
                       </div>
-                  </div>                  
+                    </div>
+                </div>                  
               </form>            
           </div>
         </div>
