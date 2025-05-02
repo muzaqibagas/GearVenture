@@ -308,20 +308,20 @@
                       </div>
                   @endif   
                     <h4>Ganti Password</h4>
-
-                    <div class="mb-3">
-                        <label>Password Saat Ini</label>
-                        <input type="password" name="current_password" class="form-control" required>
+                    
+                    <div class="mb-3 d-flex align-items-center px-3">
+                        <div class="col-5 fw-bold text-success">Password Saat Ini</div>:                        
+                        <input type="password" name="current_password" class="form-control ms-1" required>                                                            
                     </div>
 
-                    <div class="mb-3">
-                        <label>Password Baru</label>
-                        <input type="password" name="new_password" class="form-control" required>
+                    <div class="mb-3 d-flex align-items-center px-3">
+                        <div class="col-5 fw-bold text-success">Password Baru</div>:                                                
+                        <input type="password" name="new_password" class="form-control ms-1" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label>Konfirmasi Password Baru</label>
-                        <input type="password" name="new_password_confirmation" class="form-control" required>
+                    <div class="mb-3 d-flex align-items-center px-3">
+                        <div class="col-5 fw-bold text-success">Konfirmasi Password Baru</div>:                                                
+                        <input type="password" name="new_password_confirmation" class="form-control ms-1" required>
                     </div>
                     <div class="text-center mt-4">
                       <button class="btn btn-primary px-4 py-2">Ganti Password</button>

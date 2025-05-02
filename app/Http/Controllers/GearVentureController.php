@@ -181,10 +181,17 @@ class GearVentureController extends Controller
             ->whereHas('konten', function($q){
                 $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
             })->get();
+        $dacak = Barang::with('kategori')
+        ->where('kategori_id', $data->kategori_id)
+        ->where('id', '!=', $id)
+        ->inRandomOrder()
+        ->take(4)
+        ->get();        
         return view('detail', [
             'type_menu'=> 'detail',
             'data' => $data,
             'dakon' => $dakon,
+            'dacak' => $dacak,
         ]);
     }
     public function event(){
@@ -287,12 +294,12 @@ class GearVentureController extends Controller
 
         $user = Auth::guard('web')->user();
 
-        if (!Hash::check($request->current_password, $admin->password)) {
+        if (!Hash::check($request->current_password, $user->password)) {
             return back()->withErrors(['current_password' => 'Password saat ini salah.']);
         }
 
         $user->password =bcrypt($request->new_password);
-        $user-save();
+        $user->save();
 
         return back()->with('success', 'Password berhasil diperbarui.');
     }

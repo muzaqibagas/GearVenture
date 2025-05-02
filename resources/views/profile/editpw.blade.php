@@ -90,7 +90,8 @@
         
         <div class="d-flex align-items-center py-4" style="width:80%">
             <div class="row justify-content-center ">
-                <div class="col-8 d-flex justify-content-center">
+                <form action="{{ route('updatepw') }}" class="col-8 d-flex justify-content-center" method="POST">
+                    @csrf
                     <div class="card w-70 mb-4 p-4">
                         <div class="row align-items-center">
                             @if (session('success'))
@@ -120,25 +121,29 @@
                             <!-- Informasi Profil -->
                             <div class="col-md-9 w-100">                            
                                 <div class="row justify-content-center gap-1">
-                                    <div class="col-5 fw-bold rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Password Sekarang</div>:
-                                    <input class="col-7 border rounded w-50 d-flex align-items-center">
-
-                                    <div class="col-5 fw-bold rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">password Baru</div>:
-                                    <input class="col-7 border rounded w-50 d-flex align-items-center">
-
-                                    <div class="col-5 fw-bold rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Konfirmasi Password Baru</div>:
-                                    <input class="col-7 border rounded w-50 d-flex align-items-center">
+                                    <div class="mb-3 d-flex align-items-center px-4">
+                                        <div class="col-5 fw-bold rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Password Saat Ini</div>:
+                                        <input type="password" name="current_password" class="col-7 border rounded w-50 d-flex align-items-center ms-1">
+                                    </div>
+                                    <div class="mb-3 d-flex align-items-center px-4">
+                                        <div class="col-5 fw-bold rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">password Baru</div>:
+                                        <input type="password" name="new_password" class="col-7 border rounded w-50 d-flex align-items-center ms-1">
+                                    </div>
+                                    <div class="mb-3 d-flex align-items-center px-4">
+                                        <div class="col-5 fw-bold rounded me-3 d-flex align-items-center" style="color:#abc337; height:30px">Konfirmasi Password Baru</div>:
+                                        <input type="password" name="new_password_confirmation" class="col-7 border rounded w-50 d-flex align-items-center ms-1">
+                                    </div>
 
                                 </div>
                             </div>
                         </div>
 
                         <!-- Tombol Hapus Akun -->
-                        <div class="text-center mt-4 d-flex justify-content-end align-items-center me-3" h>
-                            <button class="btn btn-danger rounded-pill px-4 py-2 d-flex align-items-center" style="height:30px">Ubah Password</button>
+                        <div class="text-center mt-4 d-flex justify-content-end align-items-center me-3" >
+                            <button class="btn btn-danger rounded-pill px-4 py-2 d-flex align-items-center" style="height:30px">Ganti Password</button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

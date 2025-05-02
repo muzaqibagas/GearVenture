@@ -27,29 +27,16 @@
                 <li>Sleepingbag (Gratis)</li>
                 <li>Selimut (Gratis)</li>
             </ul>
-            <h4>Produk Terkait</h4>
-            <div class="row">
+            <h4>Produk Terkait</h4>            
+            <div class="row">            
+            @foreach ($dacak as $dabar)  
                 <div class="col-6 mb-4">
-                    <img src="{{ asset('img/banner-02.jpg') }}" class="rounded w-100" alt="Produk 1" style="height:200px; object-fit:cover;">
-                    <p class="mb-0">Aouto-Pop Camping Tent</p>
-                    <p class="mb-0 fw-bold" style="color:#c3d234">Rp125.000</p>
-                </div>
-                <div class="col-6 mb-4">
-                    <img src="{{ asset('img/banner-02.jpg') }}" class="rounded w-100" alt="Produk 2" style="height:200px; object-fit:cover;">
-                    <p class="mb-0">Aouto-Pop Camping Tent</p>
-                    <p class="mb-0 fw-bold" style="color:#c3d234">Rp125.000</p>
-                </div>
-                <div class="col-6 mb-4">
-                    <img src="{{ asset('img/banner-02.jpg') }}" class="rounded w-100" alt="Produk 3" style="height:200px; object-fit:cover;">
-                    <p class="mb-0">Aouto-Pop Camping Tent</p>
-                    <p class="mb-0 fw-bold" style="color:#c3d234">Rp125.000</p>
-                </div>
-                <div class="col-6 mb-4">
-                    <img src="{{ asset('img/banner-02.jpg') }}" class="rounded w-100" alt="Produk 4" style="height:200px; object-fit:cover;">
-                    <p class="mb-0">Aouto-Pop Camping Tent</p>
-                    <p class="mb-0 fw-bold" style="color:#c3d234">Rp125.000</p>
-                </div>
-            </div>
+                    <img src="{{ asset('pict/'.$dabar->foto)}}" class="rounded w-100" alt="Produk 1" style="height:200px; object-fit:cover;">
+                    <p class="mb-0">{{$dabar->nama}}</p>
+                    <p class="mb-0 fw-bold" style="color:#c3d234">Rp {{ number_format($dabar->harga_sewa, 0, ',', '.') }}</p>
+                </div>                                                
+            @endforeach 
+            </div>            
         </div>    
         <div class="col-lg-4 product-container">
             <h3>{{$data->nama}}</h3>            
