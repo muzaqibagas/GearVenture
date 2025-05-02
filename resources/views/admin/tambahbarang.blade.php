@@ -49,7 +49,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#menuBarang" role="button" aria-expanded="false" aria-controls="menuBarang">
+          <a class="nav-link active" data-bs-toggle="collapse" href="#menuBarang" role="button" aria-expanded="false" aria-controls="menuBarang">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>box-3d-50</title>
@@ -68,7 +68,7 @@
             </div>
             <span class="nav-link-text ms-1">Manajemen Barang</span>
           </a>
-          <div class="collapse" id="menuBarang">
+          <div class="collapse show" id="menuBarang">
             <ul class="nav ms-4 ps-3">
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('kategori') }}">
@@ -76,7 +76,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('barang') }}">
+                <a class="nav-link active" href="{{ route('barang') }}">
                   <span class="sidenav-normal">Barang</span>
                 </a>
               </li>
@@ -210,11 +210,12 @@
                   <div class="col-md-6">
                       <div class="mb-1">
                           <label class="form-label">Nama Produk</label>
-                          <input type="text" name="nama" class="form-control" value="Nama produk">
+                          <input type="text" name="nama" class="form-control" placeholder="Nama produk">
                       </div>
                       <div class="mb-1">
                           <label class="form-label">Kategori</label>
                           <select class="form-select" name="kategori_id">
+                            <option value="">Kategori</option>
                             @foreach($kategori as $k)
                                 <option value="{{ $k->id}}">
                                     {{ $k->nama }}
@@ -224,15 +225,15 @@
                       </div>
                       <div class="mb-1">
                           <label class="form-label">Harga</label>
-                          <input type="text" name="harga_sewa" class="form-control" value="0">
+                          <input type="text" name="harga_sewa" class="form-control" placeholder="0">
                       </div>                          
                       <label class="form-label">Stok</label>
                       <div class="d-flex stock-container gap-3">
-                          <input type="number" id="stockInput" name="stok" class="form-control" value="0" min="0">
+                          <input type="number" id="stockInput" name="stok" class="form-control" placeholder="0" min="0">
                       </div>                        
                       <div class="mb-3">
                           <label class="form-label">Keterangan</label>
-                          <textarea class="form-control" name="deskripsi" rows="3">Deskripsi Produk .................................</textarea>
+                          <textarea class="form-control" name="deskripsi" rows="3" placeholder="Keterangan Produk"></textarea>
                       </div>
                   </div>
                   <div class="col-md-6 text-center">

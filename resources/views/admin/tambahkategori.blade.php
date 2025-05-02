@@ -49,7 +49,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#menuBarang" role="button" aria-expanded="false" aria-controls="menuBarang">
+          <a class="nav-link active" data-bs-toggle="collapse" href="#menuBarang" role="button" aria-expanded="false" aria-controls="menuBarang">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>box-3d-50</title>
@@ -68,10 +68,10 @@
             </div>
             <span class="nav-link-text ms-1">Manajemen Barang</span>
           </a>
-          <div class="collapse" id="menuBarang">
+          <div class="collapse show" id="menuBarang">
             <ul class="nav ms-4 ps-3">
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('kategori') }}">
+                <a class="nav-link active" href="{{ route('kategori') }}">
                   <span class="sidenav-normal">Kategori</span>
                 </a>
               </li>
@@ -206,8 +206,8 @@
               <div class="row">
                   <div class="w-100">
                       <div class="mb-1">
-                          <label class="form-label">Nama Produk</label>
-                          <input type="text" name="nama" class="form-control" value="Nama produk">
+                          <label class="form-label">Nama Kategori</label>
+                          <input type="text" name="nama" class="form-control" placeholder="Nama Kategori">
                       </div> 
                   </div>                     
                   <div class="col-md-6">

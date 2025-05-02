@@ -219,7 +219,7 @@
                       <!-- Input Diskon -->
                       <div class="mb-1">
                           <label class="form-label">Diskon</label>
-                          <input type="text" name="diskon" class="form-control" value="">
+                          <input type="text" name="diskon" class="form-control" placeholder="%">
                       </div>
 
                       <!-- Deskripsi Otomatis -->
