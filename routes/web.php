@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\GearVentureController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -48,7 +49,7 @@ Route::post('/signin', [GearVentureController::class, 'signin'])->name('signin')
 Route::get('/signup', [GearVentureController::class, 'form'])->name('signup.form'); // Form pendaftaran
 Route::post('/signup', [GearVentureController::class, 'simpan'])->name('signup'); // Proses pendaftaran
 Route::post('/logout', [GearVentureController::class, 'logout'])->name('logout');
-route::delete('/user/{id}', [GearVentureController::class, 'destroy'])->name('user.destroy');
+// route::delete('/user/{id}', [GearVentureController::class, 'destroy'])->name('user.destroy');
 
 // PENYEWA
 // Route::get('/', [GearVentureController::class, 'signin'])->name('signin');
@@ -68,8 +69,11 @@ Route::get('/refund', [GearVentureController::class, 'refund'])->name('refund');
 Route::get('/jadwal', [GearVentureController::class, 'jadwal'])->name('jadwal');
 Route::get('/profile/user', [GearVentureController::class, 'profileuser'])->name('profileuser');
 Route::get('/profile/edituser', [GearVentureController::class, 'edituser'])->name('edituser');
+Route::post('/profile/updateuser', [GearVentureController::class, 'updateuser'])->name('updateuser');
 Route::get('/profile/editpw', [GearVentureController::class, 'editpw'])->name('editpw');
-Route::get('/profile/hapusakun', [GearVentureController::class, 'hapusakun'])->name('hapusakun');
+Route::post('/profile/updatepw', [GearVentureController::class, 'updatepw'])->name('updatepw');
+Route::delete('/profile/hapusakun', [GearVentureController::class, 'hapusakun'])->name('hapusakun');
+Route::get('/profile/deleteakun', [GearVentureController::class, 'deleteakun'])->name('deleteakun');
 Route::get('/profile/belum', [GearVentureController::class, 'belum'])->name('belum');
 Route::get('/profile/sewa', [GearVentureController::class, 'sewa'])->name('sewa');
 Route::get('/profile/selesai', [GearVentureController::class, 'selesai'])->name('selesai');
@@ -98,6 +102,10 @@ Route::get('/admin/kategori/{id}', [GearVentureController::class, 'deletekategor
 Route::get('/admin/laporan', [GearVentureController::class, 'laporan'])->name('laporan');
 Route::get('/admin/status', [GearVentureController::class, 'status'])->name('status');
 
+Route::get('/api/produk/{id}', function($id) {
+    return App\Models\Barang::findOrFail($id);
+});
+
 Route::get('/admin/konten', [GearVentureController::class, 'konten'])->name('konten');//semua konten ada dsini
 Route::get('/admin/tambahkonten', [GearVentureController::class, 'tambahkonten'])->name('tambahkonten');//form tambah konten
 Route::post('/admin/konten', [GearVentureController::class, 'storekonten'])->name('storekonten'); //create kategori
@@ -123,6 +131,8 @@ Route::get('/admin/profile', [GearVentureController::class, 'profile'])->name('p
 Route::get('/admin/editprofile', [GearVentureController::class, 'editprofile'])->name('editprofile');
 Route::post('/admin/updateprofile', [GearVentureController::class, 'updateprofile'])->name('updateprofile');
 Route::post('/admin/updatepassword', [GearVentureController::class, 'updatepassword'])->name('updatepassword');
+
+Route::post('/submit-form', [ContactController::class, 'sendMessage'])->name('sendmesseage');
 
 
 

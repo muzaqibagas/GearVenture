@@ -80,7 +80,7 @@
             </div>
             <div class="text-end">
                 <span class="me-3">Total (2 produk): <strong>Rp. 315.000</strong></span>
-                <button class="btn text-white rounded-pill" style="background-color:#383d1f">Buat Pesanan</button>
+                <a href="{{ route ('checkout')}}" class="btn text-white rounded-pill" style="background-color:#383d1f">Buat Pesanan</a>                
             </div>
         </div>
     </div>

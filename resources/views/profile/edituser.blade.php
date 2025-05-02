@@ -89,72 +89,92 @@
         </aside>
         
         <div class="d-flex align-items-center py-4" style="width:80%">
-            <div class="row justify-content-center ">
+            <div class="row justify-content-center">
                 <div class="col-8 d-flex justify-content-center flex-column">
-                    <div class="card w-70 mb-4 p-4">
-                        <div class="row align-items-center">
-                            <!-- Foto Profil -->
-                            <h4 class="mb-3 px-4">Profil Saya</h4>
-                            <div class="col-md-3 text-center position-relative">
-                                <img src="{{ asset('img/profile.jpg') }}" alt="Foto Profil" class="rounded-circle img-fluid" style="width: 120px; height: 120px; object-fit: cover;">
-                                
-                                <!-- Tombol Edit Profil -->
-                                <a href="edituser" class="position-absolute start-50 translate-middle text-white rounded-circle d-flex align-items-center justify-content-center" 
-                                    style="background-color: #abc337; margin-left: 1.5rem; width: 36px; height: 36px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); margin-top:-5px;">
-                                    <i class="pen fa6-solid--pen"></i> <!-- Ikon Pena -->
-                                </a>
-                            </div>
+                    <form action="{{ route('updateuser') }}" method="POST" enctype="multipart/form-data" class="w-100">
+                        @csrf
+                        <div class="card w-100 mb-4 p-4">
+                            @if (session('sukses'))
+                                <div class="alert alert-success">
+                                    {{ session('sukses') }}
+                                </div>
+                            @endif
 
-                            <!-- Informasi Profil -->
-                            <div class="col-md-9">                            
-                                <div class="row gap-2">
-                                    <div class="d-flex w-100"> 
-                                        <div class="col-5 fw-bold border rounded d-flex border-0" style="color:#abc337; height:30px">Username</div>: 
-                                        <div class="col-7 border rounded px-2 ms-1 d-flex justify-content-between align-items-center">MuzaqiBagas
-                                            <i class="pen1 fa6-solid--pen"></i>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex w-100">
-                                        <div class="col-5 fw-bold border rounded d-flex border-0" style="color:#abc337; height:30px">Nama</div>:
-                                        <div class="col-7 border rounded px-2 ms-1 d-flex justify-content-between align-items-center">Anggito Rangkuti Bagas Muzaqi
-                                            <i class="pen1 fa6-solid--pen"></i>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex w-100">
-                                        <div class="col-5 fw-bold border rounded d-flex border-0" style="color:#abc337; height:30px">Email</div>:
-                                        <div class="col-7 border rounded px-2 ms-1 d-flex justify-content-between align-items-center">Muzaqibagas@anjay.com
-                                            <i class="pen1 fa6-solid--pen"></i>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex w-100">
-                                        <div class="col-5 fw-bold border rounded d-flex border-0" style="color:#abc337; height:30px">No. Telepon</div>:
-                                        <div class="col-7 border rounded px-2 ms-1 d-flex justify-content-between align-items-center">08567926382
-                                            <i class="pen1 fa6-solid--pen"></i>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex w-100">
-                                        <div class="col-5 fw-bold border rounded d-flex border-0" style="color:#abc337; height:30px">Jenis Kelamin</div>:
-                                        <div class="col-7 border rounded px-2 ms-1 d-flex justify-content-between align-items-center">
-                                            <label class="text-muted fs-6 fw-normal">
-                                                <input type="radio" name="gender" value="Laki-laki" checked> Laki-laki
-                                            </label>
+                            @if (session('error'))
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
 
-                                            <label class="text-muted fs-6 fw-normal">
-                                                <input type="radio" name="gender" value="Perempuan"> Perempuan
-                                            </label>
+                            @if ($errors->any())
+                                <div class="alert alert-danger text-white">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <div class="row align-items-center">
+                                <h4 class="mb-3 px-4">Profil Saya</h4>
+
+                                <!-- Foto Profil -->
+                                <div class="col-md-3 text-center position-relative">
+                                    <label for="fotoInput" style="cursor: pointer; position: relative; display: inline-block;">
+                                        <img src="{{ Auth::guard('web')->user()->foto ? asset('foto/user/' . Auth::guard('web')->user()->foto) : asset('foto/user/default.jpg') }}" alt="Foto Profil" class="rounded-circle img-fluid" style="width: 120px; height: 120px; object-fit: cover;">
+                                        <div class="position-absolute start-50 translate-middle text-white rounded-circle d-flex align-items-center justify-content-center"
+                                            style="background-color: #abc337; margin-left: 1.5rem; width: 36px; height: 36px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); margin-top:-5px;">
+                                            <i class="material-symbols--photo-camera"></i>
+                                        </div>
+                                    </label>
+                                    <input type="file" name="foto" id="fotoInput" class="d-none" onchange="previewImage(this)">
+                                </div>
+
+                                <!-- Informasi Profil -->
+                                <div class="col-md-9">
+                                    <div class="row gap-2">
+                                        <div class="d-flex w-100">
+                                            <div class="col-5 fw-bold border-0" style="color:#abc337;">Username</div>:
+                                            <div class="col-7 px-2 ms-1">
+                                                <input type="text" name="username" class="form-control" value="{{ Auth::guard('web')->user()->username }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex w-100">
+                                            <div class="col-5 fw-bold border-0" style="color:#abc337;">Nama</div>:
+                                            <div class="col-7 px-2 ms-1">
+                                                <input type="text" name="nama" class="form-control" value="{{ Auth::guard('web')->user()->nama }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex w-100">
+                                            <div class="col-5 fw-bold border-0" style="color:#abc337;">Email</div>:
+                                            <div class="col-7 px-2 ms-1">
+                                                <input type="text" name="email" class="form-control" value="{{ Auth::guard('web')->user()->email }}">
+                                            </div>
+                                        </div>                                        
+                                        <div class="d-flex w-100 align-items-center">
+                                            <div class="col-5 fw-bold border-0" style="color:#abc337;">Jenis Kelamin</div>:
+                                            <div class="col-7 px-2 ms-1 d-flex gap-3">
+                                                <label class="text-muted fs-6 fw-normal">
+                                                    <input type="radio" name="jenis_kelamin" value="Laki-laki" {{ Auth::guard('web')->user()->jenis_kelamin == 'Laki-laki' ? 'checked' : '' }}> Laki-laki
+                                                </label>
+                                                <label class="text-muted fs-6 fw-normal">
+                                                    <input type="radio" name="jenis_kelamin" value="Perempuan" {{ Auth::guard('web')->user()->jenis_kelamin == 'Perempuan' ? 'checked' : '' }}> Perempuan
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Tombol Hapus Akun -->
-                        <div class="text-center mt-4 d-flex justify-content-end align-items-center me-3">
-                            <button class="btn rounded-pill px-4 py-2 d-flex align-items-center" style="height:30px">Cancel</button>
-                            <button class="btn btn-danger rounded-pill px-4 py-2 d-flex  align-items-center" style="height:30px">Simpan</button>
+                            <!-- Tombol Simpan -->
+                            <div class="text-center mt-4 d-flex justify-content-end align-items-center me-3">
+                                <button type="submit" class="btn btn-danger rounded-pill px-4 py-2 d-flex align-items-center" style="height:30px">Simpan</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -164,4 +184,15 @@
 @endsection
 
 @push('script')
+<script>
+  function previewImage(input) {
+      if (input.files && input.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+              document.querySelector('img[alt="Foto Profil"]').src = e.target.result;
+          }
+          reader.readAsDataURL(input.files[0]);
+      }
+  }
+  </script>
 @endpush

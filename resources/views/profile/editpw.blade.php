@@ -93,7 +93,28 @@
                 <div class="col-8 d-flex justify-content-center">
                     <div class="card w-70 mb-4 p-4">
                         <div class="row align-items-center">
-                            <!-- Foto Profil -->
+                            @if (session('success'))
+                                <div class="alert alert-success text-white">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            @if (session('error'))
+                                <div class="alert alert-danger text-white">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
+
+                            {{-- Menampilkan error validasi jika ada --}}
+                            @if ($errors->any())
+                                <div class="alert alert-danger text-white">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif  
                             <h4 class="mb-3 px-4">Ubah Password</h4>
 
                             <!-- Informasi Profil -->

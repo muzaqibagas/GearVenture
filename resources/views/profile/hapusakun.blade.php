@@ -95,10 +95,10 @@
                     <span class="fluent-mdl2--sad text-center"></span>
                     <p class="m-0">Ingin Menghapus Akun?</p>
                     <!-- Tombol Hapus Akun -->                    
-                    <form class="text-center d-flex justify-content-end align-items-center" action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus akun ini?')">
+                    <form id="formHapusAkun" class="text-center d-flex justify-content-end align-items-center" action="{{ route('hapusakun', Auth::user()->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-danger rounded px-4 py-2 d-flex align-items-center">Hapus Akun</button>
+                        <button type="button" onclick="konfirmasiHapus()" class="btn btn-danger rounded px-4 py-2 d-flex align-items-center">Hapus Akun</button>
                     </form>
                 </div>
             </div>
@@ -109,4 +109,29 @@
 @endsection
 
 @push('script')
+<script>
+    function konfirmasiHapus() {
+        Swal.fire({
+            title: '',
+            html: `<div style="display: flex; flex-direction: column; align-items: center;">
+                        <div class="mdi--trash-can-empty bg-danger" style="height:80px; width:80px; margin-bottom: 16px;"></div>
+                        <p>Akunmu akan terhapus selamanya, lanjutkan?</p>
+                    </div>`,
+            showCancelButton: true,
+            confirmButtonText: 'Hapus Akun',
+            cancelButtonText: 'Batal',
+            reverseButtons: true,
+            customClass: {
+                confirmButton: 'btn btn-danger ms-2',
+                cancelButton: 'btn btn-dark',
+                popup: 'rounded-3 border border-lime-600'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('formHapusAkun').submit();
+            }
+        });
+    }
+</script>
 @endpush

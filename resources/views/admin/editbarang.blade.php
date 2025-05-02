@@ -190,17 +190,7 @@
       <div class="row">
         <div class="col-12">          
           <h5 class="card bg-white p-3"><strong>Edit Data Product</strong></h5>
-          <div class="card mb-4 mt-3">  
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <strong>Oops! Validasi gagal:</strong>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif                       
+          <div class="card mb-4 mt-3">                                   
             <form class="text-xxs p-4" action="{{ route('updatebarang', $data->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf                
                 <div class="row">

@@ -54,8 +54,8 @@
                 @foreach($dakat as $item)
                     <div class="catalog-card">
                         <img src="{{ asset('pict/'.$item->produk->foto) }}" alt="Kursi Kramat" class="catalog-image">
-                        <div class="catalog-title">
-                            <a href="{{ route('detail', $dabar->id) }}" class="catalog-title text-decoration-none">{{ $item->produk->nama ?? 'Nama tidak tersedia' }}</a>
+                        <div class="catalog-title">                            
+                            <a href="{{ route('detail', $item->produk->id) }}" class="catalog-title text-decoration-none">{{ $item->produk->nama ?? 'Nama tidak tersedia' }}</a>
                         </div>                        
                         <div class="catalog-price">
                             @php
@@ -144,13 +144,14 @@
                 </div>
 
                 <!-- Contact Form -->
-                <form class="contact-form">
+                <form class="contact-form" method="POST" action="{{ route('sendmesseage') }}">                    
+                    @csrf
                     <div class="form-group">
-                        <input class="rounded-0" type="text" placeholder="Nama *">
-                        <input class="rounded-0" type="email" placeholder="Email *">
+                        <input class="rounded-0" type="text" name="nama" placeholder="Nama *">
+                        <input class="rounded-0" type="email" name="email" placeholder="Email *" value="{{ auth()->user()->email }}" readonly>
                     </div>
-                    <input class="rounded-0" type="text" placeholder="Nomor Hp *">
-                    <textarea class="rounded-0" placeholder="Tulis Pesanmu Disini"></textarea>
+                    <input class="rounded-0" type="text" name="nomor_hp" placeholder="Nomor Hp *">
+                    <textarea class="rounded-0" name="pesan" placeholder="Tulis Pesanmu Disini"></textarea>
                     <button class="rounded fw-bold" type="submit">KIRIM</button>
                 </form>
             </div>

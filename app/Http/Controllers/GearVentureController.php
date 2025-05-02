@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Admin;
 use App\Models\Barang;
 use App\Models\Event;
@@ -187,8 +188,10 @@ class GearVentureController extends Controller
         ]);
     }
     public function event(){
+        $data = Event::all();
         return view('event', [
-            'type_menu'=> 'event'
+            'type_menu'=> 'event',
+            'data' => $data,
         ]);
     }
     public function detailevent(){
@@ -223,33 +226,98 @@ class GearVentureController extends Controller
             'penyewa' => $penyewa,
         ]);
     }
+
     public function edituser(){
+        $penyewa = Auth::user();
         return view('profile.edituser', [
-            'type_menu'=> 'edituser'
+            'type_menu'=> 'edituser',
+            'penyewa' => $penyewa,
         ]);
     }    
-    public function editpw(){
-        return view('profile.editpw', [
-            'type_menu'=> 'editpw'
-        ]);
-    }        
-    public function hapusakun(){
-        $user = Auth::user(); // atau Auth::guard('web')->user();
 
-        if ($user) {
-            $user->delete();
+    public function updateuser(Request $request){
+        $penyewa = Auth::guard('web')->user();
 
-            // Logout otomatis setelah akun dihapus
-            Auth::logout();
-
-            return view('profile.hapusakun', [
-                'type_menu' => 'hapusakun',
-                'message' => 'Akun berhasil dihapus.'
+        if ($request->hasfile('foto')){
+            $request->validate([
+                'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
+
+            $file = $request->file('foto');
+
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName(); // tambahkan time biar unique
+            $file->move(public_path('foto/user'), $filename);
+            $penyewa->foto = $filename;
         }
 
-        return redirect()->route('signin.form')->withErrors(['error' => 'Tidak ada user yang login.']);
+        $request->validate([
+            'username' => 'required',
+            'nama' => 'required',
+            'email' => 'required|email',
+            'jenis_kelamin' => 'required'
+        ]);
+
+        $penyewa->username = $request->username;
+        $penyewa->nama = $request->nama;
+        $penyewa->email = $request->email;
+        $penyewa->jenis_kelamin = $request->jenis_kelamin;
+
+        if ($request->filled('password')){
+            $penyewa->password =bcrypt($request->password);
+        }
+
+        $penyewa->save();
+        return redirect()->back()->with('sukses', 'Profil berhasil diperbarui.');
     }
+
+    public function editpw(){
+        $penyewa = Auth::user();
+        return view('profile.editpw', [
+            'type_menu'=> 'editpw',
+            'penyewa' => $penyewa,
+        ]);
+    }    
+    
+    public function updatepw(Request $request){
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed|min:8',
+        ]);
+
+        $user = Auth::guard('web')->user();
+
+        if (!Hash::check($request->current_password, $admin->password)) {
+            return back()->withErrors(['current_password' => 'Password saat ini salah.']);
+        }
+
+        $user->password =bcrypt($request->new_password);
+        $user-save();
+
+        return back()->with('success', 'Password berhasil diperbarui.');
+    }
+    
+    public function deleteakun(){
+        $user = Auth::user();
+
+        return view('profile.hapusakun', [
+            'type_menu'=> 'hapusakun',
+            'user' => $user // ← ini penting
+        ]);
+    }
+
+    public function hapusakun() {
+        $user = Auth::user();
+    
+        if ($user) {
+            $user->delete();
+            Auth::logout();
+            return redirect()->route('signin.form')->with('message', 'Akun berhasil dihapus.');
+        }
+    
+        return redirect()->route('signin.form')->withErrors(['error' => 'Tidak ada user yang login.']);
+    }    
+
   
     public function belum(){
         return view('profile.belum', [
@@ -583,32 +651,48 @@ class GearVentureController extends Controller
 
     //FORM TAMBAH EVENT
     public function tambahevent(){
-        return view('admin.tambahevent');
+        $data = Event::all();
+        return view('admin.tambahevent', compact('data'));
     }
 
     //CREATE EVENT
     public function storeevent(Request $request){
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'judul' => 'required|string|max:255|unique:event,judul',
             'lokasi' => 'required|string|max:255',
             'isi_artikel' => 'required|string',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'judul.unique' => 'Judul event sudah digunakan. Silakan gunakan judul lain.',
+            'judul.required' => 'Judul event wajib diisi.',
+            'lokasi.required' => 'Lokasi event wajib diisi.',
+            'isi_artikel.required' => 'Isi artikel tidak boleh kosong.',
+            'gambar.required' => 'Gambar event wajib diunggah.',
+            'gambar.image' => 'File yang diunggah harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, atau gif.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
-
+    
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+    
         $data = new Event();
         $data->judul = $request->judul;
         $data->lokasi = $request->lokasi;
         $data->isi_artikel = $request->isi_artikel;
-
+    
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
-            $namaFile = time() . '_' . $file->getClientOriginalName(); // Hindari nama sama
+            $namaFile = time() . '_' . $file->getClientOriginalName();
             $file->move('pict/', $namaFile);
             $data->gambar = $namaFile;
         }
-
+    
         $data->save();
-
+    
         return redirect()->route('events')->with('sukses', 'Event berhasil ditambahkan.');
     }
 
@@ -625,21 +709,30 @@ class GearVentureController extends Controller
             'lokasi' => 'required|string|max:255',
             'isi_artikel' => 'required|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'judul.unique' => 'Judul event sudah digunakan. Silakan gunakan judul lain.',
+            'judul.required' => 'Judul event wajib diisi.',
+            'lokasi.required' => 'Lokasi event wajib diisi.',
+            'isi_artikel.required' => 'Isi artikel tidak boleh kosong.',
+            'gambar.required' => 'Gambar event wajib diunggah.',
+            'gambar.image' => 'File yang diunggah harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, atau gif.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
-        $event = Event::findOrFail($id);
-        $event->judul = $request->judul;
-        $event->lokasi = $request->lokasi;
-        $event->isi_artikel = $request->isi_artikel;
+        $data = Event::findOrFail($id);
+        $data->judul = $request->judul;
+        $data->lokasi = $request->lokasi;
+        $data->isi_artikel = $request->isi_artikel;
 
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
             $namaFile = time() . '_' . $file->getClientOriginalName();
             $file->move('pict/', $namaFile);
-            $event->gambar = $namaFile;
+            $data->gambar = $namaFile;
         }
 
-        $event->save();
+        $data->save();
 
         return redirect()->route('events')->with('sukses', 'Event berhasil diperbarui.');
     }

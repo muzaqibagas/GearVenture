@@ -39,7 +39,7 @@
                 </ul>                                                
                 <ul class="nav nav-pills nav-fill">                    
                     <li class="nav-item">
-                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('hapusakun')}}">
+                        <a class="d-flex align-items-center rounded p-2 text-decoration-none text-dark" href="{{ route ('deleteakun')}}">
                             <div class="shadow border-radius-md rounded text-center me-2 d-flex align-items-center justify-content-center" style="width:30px; height:30px">
                                 <span class="mdi--trash-can-empty bg-dark"></span>
                             </div>
@@ -101,8 +101,8 @@
                         <div class="row align-items-center">
                             <!-- Foto Profil -->
                             <h4 class="mb-3 px-4">Profil Saya</h4>
-                            <div class="col-md-3 text-center position-relative">
-                                <img src="{{ asset('img/profile.jpg') }}" alt="Foto Profil" class="rounded-circle img-fluid" style="width: 120px; height: 120px; object-fit: cover;">                                                            
+                            <div class="col-md-3 text-center position-relative">                                
+                            <img src="{{ Auth::guard('web')->user()->foto ? asset('foto/user/' . Auth::guard('web')->user()->foto) : asset('foto/user/default.jpg') }}" alt="Foto Profil" class="rounded-circle img-fluid" style="width: 120px; height: 120px; object-fit: cover;">
                             </div>
 
                             <!-- Informasi Profil -->

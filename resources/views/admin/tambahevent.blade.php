@@ -191,19 +191,15 @@
         <div class="col-12">          
           <h5 class="card bg-white p-3"><strong>Tambah Info Event</strong></h5>
           <div class="card mb-4 mt-3">                         
-            {{-- Untuk pesan sukses --}}
-              @if (session('sukses'))
-                  <div class="alert alert-success text-white">
-                      {{ session('sukses') }}
-                  </div>
-              @endif
-
-              {{-- Untuk pesan error --}}
-              @if (session('error'))
-                  <div class="alert alert-danger text-white">
-                      {{ session('error') }}
-                  </div>
-              @endif   
+            @if ($errors->any())
+                <div class="alert alert-danger text-white">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
               <form class="text-xxs p-4" action="{{ route('storeevent') }}" method="POST" enctype="multipart/form-data">              
                 @csrf
                 <div class="row">

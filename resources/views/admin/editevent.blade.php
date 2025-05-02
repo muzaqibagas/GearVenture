@@ -190,34 +190,44 @@
       <div class="row">
         <div class="col-12">          
           <h5 class="card bg-white p-3"><strong>Edit Info Event</strong></h5>
-          <div class="card mb-4 mt-3">                         
-              <form class="text-xxs p-4">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <div class="mb-1">
-                              <label class="form-label">Judul</label>
-                              <input type="text" class="form-control" value="Jalan-jalan">
-                          </div>                          
-                          <div class="mb-1">
-                              <label class="form-label">Alamat</label>
-                              <input type="text" class="form-control" value="Gunung Prau, Jawa Tengah">
-                          </div>                                                                     
-                          <div class="mb-3">
-                              <label class="form-label">Artikel</label>
-                              <textarea class="form-control" rows="3">Artikel .................................</textarea>
-                          </div>
-                      </div>
-                      <div class="col-md-6 text-center">
-                          <label class="form-label">Gambar</label>
-                          <input type="file" class="form-control mb-3">
-                          <img src="{{ asset('img/banner-04.jpg') }}" alt="Tenda Dome" class="img-fluid border rounded" style="max-height: 200px;">
-                          <div class="text-end d-flex justify-content-center gap-3">
-                            <a href="#" class=" btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
-                            <a href="#" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</a>
+          <div class="card mb-4 mt-3">                   
+            @if ($errors->any())
+                <div class="alert alert-danger text-white">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif 
+            <form class="text-xxs p-4" action="{{ route('updateevent', $data->id) }}" method="POST" enctype="multipart/form-data">                   
+                @csrf
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-1">
+                            <label class="form-label">Judul</label>
+                            <input type="text" class="form-control" name="judul" value="{{$data->judul}}" placeholder="Judul">
+                        </div>                          
+                        <div class="mb-1">
+                            <label class="form-label">Alamat</label>
+                            <input type="text" class="form-control" name="lokasi" value="{{$data->lokasi}}" placeholder="Alamat">
+                        </div>                                                                     
+                        <div class="mb-3">
+                            <label class="form-label">Artikel</label>
+                            <textarea class="form-control" name="isi_artikel" rows="3" placeholder="Artikel">{{$data->isi_artikel}}</textarea>
                         </div>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <label class="form-label">Gambar</label>
+                        <input type="file" class="form-control mb-3" name="gambar">
+                        <img src="{{ asset('pict/'.$data->gambar)}}" alt="Tenda Dome" class="img-fluid border rounded" style="max-height: 200px;">
+                        <div class="text-end d-flex justify-content-center gap-3">
+                          <a href="#" class=" btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
+                          <button type="submit" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</button>
                       </div>
-                  </div>                  
-              </form>            
+                    </div>
+                </div>                  
+            </form>            
           </div>
         </div>
       </div>      
