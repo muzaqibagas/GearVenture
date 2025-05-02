@@ -207,7 +207,7 @@
                   <div class="w-100">                                                  
                       <div class="mb-1">
                           <label class="form-label">Diskon</label>
-                          <input type="text" class="form-control" name="diskon" value="{{ $dakon->diskon ?? 'Tidak ada diskon' }}">
+                          <input type="text" class="form-control" name="diskon" value="{{ $dakon->diskon ?? 'Tidak ada diskon' }}" placeholder="%">
                       </div>                                                                                             
                   </div>
                   <div class="col-md-6">

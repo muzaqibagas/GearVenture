@@ -189,19 +189,20 @@
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">          
-          <h5 class="card bg-white p-3"><strong>Edit Data Product</strong></h5>
+          <h5 class="card bg-white p-3"><strong>Edit Data Produk</strong></h5>
           <div class="card mb-4 mt-3">                                   
             <form class="text-xxs p-4" action="{{ route('updatebarang', $data->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-1">
-                            <label class="form-label">Nama Product</label>
-                            <input type="text" class="form-control" name="nama" value="{{ $data->nama }}">
+                            <label class="form-label">Nama Produk</label>
+                            <input type="text" class="form-control" name="nama" value="{{ $data->nama }}" placeholder="Nama Produk">
                         </div>
                         <div class="mb-1">
                             <label class="form-label">Kategori</label>
                             <select class="form-select" name="kategori_id">
+                              <option value="">Kategori</option>
                                 @foreach($kategori as $k)
                                     <option value="{{ $k->id}}" {{ $data->kategori_id == $k->id? 'selected' : '' }}>
                                         {{ $k->nama }}
@@ -212,15 +213,15 @@
                         </div>
                         <div class="mb-1">
                           <label class="form-label">Harga</label>
-                          <input type="text" class="form-control" name="harga_sewa" value="{{ $data->harga_sewa }}">
+                          <input type="text" class="form-control" name="harga_sewa" value="{{ $data->harga_sewa }}" placeholder="Rp">
                         </div>                                    
                         <label class="form-label">Stok</label>
                         <div class="d-flex stock-container gap-3">
-                          <input type="number" id="stockInput" name="stok" class="form-control" value="{{ $data->stok }}" min="0">
+                          <input type="number" id="stockInput" name="stok" class="form-control" value="{{ $data->stok }}" min="0" placeholder="0">
                         </div> 
                         <div class="mb-3">
                             <label class="form-label">Keterangan</label>
-                            <textarea class="form-control" name="deskripsi" rows="3">{{ $data->deskripsi }}</textarea>
+                            <textarea class="form-control" name="deskripsi" rows="3" placeholder="Keterangan Produk">{{ $data->deskripsi }}</textarea>
                         </div>
                     </div>
                     <div class="col-md-6 text-center">

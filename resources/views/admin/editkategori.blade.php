@@ -206,8 +206,8 @@
                     <div class="row">
                         <div class="w-100">
                             <div class="mb-1">
-                                <label class="form-label">Nama Produk</label>
-                                <input type="text" name="nama" class="form-control" value="{{ $data->nama }}">
+                                <label class="form-label">Nama Kategori</label>
+                                <input type="text" name="nama" class="form-control" value="{{ $data->nama }}" placeholder="Nama Kategori">
                             </div> 
                         </div>                     
                         <div class="col-md-6">

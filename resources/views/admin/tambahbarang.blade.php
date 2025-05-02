@@ -189,7 +189,7 @@
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">          
-          <h5 class="card bg-white p-3"><strong>Tambah Data Product</strong></h5>
+          <h5 class="card bg-white p-3"><strong>Tambah Data Produk</strong></h5>
           <div class="card mb-4 mt-3">   
             {{-- Untuk pesan sukses --}}
             @if (session('sukses'))
@@ -225,7 +225,7 @@
                       </div>
                       <div class="mb-1">
                           <label class="form-label">Harga</label>
-                          <input type="text" name="harga_sewa" class="form-control" placeholder="0">
+                          <input type="text" name="harga_sewa" class="form-control" placeholder="Rp">
                       </div>                          
                       <label class="form-label">Stok</label>
                       <div class="d-flex stock-container gap-3">

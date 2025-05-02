@@ -206,7 +206,7 @@
                       </div>                          
                       <div class="mb-1">
                           <label class="form-label">Harga Sewa</label>
-                          <input type="text" name="harga_sewa" class="form-control" value="Rp">
+                          <input type="text" name="harga_sewa" class="form-control" placeholder="Rp">
                       </div>                                                                     
                   </div>
                   <div class="col-md-6 text-center">                          

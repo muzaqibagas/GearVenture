@@ -225,7 +225,7 @@
                       <!-- Deskripsi Otomatis -->
                       <div class="mb-3">
                           <label class="form-label">Keterangan</label>
-                          <textarea class="form-control" name="deskripsi" id="deskripsi" rows="3"></textarea>
+                          <textarea class="form-control" name="deskripsi" id="deskripsi" rows="3" placeholder="Keterangan"></textarea>
                       </div>
                   </div>
 
