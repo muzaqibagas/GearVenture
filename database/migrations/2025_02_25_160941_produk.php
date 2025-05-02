@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('deskripsi');
             $table->integer('stok');
             $table->decimal('harga_sewa', 10, 2);
-            $table->string('foto');
             $table->unsignedBigInteger('kategori_id');
             $table->timestamps();
         });

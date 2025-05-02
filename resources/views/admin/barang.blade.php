@@ -240,7 +240,11 @@
                         <p class="ps-3"scope="row">{{ $no++ }}</p>
                       </td>
                       <td>
-                        <img src="{{ asset('pict/'.$dabar->foto)}}" class="rounded" style="height:100px; width:100px" alt="user1">
+                          @if ($dabar->fotoBarangs->isNotEmpty())
+                              <img src="{{ asset('pict/' . $dabar->fotoBarangs->first()->foto) }}" class="rounded" style="height:100px; width:100px" alt="foto barang">
+                          @else
+                              <img src="{{ asset('pict/default.jpg') }}" class="rounded" style="height:100px; width:100px" alt="foto barang">
+                          @endif
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">{{$dabar->nama}}</p>                        

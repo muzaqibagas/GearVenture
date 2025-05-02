@@ -12,12 +12,13 @@
     <a href="javascript:history.back()" class="btn text-white rounded-pill mb-3 align-self-start" style="background-color:#383d1f">&larr; Kembali</a>
     <div class="row mt-3 d-flex justify-content-center gap-3">
         <div class="col-lg-4">
-            <img src="{{ asset('pict/'.$data->foto)}}" class="rounded" style="width:100%; height:400px" alt="Tenda Camping">
+            @if ($data->fotoBarangs->isNotEmpty())
+                <img src="{{ asset('pict/' . $data->fotoBarangs->first()->foto) }}" class="rounded" style="width:100%; height:400px" alt="Tenda Camping">
+            @endif
             <div class="mt-3 d-flex thumbnail-container gap-3">
-                <img src="{{ asset('img/banner-02.jpg') }}" class="rounded" style="width:80px; height:80px" alt="Thumbnail">                
-                <img src="{{ asset('img/banner-02.jpg') }}" class="rounded" style="width:80px; height:80px" alt="Thumbnail">                
-                <img src="{{ asset('img/banner-02.jpg') }}" class="rounded" style="width:80px; height:80px" alt="Thumbnail">                
-                <img src="{{ asset('img/banner-02.jpg') }}" class="rounded" style="width:80px; height:80px" alt="Thumbnail">                
+                @foreach ($data->fotoBarangs->skip(1) as $foto)
+                    <img src="{{ asset('pict/' . $foto->foto) }}" class="rounded" style="width:80px; height:80px" alt="Thumbnail">                   
+                @endforeach           
             </div>
             <h5 class="mt-3">Termasuk dalam layanan</h5>
             <ul>

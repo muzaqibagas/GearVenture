@@ -238,7 +238,7 @@
                   </div>
                   <div class="col-md-6 text-center">
                       <label class="form-label">Gambar</label>
-                      <input type="file" name="foto" class="form-control mb-3" multiple>
+                      <input type="file" name="foto[]" class="form-control mb-3" multiple>
                       <img src="#" alt="" class="img-fluid border rounded" style="max-height: 200px;">
                       <div class="text-end d-flex justify-content-center gap-3">
                           <a href="#" class="btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>

@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin;
 use App\Models\Barang;
 use App\Models\Event;
+use App\Models\FotoBarang;
 use App\Models\KategoriProduk;
 use App\Models\Konten;
 use App\Models\ProdukPopuler;
@@ -176,7 +179,7 @@ class GearVentureController extends Controller
     }
 
     public function detail($id){
-        $data = Barang::findOrFail($id);
+        $data = Barang::with('fotoBarangs')->findOrFail($id);
         $dakon = Barang::with('konten')
             ->whereHas('konten', function($q){
                 $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
@@ -370,28 +373,49 @@ class GearVentureController extends Controller
     }
 
     //CREATE BARANG
-    public function store(Request $request) {        
+    public function store(Request $request) {
+        $request->validate([
+            'nama' => 'required',
+            'kategori_id' => 'required',
+            'harga_sewa' => 'required',
+            'stok' => 'required',
+            'deskripsi' => 'required',
+            'foto.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
         $cekBarang = Barang::where('nama', $request->nama)->first();
         if ($cekBarang) {
-            // Jika sudah ada, kembalikan dengan pesan error
             return redirect()->back()->with('error', 'Barang dengan nama tersebut sudah ada.');
         }
+    
         $hargaBersih = str_replace(['Rp', ' ', '.'], '', $request->harga_sewa);
+    
+        // Simpan barang tanpa kolom foto
         $data = new Barang();
         $data->nama = $request->nama;
         $data->kategori_id = $request->kategori_id;
         $data->harga_sewa = $hargaBersih;
         $data->stok = $request->stok;
         $data->deskripsi = $request->deskripsi;
+        $data->save(); // dapatkan ID
+    
         if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
-            $namaFile = $file->getClientOriginalName();
-            $file->move('pict/', $namaFile);
-            $data->foto = $namaFile; 
+            $files = $request->file('foto');
+    
+            foreach ($files as $file) {
+                $namaFile = uniqid() . '_' . $file->getClientOriginalName();
+                $file->move('pict/', $namaFile);
+    
+                FotoBarang::create([
+                    'barang_id' => $data->id,
+                    'foto' => $namaFile,
+                ]);
+            }
         }
-        $data->save();
+    
         return redirect()->route('barang')->with('sukses', 'Barang Berhasil Ditambahkan');
     }
+    
     
     //FORM EDIT BARANG
     public function editbarang($id)
@@ -402,35 +426,50 @@ class GearVentureController extends Controller
     }
 
     //UPDATE BARANG
-    public function updatebarang(Request $request, $id)
-    {
+    public function updatebarang(Request $request, $id){
         $request->validate([
             'nama' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'stok' => 'required|integer|min:0',
             'harga_sewa' => 'required|numeric|min:0',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'kategori_id' => 'required|exists:kategori_produk,id', 
+            'foto.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'kategori_id' => 'required|exists:kategori_produk,id',
         ]);
-        
+
         $data = Barang::findOrFail($id);
         $data->nama = $request->nama;
         $data->deskripsi = $request->deskripsi;
         $data->stok = $request->stok;
         $data->harga_sewa = $request->harga_sewa;
         $data->kategori_id = $request->kategori_id;
-               
+        $data->save();
+
+        // ✅ Hapus semua foto lama jika ada foto baru di-upload
         if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
-            $namaFile = $file->getClientOriginalName();
-            $file->move('pict/', $namaFile);
-            $data->foto = $namaFile;
-        } else {        
-            $data->foto = $data->foto;
-        }        
-        $data->save();        
+            foreach ($data->fotoBarangs as $fotoLama) {
+                $filePath = public_path('pict/' . $fotoLama->foto);
+                if (File::exists($filePath)) {
+                    File::delete($filePath);
+                }
+                $fotoLama->delete();
+            }
+
+            // Simpan foto baru
+            foreach ($request->file('foto') as $index => $file) {
+                $namaFile = uniqid() . '_' . $file->getClientOriginalName();
+                $file->move('pict/', $namaFile);
+
+                FotoBarang::create([
+                    'barang_id' => $data->id,
+                    'foto' => $namaFile,
+                ]);
+            }
+        }
+
         return redirect()->route('barang')->with('sukses', 'Barang berhasil diperbarui');
     }
+
+
 
     //DELETE BARANG
     public function deletebarang($id){

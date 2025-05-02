@@ -226,8 +226,14 @@
                     </div>
                     <div class="col-md-6 text-center">
                         <label class="form-label">Gambar</label>
-                        <input type="file" class="form-control mb-3" name="foto">
-                        <img src="{{ asset('pict/'.$data->foto)}}" alt="{{ $data->nama }}" class="img-fluid border rounded" style="max-height: 200px;">
+                        <input type="file" class="form-control mb-3" name="foto[]" multiple>
+                        @if ($data->fotoBarangs->isNotEmpty())
+                            @foreach ($data->fotoBarangs as $foto)
+                                <img src="{{ asset('pict/' . $foto->foto) }}" class="rounded m-1" style="height:100px; width:100px;" alt="foto barang">
+                            @endforeach
+                        @else
+                            <img src="{{ asset('pict/default.jpg') }}" class="rounded" style="height:100px; width:100px;" alt="foto barang">
+                        @endif
                         <div class="text-end d-flex justify-content-center gap-3">
                             <a href="{{ route('barang') }}" class="btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
                             <button type="submit" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</button>

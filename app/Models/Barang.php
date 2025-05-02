@@ -20,7 +20,6 @@ class Barang extends Model
         'deskripsi',
         'stok',
         'harga_sewa',
-        'foto',
         'kategori_id',
     ];
 
@@ -47,5 +46,10 @@ class Barang extends Model
     {
         return $this->hasOne(ProdukPopuler::class, 'produk_id');
     }
+    public function fotoBarangs()
+    {
+        return $this->hasMany(FotoBarang::class);
+    }
+
 
 }
