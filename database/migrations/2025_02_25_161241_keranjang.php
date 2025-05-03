@@ -12,11 +12,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('keranjang', function (Blueprint $table) {
-            $table->id('id');
+            $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->integer('jumlah');
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_selesai');
+            $table->integer('durasi');
+            $table->integer('total_harga');
             $table->timestamps();
+        
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+        
     }
     public function down()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,8 @@ use App\Models\Barang;
 use App\Models\Event;
 use App\Models\FotoBarang;
 use App\Models\KategoriProduk;
+use App\Models\Keranjang;
+use App\Models\KeranjangItem;
 use App\Models\Konten;
 use App\Models\ProdukPopuler;
 use App\Models\User;
@@ -180,23 +183,41 @@ class GearVentureController extends Controller
 
     public function detail($id){
         $data = Barang::with('fotoBarangs')->findOrFail($id);
+
+        // Jika layanan tambahan tersedia sebagai array atau data lain
+        $layananTambahan = [
+            'meja_lipat' => 10000,
+            'kursi_lipat' => 5000,
+            'hammock' => 20000,
+            'lampu_led' => 8000,
+            'senter_kepala' => 6000,
+            'lentera_gantung' => 7000,
+            'flysheet' => 15000,
+            'ground_sheet' => 10000,
+            'terpal' => 12000,
+        ];
+
         $dakon = Barang::with('konten')
-            ->whereHas('konten', function($q){
+            ->whereHas('konten', function($q) {
                 $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
             })->get();
+
         $dacak = Barang::with('kategori')
-        ->where('kategori_id', $data->kategori_id)
-        ->where('id', '!=', $id)
-        ->inRandomOrder()
-        ->take(4)
-        ->get();        
+            ->where('kategori_id', $data->kategori_id)
+            ->where('id', '!=', $id)
+            ->inRandomOrder()
+            ->take(4)
+            ->get();  
+
         return view('detail', [
-            'type_menu'=> 'detail',
+            'type_menu' => 'detail',
             'data' => $data,
             'dakon' => $dakon,
             'dacak' => $dacak,
+            'layananTambahan' => $layananTambahan, // Kirim layanan tambahan ke view
         ]);
     }
+
     public function event(){
         $data = Event::all();
         return view('event', [
@@ -349,11 +370,122 @@ class GearVentureController extends Controller
             'type_menu'=> 'checkout'
         ]);
     }    
-    public function keranjang(){
+    public function keranjang() {
+        $user_id = Auth::id();
+    
+        
+        $keranjang = Keranjang::with('items.produk')
+                ->where('user_id', $user_id)
+                ->latest()
+                ->first();
+
+        $items = $keranjang ? $keranjang->items : collect();
+    
+        $total = 0;
+    
+        if ($keranjang) {
+            foreach ($keranjang->items as $item) {
+                $total_produk = $item->jumlah * $item->harga_setelah_diskon;
+                $total_layanan = $item->total_layanan ?? 0;
+                $total += $total_produk + $total_layanan;
+            }
+        }
+    
         return view('keranjang', [
-            'type_menu'=> 'keranjang'
-        ]);
+            'type_menu' => 'keranjang',
+            'keranjang' => $keranjang,
+            'items' => $items,
+            'total' => $total
+        ]);        
     }    
+    
+    public function tambahkeranjang(Request $request){
+        $request->validate([
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
+            'jumlah' => 'required|integer|min:1',
+            'produk_id' => 'required|exists:produk,id',
+        ]);
+
+        $mulai = Carbon::parse($request->tanggal_mulai);
+        $selesai = Carbon::parse($request->tanggal_selesai);
+        $durasi = $mulai->diffInDays($selesai);
+
+        if ($durasi < 2) {
+            return redirect()->back()->withInput()->withErrors(['tanggal_selesai' => 'Minimal penyewaan adalah 2 hari.']);
+        }
+
+        $produk = Barang::findOrFail($request->produk_id);
+
+        $harga_layanan = [
+            'meja_lipat' => 10000,
+            'kursi_lipat' => 5000,
+            'hammock' => 20000,
+            'lampu_led' => 8000,
+            'senter_kepala' => 6000,
+            'lentera_gantung' => 7000,
+            'flysheet' => 15000,
+            'ground_sheet' => 10000,
+            'terpal' => 12000,
+        ];
+
+        $total_layanan = 0;
+        $qty_tambahan = $request->qty ?? [];
+        $tambahan = $request->tambahan ?? [];
+
+        if (!empty($tambahan)) {
+            foreach ($tambahan as $key => $val) {
+                $qty = $qty_tambahan[$key] ?? 0;
+                $total_layanan += ($harga_layanan[$key] ?? 0) * $qty;
+            }
+        }
+
+        $harga_per_hari = $produk->harga_sewa;
+        $harga_asli_total = $harga_per_hari * $durasi;
+
+        $diskon = $produk->konten->diskon ?? 0;
+        $harga_setelah_diskon = $diskon > 0 ? $harga_asli_total * (100 - $diskon) / 100 : $harga_asli_total;
+
+        $total_harga = ($harga_setelah_diskon + $total_layanan) * $request->jumlah;
+
+        // Simpan ke tabel keranjang
+        $keranjang = Keranjang::create([
+            'user_id' => Auth::id(),
+            'tanggal_mulai' => $request->tanggal_mulai,
+            'tanggal_selesai' => $request->tanggal_selesai,
+            'durasi' => $durasi,
+            'total_harga' => $total_harga,
+        ]);
+
+        // Simpan ke keranjang_items
+        KeranjangItem::create([
+            'keranjang_id' => $keranjang->id,
+            'produk_id' => $produk->id,
+            'jumlah' => $request->jumlah,
+            'harga_asli' => $harga_asli_total,
+            'harga_setelah_diskon' => $harga_setelah_diskon,
+            'diskon' => $diskon,
+            'total_layanan' => $total_layanan,
+            'tambahan' => $tambahan,
+            'qty_tambahan' => $qty_tambahan,
+        ]);
+
+        return redirect()->route('keranjang')->with('success', 'Produk berhasil dimasukkan ke dalam keranjang.');
+    }
+
+    public function hapusKeranjang($index){
+        $keranjang = session()->get('keranjang', []);
+
+        if (isset($keranjang[$index])) {
+            unset($keranjang[$index]);
+            // Reset ulang array supaya indeksnya berurutan kembali
+            $keranjang = array_values($keranjang);
+            session(['keranjang' => $keranjang]);
+        }
+
+        return redirect()->route('keranjang')->with('success', 'Item berhasil dihapus dari keranjang.');
+    }
+
 
 // ADMIN
     public function dashboard(){
@@ -555,8 +687,9 @@ class GearVentureController extends Controller
 
     //FORM TAMBAH KONTEN
     public function tambahkonten(){   
+        $data = Barang::with('fotoBarangs')->get();
         $dakon = Barang::all();     
-        return view('admin.tambahkonten', compact('dakon'));
+        return view('admin.tambahkonten', compact('dakon', 'data'));
     }
 
     //CREATE KONTEN

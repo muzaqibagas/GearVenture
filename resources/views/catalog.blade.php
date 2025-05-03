@@ -72,10 +72,29 @@
             @foreach ($data as $dabar)  
                 <div class="col-md-4 p-1">
                     <div class="card">
-                        <img src="{{ asset('pict/'.$dabar->foto)}}" class="card-img-top" alt="Fireplace starterkit mini">
+                        @if ($dabar->fotoBarangs->count() > 0)
+                            <img src="{{ asset('pict/'.$dabar->fotoBarangs->first()->foto) }}" class="card-img-top" alt="{{ $dabar->nama }}">
+                        @else
+                            <img src="{{ asset('pict/default-image.jpg') }}" class="card-img-top" alt="No Image">
+                        @endif                        
                         <div class="card-body my-0 mx-1">
                             <p class="fw-bold m-0">{{$dabar->nama}}</p>
-                            <p class="fw-bold" style="color:#c3d234">Rp {{ number_format($dabar->harga_sewa, 0, ',', '.') }}</p>
+                            <p class="fw-bold" style="color:#c3d234">
+                                @php
+                                    // Ambil harga sewa dan diskon
+                                    $diskon = $dabar->konten->diskon ?? 0;
+                                    $hargaDiskon = $dabar->harga_sewa * (100 - $diskon) / 100;
+                                @endphp
+
+                                @if($diskon > 0)
+                                    <span class="text-decoration-line-through text-danger">
+                                        Rp {{ number_format($dabar->harga_sewa, 0, ',', '.') }}
+                                    </span>
+                                    Rp {{ number_format($hargaDiskon, 0, ',', '.') }}
+                                @else
+                                    Rp {{ number_format($dabar->harga_sewa, 0, ',', '.') }}
+                                @endif
+                            </p>
                             <a href="{{ route('detail', $dabar->id) }}" class="btn fw-bold rounded-pill" style="background-color:#383d1f; color:white">lihat detail!</a>
                         </div>
                     </div>

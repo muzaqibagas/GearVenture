@@ -79,6 +79,8 @@ Route::get('/profile/sewa', [GearVentureController::class, 'sewa'])->name('sewa'
 Route::get('/profile/selesai', [GearVentureController::class, 'selesai'])->name('selesai');
 Route::get('/checkout', [GearVentureController::class, 'checkout'])->name('checkout');
 Route::get('/keranjang', [GearVentureController::class, 'keranjang'])->name('keranjang');
+Route::post('/keranjang/tambahkeranjang', [GearVentureController::class, 'tambahkeranjang'])->name('keranjang.tambah');
+Route::post('/keranjang/hapus/{index}', [GearVentureController::class, 'hapusKeranjang'])->name('keranjang.hapus');
 
 // ADMIN
 Route::get('/admin/dashboard', [GearVentureController::class, 'dashboard'])->name('dashboard');
@@ -103,8 +105,22 @@ Route::get('/admin/laporan', [GearVentureController::class, 'laporan'])->name('l
 Route::get('/admin/status', [GearVentureController::class, 'status'])->name('status');
 
 Route::get('/api/produk/{id}', function($id) {
-    return App\Models\Barang::findOrFail($id);
+    // Ambil produk beserta foto yang terkait
+    $produk = App\Models\Barang::with('fotoBarangs')->findOrFail($id);
+
+    // Ambil gambar pertama dari fotoBarangs, jika ada
+    $foto = $produk->fotoBarangs->first(); 
+
+    return response()->json([
+        'deskripsi' => $produk->deskripsi,
+        'foto' => $foto ? $foto->foto : null,  // Kembalikan nama foto jika ada, atau null
+    ]);
 });
+
+// Route::get('/reset-keranjang', function () {
+//     session()->forget('keranjang');
+//     return redirect()->back()->with('success', 'Keranjang berhasil direset.');
+// });
 
 Route::get('/admin/konten', [GearVentureController::class, 'konten'])->name('konten');//semua konten ada dsini
 Route::get('/admin/tambahkonten', [GearVentureController::class, 'tambahkonten'])->name('tambahkonten');//form tambah konten
