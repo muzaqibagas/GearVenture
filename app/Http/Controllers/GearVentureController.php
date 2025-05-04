@@ -19,6 +19,7 @@ use App\Models\KeranjangItem;
 use App\Models\Konten;
 use App\Models\ProdukPopuler;
 use App\Models\User;
+use App\Mail\InvoiceMail;
 
 class GearVentureController extends Controller
 {
@@ -219,15 +220,18 @@ class GearVentureController extends Controller
     }
 
     public function event(){
-        $data = Event::all();
+        $data = Event::paginate(9); // Ambil 9 data per halaman
         return view('event', [
-            'type_menu'=> 'event',
+            'type_menu' => 'event',
             'data' => $data,
         ]);
     }
-    public function detailevent(){
+    
+    public function detailevent($id){
+        $davent = Event::with('fotoBarangs')->findOrFail($id);
         return view('detailevent', [
-            'type_menu'=> 'detailevent'
+            'type_menu'=> 'detailevent',
+            'davent' => $davent,
         ]);
     }
     public function about(){
@@ -366,28 +370,66 @@ class GearVentureController extends Controller
         ]);
     }    
     public function checkout(){
+        $keranjangItems = Keranjang::where('user_id', Auth::id())->get();
+        $totalHarga = $keranjangItems->sum('subtotal');
         return view('checkout', [
-            'type_menu'=> 'checkout'
+            'type_menu'=> 'checkout',
+            'keranjangItems'=> $keranjangItems,
+            'totalHarga' => $totalHarga,
         ]);
     }    
+
+    public function storecheckout(Request $request)
+    {
+        // Validasi form
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'no_hp' => 'required|string|max:15',
+            'alamat' => 'required|string',
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        // Simpan transaksi
+        $transaksi = new Transaksi();
+        $transaksi->user_id = Auth::id();
+        $transaksi->nama_pengguna = $request->nama;
+        $transaksi->no_handphone = $request->no_hp;
+        $transaksi->alamat = $request->alamat;
+        $transaksi->email = $request->email;
+        $transaksi->status = 'belum lunas'; // Status transaksi
+        $transaksi->tanggal = now();
+        $transaksi->total_harga = $request->total_harga; // Pastikan total dihitung sesuai keranjang
+        $transaksi->save();
+
+        // Kirim email dengan invoice
+        Mail::to($request->email)->send(new InvoiceMail($transaksi));
+
+        // Update keranjang menjadi 'checked out'
+        Keranjang::where('user_id', Auth::id())->delete();
+
+        // Redirect atau beri response sukses
+        return redirect()->route('checkout');
+    }
     public function keranjang() {
         $user_id = Auth::id();
     
         
-        $keranjang = Keranjang::with('items.produk')
+        $keranjang = Keranjang::with('items.produk.fotoBarangs')
                 ->where('user_id', $user_id)
                 ->latest()
-                ->first();
+                ->get();
 
-        $items = $keranjang ? $keranjang->items : collect();
+        $items = $keranjang->flatMap(function ($keranjang_item) {
+            return $keranjang_item->items;
+        });
     
         $total = 0;
     
-        if ($keranjang) {
-            foreach ($keranjang->items as $item) {
-                $total_produk = $item->jumlah * $item->harga_setelah_diskon;
-                $total_layanan = $item->total_layanan ?? 0;
-                $total += $total_produk + $total_layanan;
+        foreach ($keranjang as $keranjang_item) {
+        foreach ($keranjang_item->items as $item) {
+            $total_produk = $item->jumlah * $item->harga_setelah_diskon;
+            $total_layanan = $item->total_layanan ?? 0;
+            $total += $total_produk + $total_layanan;
             }
         }
     
@@ -488,8 +530,13 @@ class GearVentureController extends Controller
 
 
 // ADMIN
-    public function dashboard(){
-        return view('admin.dashboard');
+    public function dashboard() {
+        $totalUsers = User::count();
+        $totalProduk = Barang::count();
+        $laki = User::where('jenis_kelamin', 'Laki-laki')->count();
+        $perempuan = User::where('jenis_kelamin', 'Perempuan')->count();
+
+        return view('admin.dashboard', compact('laki', 'perempuan', 'totalUsers', 'totalProduk'));
     }
 
     //BARANG

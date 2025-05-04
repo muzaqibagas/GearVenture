@@ -62,7 +62,7 @@ Route::get('/catalog/{nama?}', [GearVentureController::class, 'filterByKategori'
 Route::get('/detail/{id}', [GearVentureController::class, 'detail'])->name('detail');
 
 Route::get('/event', [GearVentureController::class, 'event'])->name('event');
-Route::get('/detailevent', [GearVentureController::class, 'detailevent'])->name('detailevent');
+Route::get('/detailevent/{id}', [GearVentureController::class, 'detailevent'])->name('detailevent');
 Route::get('/about', [GearVentureController::class, 'about'])->name('about');
 Route::get('/penyewaan', [GearVentureController::class, 'penyewaan'])->name('penyewaan');
 Route::get('/refund', [GearVentureController::class, 'refund'])->name('refund');
@@ -78,6 +78,7 @@ Route::get('/profile/belum', [GearVentureController::class, 'belum'])->name('bel
 Route::get('/profile/sewa', [GearVentureController::class, 'sewa'])->name('sewa');
 Route::get('/profile/selesai', [GearVentureController::class, 'selesai'])->name('selesai');
 Route::get('/checkout', [GearVentureController::class, 'checkout'])->name('checkout');
+Route::post('/checkout', [GearVentureController::class, 'storecheckout'])->name('checkout.store');
 Route::get('/keranjang', [GearVentureController::class, 'keranjang'])->name('keranjang');
 Route::post('/keranjang/tambahkeranjang', [GearVentureController::class, 'tambahkeranjang'])->name('keranjang.tambah');
 Route::post('/keranjang/hapus/{index}', [GearVentureController::class, 'hapusKeranjang'])->name('keranjang.hapus');

@@ -229,7 +229,7 @@
                         <span class="ci--user-add"></span>
                       </div>
                       <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                        357
+                        {{ $totalUsers }}
                       </h5>
                       <span class="text-white text-sm">Pengguna</span>
                     </div>
@@ -277,7 +277,7 @@
                         <span class="humbleicons--box"></span>  
                       </div>
                       <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                        940
+                        {{ $totalProduk }}
                       </h5>
                       <span class="text-white text-sm">Total Produk</span>
                     </div>
@@ -473,7 +473,7 @@
     });
   </script>
 
-  <script>
+<script>
     var ctx = document.getElementById("genderPieChart").getContext("2d");
 
     var genderPieChart = new Chart(ctx, {
@@ -481,8 +481,8 @@
         data: {
             labels: ["Laki-laki", "Perempuan"],
             datasets: [{
-                data: [120, 90], // Ganti dengan data asli
-                backgroundColor: ["#6366f1", "#ec4899"], // Biru untuk pria, merah untuk wanita
+                data: [{{ $laki }}, {{ $perempuan }}], // Mengambil data dari controller
+                backgroundColor: ["#6366f1", "#ec4899"],
                 hoverBackgroundColor: ["#2980b9", "#c0392b"]
             }]
         },
@@ -496,7 +496,7 @@
             }
         }
     });
-  </script>
+</script>
 
   <script>
     var win = navigator.platform.indexOf('Win') > -1;

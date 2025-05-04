@@ -346,6 +346,34 @@ header li a {
     background-color: #4C7B2C;
 }
 
+.pagination .page-item.active .page-link {
+    background-color: #abc337;
+    border-color: #abc337;
+    color: white;
+}
+
+/* Default Link */
+.pagination .page-link {
+    color: #000000;
+    /* border: 1px solid #dee2e6; */
+}
+
+/* Hover */
+.pagination .page-link:hover {
+    background-color: #cde95c;
+    border-color: #cde95c;
+    color: white;
+}
+
+/* Disabled */
+.pagination .page-item.disabled .page-link {
+    background-color: #b8c07e;
+    border-color: #b8c07e;
+    color: #ffffff;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
 /* Responsive styles */
 @media (max-width: 1200px) {
     .promo-container {

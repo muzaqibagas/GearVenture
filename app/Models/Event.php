@@ -18,4 +18,9 @@ class Event extends Model
         'lokasi',
         'isi_artikel',
     ];
+
+    public function fotoBarangs()
+    {
+        return $this->hasMany(FotoBarang::class, 'id');
+    }
 }

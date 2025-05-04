@@ -16,5 +16,9 @@ class FotoBarang extends Model
     {
         return $this->belongsTo(Barang::class);
     }
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }
 

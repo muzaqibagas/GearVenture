@@ -20,73 +20,30 @@
 
     <!-- Content Section -->
     <div class="section-wrapper rounded-bottom text-white">
-      <h2 class="text-center mb-4">Cara Pembayaran GearVenture</h2>
-
-      <h4 class="mb-2">Metode Pembayaran GearVenture</h4>
-      <p>Kami menyediakan beberapa metode pembayaran yang dapat Anda pilih untuk mempermudah transaksi sewa peralatan outdoor di GearVenture:</p>
-
+      <h2 class="text-center mb-4">Prosedur Penyewaan</h2>      
       <ol>
-        <li><strong>Transfer Bank</strong>
-          <ul>
-            <li>Lakukan transfer ke rekening yang tertera saat checkout.</li>
-            <li>Pastikan mencantumkan kode pesanan pada catatan transfer.</li>
-            <li>Unggah bukti pembayaran di halaman status penyewaan untuk verifikasi.</li>
-          </ul>
-        </li>
-        <li><strong>E-Wallet (OVO, Dana, GoPay, dll.)</strong>
-          <ul>
-            <li>Pilih metode e-wallet saat checkout.</li>
-            <li>Lakukan pembayaran sesuai dengan nominal yang tertera.</li>
-            <li>Konfirmasi pembayaran dengan mengunggah bukti transaksi.</li>
-          </ul>
-        </li>
-        <li><strong>Virtual Account</strong>
-          <ul>
-            <li>Sistem akan memberikan nomor Virtual Account unik untuk setiap pesanan.</li>
-            <li>Lakukan pembayaran melalui ATM, mobile banking, atau internet banking.</li>
-            <li>Transaksi akan terverifikasi otomatis dalam beberapa menit.</li>
-          </ul>
-        </li>
-        <li><strong>QRIS</strong>
-          <ul>
-            <li>Pindai kode QRIS yang muncul di halaman pembayaran.</li>
-            <li>Pastikan nominal pembayaran sesuai dengan total pesanan.</li>
-            <li>Pembayaran akan terkonfirmasi otomatis.</li>
-          </ul>
-        </li>
-      </ol>
-
-      <h4 class="mt-4 mb-2">Konfirmasi Pembayaran</h4>
-      <p>Setelah melakukan pembayaran, Anda perlu mengonfirmasi transaksi dengan mengunggah bukti pembayaran agar pesanan dapat segera diproses. Berikut langkah-langkahnya:</p>
-
-      <ol>
-        <li><strong>Masuk ke Akun Anda</strong>
-          <ul>
-            <li>Login ke akun GearVenture.</li>
-            <li>Buka halaman Profile di menu utama.</li>
-          </ul>
-        </li>
-        <li><strong>Unggah Bukti Pembayaran</strong>
-          <ul>
-            <li>Pilih bagian Status Penyewaan.</li>
-            <li>Cari pesanan yang telah dibayar dan klik Unggah Bukti Pembayaran.</li>
-            <li>Pastikan foto atau screenshot bukti pembayaran jelas dan sesuai dengan transaksi.</li>
-          </ul>
-        </li>
-        <li><strong>Verifikasi oleh Admin</strong>
-          <ul>
-            <li>Tim kami akan memeriksa bukti pembayaran dalam waktu maksimal 24 jam.</li>
-            <li>Setelah diverifikasi, Anda akan menerima email konfirmasi.</li>
-            <li>Status penyewaan akan berubah menjadi Dibayar.</li>
-          </ul>
-        </li>
-        <li><strong>Jika Ada Kendala</strong>
-          <ul>
-            <li>Jika pembayaran belum terkonfirmasi dalam waktu yang ditentukan, hubungi layanan pelanggan melalui WhatsApp.</li>
-            <li>Pastikan informasi pembayaran sesuai untuk mempercepat proses verifikasi.</li>
-          </ul>
-        </li>
-      </ol>
+        <li>Silahkan Login di My account, atau registrasi akun dengan mengisi lengkap data diri Anda.</li>        
+        <li>Buka halaman Sewa atau Paket Camping dan pilih produk-prouk yang akan Anda sewa.</li>        
+        <li>Tekan pada gambar produk sewa untuk melihat detil dan ketersediaan.</li>      
+        <li>Untuk booking, pilih tanggal kapan Anda memulai sewa, kemudian;</li>      
+        <li>Pilih tanggal kapan Anda selesai menyewa.</li>      
+        <li>Apabila tersedia, Anda bisa menyewa lebih dari satu produk.</li>      
+        <li>Anda dapat melihat durasi penyewaan dan total biaya sewa.</li>      
+        <li>Tekan tombol “Book Now” untuk memasukkan ke dalam keranjang belanja (Cart) Anda.</li>      
+        <li>Lihat keranjang belanja apabila sudah selesai, atau anda bisa langsung checkout.</li>      
+        <li>Masukkan kupon yang Anda miliki untuk mendapatkan potongan harga.</li>      
+        <li>Untuk produk sewa tidak ada pilihan pengiriman dan produk tidak dikirim ke alamat Anda.</li>      
+        <li>Namun jika Anda sekaligus membeli produk, maka pemilihan pengiriman dan proses checkout mengikuti cara membeli produk.</li>      
+        <li>Pilih metode pembayaran.</li>  
+        <li>Tekan tombol “Place Order”.</li>    
+        <li>Anda akan menerima bukti pesanan (order received) ke email Anda.</li>    
+        <li>Segera selesaikan pembayaran Anda.</li>    
+        <li>Pastikan status pembayaran sudah berhasil di My account bagian Orders dan status sewa (booking) sudah terkonfirmasi di bagian Booking.</li>    
+        <li>Atau konfirmasi melalui kontak whatsapp kami.</li>    
+        <li>Silahkan ambil dan kembalikan produk sewa di Basecamp Sibayak Adventure sesuai jadwal booking Anda pada jam pengambilan /pengembalian alat (check in – check out).</li>    
+        <li>Keterlambatan pengembalian akan dianggap penambahan waktu sewa yang dikenakan biaya per hari sesuai harga reguler produk sewa.</li>    
+        <li>Kerusakan/kehilangan pada saat penyewaan  menjadi tanggung jawab pelanggan, Kami berhak meminta biaya ganti rugi  kehilangan dan/atau kerusakan sesuai dengan tingkat keparahannya.</li>    
+        <li>Pergunakan semestinya dan jagalah produk yang Anda sewa demi kenyamanan kita bersama.</li>    
     </div>
   </div>
 

@@ -20,57 +20,49 @@
 
     <!-- Content Section -->
     <div class="section-wrapper rounded-bottom text-white">
-      <h2 class="text-center mb-4">Cara Pembayaran GearVenture</h2>
+      <h2 class="text-center mb-4">S&K Penggantian Jadwal</h2>
+      
+      <p>Kami memahami bahwa rencana bisa berubah. Oleh karena itu, GearVenture memberikan kemudahan bagi penyewa untuk melakukan penggantian jadwal penyewaan, dengan ketentuan sebagai berikut:</p>
 
-      <h4 class="mb-2">Metode Pembayaran GearVenture</h4>
-      <p>Kami menyediakan beberapa metode pembayaran yang dapat Anda pilih untuk mempermudah transaksi sewa peralatan outdoor di GearVenture:</p>
-
+      <strong>Syarat Penggantian Jadwal:</strong>
       <ol>
-        <li><strong>Transfer Bank</strong>
+        <li>Batas Waktu Pengajuan:
           <ul>
-            <li>Lakukan transfer ke rekening yang tertera saat checkout.</li>
-            <li>Pastikan mencantumkan kode pesanan pada catatan transfer.</li>
-            <li>Unggah bukti pembayaran di halaman status penyewaan untuk verifikasi.</li>
+            <li>Pengajuan penggantian jadwal harus dilakukan maksimal H-2 (2 hari sebelum jadwal penyewaan dimulai).</li>            
           </ul>
         </li>
-        <li><strong>E-Wallet (OVO, Dana, GoPay, dll.)</strong>
+        <li>Jumlah Maksimal Perubahan Jadwal:
           <ul>
-            <li>Pilih metode e-wallet saat checkout.</li>
-            <li>Lakukan pembayaran sesuai dengan nominal yang tertera.</li>
-            <li>Konfirmasi pembayaran dengan mengunggah bukti transaksi.</li>
+            <li>Penyewa dapat melakukan penggantian jadwal maksimal sebanyak 2 kali.</li>          
           </ul>
         </li>
-        <li><strong>Virtual Account</strong>
+        <li>Ketersediaan Barang:
           <ul>
-            <li>Sistem akan memberikan nomor Virtual Account unik untuk setiap pesanan.</li>
-            <li>Lakukan pembayaran melalui ATM, mobile banking, atau internet banking.</li>
-            <li>Transaksi akan terverifikasi otomatis dalam beberapa menit.</li>
+            <li>Jadwal baru akan disesuaikan dengan ketersediaan barang pada tanggal yang diminta.</li>            
           </ul>
         </li>
-        <li><strong>QRIS</strong>
+        <li>Pengajuan Setelah Tanggal Sewa Dimulai:
           <ul>
-            <li>Pindai kode QRIS yang muncul di halaman pembayaran.</li>
-            <li>Pastikan nominal pembayaran sesuai dengan total pesanan.</li>
-            <li>Pembayaran akan terkonfirmasi otomatis.</li>
+            <li>Penggantian jadwal tidak dapat dilakukan jika melewati tanggal penyewaan yang telah ditentukan.</li>            
           </ul>
         </li>
       </ol>
 
-      <h4 class="mt-4 mb-2">Konfirmasi Pembayaran</h4>
-      <p>Setelah melakukan pembayaran, Anda perlu mengonfirmasi transaksi dengan mengunggah bukti pembayaran agar pesanan dapat segera diproses. Berikut langkah-langkahnya:</p>
+      <strong>Langkah Pengajuan Penggantian Jadwal:</strong>
 
       <ol>
-        <li><strong>Masuk ke Akun Anda</strong>
+        <li>Simpan Kode Pesanan Anda
           <ul>
-            <li>Login ke akun GearVenture.</li>
-            <li>Buka halaman Profile di menu utama.</li>
+            <li>Pastikan Anda mencatat kode pesanan saat melakukan checkout sebelumnya.</li>            
           </ul>
         </li>
-        <li><strong>Unggah Bukti Pembayaran</strong>
+        <li>Hubungi Admin Melalui WhatsApp
           <ul>
-            <li>Pilih bagian Status Penyewaan.</li>
-            <li>Cari pesanan yang telah dibayar dan klik Unggah Bukti Pembayaran.</li>
-            <li>Pastikan foto atau screenshot bukti pembayaran jelas dan sesuai dengan transaksi.</li>
+            <li>Kirim pesan ke admin GearVenture melalui WhatsApp resmi di nomor: 08xxxxxxxxxx.</li>
+            <li>Format pengajuan:</li>
+            <li>less</li>
+            <li>CopyEdit</li>
+            <li>[Pengajuan Ubah Jadwal]Nama: [Nama Anda]Kode Pesanan: [Kode]Tanggal Awal: [dd/mm/yyyy]Tanggal Baru yang Diinginkan: [dd/mm/yyyy]Alasan: [Tulis alasan singkat]</li>
           </ul>
         </li>
         <li><strong>Verifikasi oleh Admin</strong>
@@ -87,6 +79,12 @@
           </ul>
         </li>
       </ol>
+      <strong>Catatan Tambahan:</strong>
+      <ul>
+        <li>Pengajuan dianggap sah setelah mendapat balasan resmi dari admin melalui WhatsApp.</li>
+        <li>Jika tanggal baru tidak tersedia, tim admin akan menawarkan opsi tanggal alternatif.</li>
+        <li>Pastikan pengajuan dilakukan dalam jam operasional untuk respon lebih cepat.</li>
+      </ul>
     </div>
   </div>
 

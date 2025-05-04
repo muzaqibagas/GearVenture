@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('jumlah');
             $table->date('tanggal');
             $table->decimal('total_harga', 10, 2);
-            $table->string('status');
+            $table->string('status')->default('belum lunas');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
