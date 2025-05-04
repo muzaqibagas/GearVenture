@@ -515,18 +515,20 @@ class GearVentureController extends Controller
         return redirect()->route('keranjang')->with('success', 'Produk berhasil dimasukkan ke dalam keranjang.');
     }
 
-    public function hapusKeranjang($index){
-        $keranjang = session()->get('keranjang', []);
+    public function hapusKeranjang($id)
+    {
+        $item = KeranjangItem::findOrFail($id);
 
-        if (isset($keranjang[$index])) {
-            unset($keranjang[$index]);
-            // Reset ulang array supaya indeksnya berurutan kembali
-            $keranjang = array_values($keranjang);
-            session(['keranjang' => $keranjang]);
+        // Pastikan item milik user yg sedang login
+        if ($item->keranjang->user_id != Auth::id()) {
+            abort(403); // Forbidden
         }
 
-        return redirect()->route('keranjang')->with('success', 'Item berhasil dihapus dari keranjang.');
+        $item->delete();
+
+        return redirect()->route('keranjang')->with('success', 'Item berhasil dihapus.');
     }
+
 
 
 // ADMIN

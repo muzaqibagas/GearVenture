@@ -81,7 +81,7 @@ Route::get('/checkout', [GearVentureController::class, 'checkout'])->name('check
 Route::post('/checkout', [GearVentureController::class, 'storecheckout'])->name('checkout.store');
 Route::get('/keranjang', [GearVentureController::class, 'keranjang'])->name('keranjang');
 Route::post('/keranjang/tambahkeranjang', [GearVentureController::class, 'tambahkeranjang'])->name('keranjang.tambah');
-Route::post('/keranjang/hapus/{index}', [GearVentureController::class, 'hapusKeranjang'])->name('keranjang.hapus');
+Route::post('/keranjang/hapus/{id}', [GearVentureController::class, 'hapusKeranjang'])->name('keranjang.hapus');
 
 // ADMIN
 Route::get('/admin/dashboard', [GearVentureController::class, 'dashboard'])->name('dashboard');
