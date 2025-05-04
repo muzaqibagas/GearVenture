@@ -30,4 +30,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+    public function keranjang()
+    {
+        return $this->hasOne(Keranjang::class, 'user_id');
+    }
 }

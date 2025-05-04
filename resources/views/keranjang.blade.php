@@ -28,11 +28,11 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    @if ($keranjang && $keranjang->items->count())
-                    @foreach ($keranjang->items as $item)   
+                    @if ($items->count())
+                    @foreach ($items as $item)  
                         @php
-                            $tanggalMulai = \Carbon\Carbon::parse($keranjang->tanggal_mulai);
-                            $tanggalSelesai = \Carbon\Carbon::parse($keranjang->tanggal_selesai);
+                            $tanggalMulai = \Carbon\Carbon::parse($keranjang->first()->tanggal_mulai);
+                            $tanggalSelesai = \Carbon\Carbon::parse($keranjang->first()->tanggal_selesai);
                             $durasiHari = $tanggalMulai->diffInDays($tanggalSelesai) ?: 1;
 
                             $hargaSatuan = $item->produk->harga_sewa ?? 0;
@@ -47,12 +47,17 @@
                         @php
                             $total_produk = $item->jumlah * $item->harga;
                             $total_layanan = $item->total_layanan ?? 0;
+
+                            $fotoPertama = $item->produk->fotoBarangs->first();
+                            $fotoProduk = $fotoPertama ? $fotoPertama->foto : 'default.jpg';
+
+                            $totalProdukFix = ($total_produk + $total_layanan) ?? 0;
                         @endphp
                         <tr>
-                            <td><input type="checkbox" class="checkbox-produk" data-total="{{ $total_produk + $total_layanan }}"></td>
+                            <td><input type="checkbox" class="checkbox-produk" data-total="{{ intval($totalProdukFix) }}"></td>
                             <td class="text-start">
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ asset('pict/' . $item->produk->foto) }}" class="me-3 rounded" width="70" height="70" alt="Produk">
+                                    <img src="{{ asset('pict/' . $fotoProduk ) }}" class="me-3 rounded" width="70" height="70" alt="Produk">
                                     <span>{{ $item->produk->nama }}</span>
                                 </div>
                             </td>
@@ -128,10 +133,6 @@
                                 @endif
                             </td>
                             <td>{{ $item->jumlah }}</td>
-                            @php
-                                $total_produk = $item->jumlah * $item->harga;
-                                $total_layanan = $item->total_layanan ?? 0;
-                            @endphp
                             <td>
                                 Rp {{ number_format($totalItem, 0, ',', '.') }}
                                 <br><small class="text-muted">(Termasuk tambahan Rp {{ number_format($totalLayanan, 0, ',', '.') }})</small>
@@ -162,13 +163,16 @@
                 $total_semua = 0;
             @endphp
 
-            @foreach ($keranjang->items as $item)
-                @php
-                    $total_produk = $item->jumlah * $item->harga;
-                    $total_layanan = $item->total_layanan ?? 0;
-                    $total_semua += $total_produk + $total_layanan;
-                @endphp
+            @foreach ($keranjang as $keranjangItem)
+                @foreach ($keranjangItem->items as $item)
+                    @php
+                        $total_produk = $item->jumlah * $item->harga;
+                        $total_layanan = $item->total_layanan ?? 0;
+                        $total_semua += $total_produk + $total_layanan;
+                    @endphp
+                @endforeach
             @endforeach
+
 
 
 
@@ -190,19 +194,24 @@
     }
 
     function hitungTotal() {
-        let total = 0;
-        let jumlah = 0;
+    let total = 0;
+    let jumlah = 0;
 
-        document.querySelectorAll('.checkbox-produk').forEach(checkbox => {
-            if (checkbox.checked) {
-                total += parseInt(checkbox.dataset.total);
+    document.querySelectorAll('.checkbox-produk').forEach(checkbox => {
+        if (checkbox.checked) {
+            const nilai = parseInt(checkbox.dataset.total);
+            console.log("Nilai checkbox:", nilai); // Debugging line
+            if (!isNaN(nilai)) {
+                total += nilai;
                 jumlah++;
             }
-        });
+        }
+    });
 
-        document.getElementById('total-terpilih').textContent = formatRupiah(total);
-        document.getElementById('jumlah-terpilih').textContent = jumlah;
-    }
+    document.getElementById('total-terpilih').textContent = formatRupiah(total);
+    document.getElementById('jumlah-terpilih').textContent = jumlah;
+}
+
 
     // Event listener untuk semua checkbox produk
     document.querySelectorAll('.checkbox-produk').forEach(checkbox => {
@@ -211,11 +220,19 @@
 
     // Event listener untuk checkbox "semua produk"
     document.getElementById('semua-produk').addEventListener('change', function () {
-        const semuaCek = this.checked;
-        document.querySelectorAll('.checkbox-produk').forEach(checkbox => {
-            checkbox.checked = semuaCek;
-        });
-        hitungTotal();
+    const semuaCek = this.checked;
+    document.querySelectorAll('.checkbox-produk').forEach(checkbox => {
+        checkbox.checked = semuaCek;
     });
+    hitungTotal(); // Jangan lupa panggil hitungTotal setelah mengubah checkbox
+    });
+
+    if (checkbox.checked) {
+    const nilai = parseInt(checkbox.dataset.total) || 0;
+    console.log("Terpilih:", nilai);
+    total += nilai;
+    jumlah++;
+    }
+
 </script>
 @endpush

@@ -22,4 +22,5 @@ class ProdukPopuler extends Model
     {
         return $this->belongsTo(Barang::class, 'produk_id');
     }
+    
 }
