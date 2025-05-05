@@ -19,5 +19,14 @@ class AdminSeeder extends Seeder
             'jenis_kelamin' => 'Laki-laki',
             'role' => 'admin'
         ]);
+        User::create([
+            'nama' => 'Ali Imron',
+            'username' => 'Ali',
+            'email' => 'Ali@gmail.com',
+            'foto' => '',
+            'password' => Hash::make('ali12345'),
+            'jenis_kelamin' => 'Laki-laki',
+            'role' => 'user'
+        ]);
     }
 }
