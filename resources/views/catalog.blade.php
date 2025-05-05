@@ -33,12 +33,7 @@
         <!-- Main Content -->
         <div class="col-md-9">
             <div class="text-white p-3 rounded d-flex justify-content-between align-items-center mb-4" style="background-color:#383d1f">
-                <div class="d-flex justify-content-start gap-3">
-                    <!-- <select class="form-select w-auto">
-                        <option>Pengurutan: Default</option>
-                        <option>Harga Termurah</option>
-                        <option>Harga Termahal</option>
-                    </select> -->
+                <div class="d-flex justify-content-start gap-3">                    
                     <div class="kategori">
                         <select class="form-select" aria-label="Pilih Kategori" onchange="window.location.href=this.value">
                             <option value="{{ route('catalog') }}" {{ !isset($selectedKategori) ? 'selected' : '' }}>Semua Kategori</option>
@@ -67,7 +62,14 @@
                         <a href="{{ $data->nextPageUrl() }}" class="btn btn-light">...</a>
                     @endif
                 </div>
-            </div>            
+            </div>       
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show text-white" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+     
             <div class="row g-3">                
             @foreach ($data as $dabar)  
                 <div class="col-md-4 p-1">

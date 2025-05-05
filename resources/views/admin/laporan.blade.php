@@ -194,117 +194,82 @@
     <!-- End Navbar -->
     <div class="container fluid py-4">
         <div class="card shadow-sm p-4">
-            <div class="mb-3">
-                <label for="jenisLaporan" class="form-label">Jenis Laporan</label>
-                <select class="form-select" id="jenisLaporan">
-                    <option selected>Laporan Tahunan</option>
-                </select>
+          <form method="GET" action="{{ route('laporans') }}" class="row g-3 mb-4">
+              <div class="col-md-3">
+                  <label for="tahun" class="form-label">Tahun</label>
+                  <select name="tahun" id="tahun" class="form-select" onchange="this.form.submit()">
+                      @foreach($tahunList as $th)
+                          <option value="{{ $th }}" {{ $tahun == $th ? 'selected' : '' }}>{{ $th }}</option>
+                      @endforeach
+                  </select>
+              </div>
+              <div class="col-md-3">
+                  <label for="bulan" class="form-label">Bulan</label>
+                  <select name="bulan" id="bulan" class="form-select" onchange="this.form.submit()">
+                      <option value="">Semua Bulan</option>
+                      @for ($i = 1; $i <= 12; $i++)
+                          <option value="{{ $i }}" {{ $bulan == $i ? 'selected' : '' }}>
+                              {{ \Carbon\Carbon::create()->month($i)->translatedFormat('F') }}
+                          </option>
+                      @endfor
+                  </select>
+              </div>
+          </form>          
+
+          <div class="p-3 border rounded bg-white">
+            <h4>GearVenture</h4>
+            <div class="d-flex justify-content-between">
+                <p>Alamat : <br>Kec Bogor Tengah<br>Kota Bogor<br>Prov. Jawa Barat</p>
+                <p><strong>Laporan Keuangan</strong><br>Jenis: Tahunan<br>Tahun: {{ $tahun }}<br>Bulan: {{ $bulan ? \Carbon\Carbon::create()->month($bulan)->translatedFormat('F') : 'Semua' }}</p>
+                <p class="text-end">Tanggal: {{ \Carbon\Carbon::now()->translatedFormat('j F Y') }}</p>
             </div>
-            <div class="mb-3">
-                <label for="tahun" class="form-label">Tahun</label>
-                <select class="form-select" id="tahun">
-                    <option selected>2024</option>
-                </select>
-            </div>            
 
-            <div class="p-3 border rounded bg-white">
-              <h4>GearVenture</h4>
-                <div class="d-flex justify-content-between">                    
-                    <p>Alamat : <br>Kec Bogor Tengah<br>Kota Bogor<br>Prov. Jawa Barat</p>
-                    <p><strong>Laporan Keuangan</strong><br>Jenis: Tahunan<br>Tahun: 2024</p>
-                    <p class="text-end">Data: 1 - 30 Januari 2025</p>
-                </div>
-
-                <table class="table table-bordered text-center table-striped">
-                    <thead class="table-secondary">
+            <table class="table table-bordered text-center table-striped">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Barang</th>
+                        <th>Harga per Item</th>
+                        <th>Penyewaan</th>
+                        <th>Pendapatan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $totalPendapatan = 0; @endphp
+                    @foreach ($transaksi as $i => $row)
                         <tr>
-                            <th>No</th>
-                            <th>Nama Barang</th>
-                            <th>Harga per Item</th>
-                            <th>Penyewaan</th>
-                            <th>Pendapatan</th>
+                            <td>{{ $i + 1 }}</td>
+                            <td>{{ $row->produk->nama ?? '-' }}</td>
+                            <td>Rp{{ number_format($row->produk->harga_sewa ?? 0, 0, ',', '.') }}</td>
+                            <td>{{ $row->total_penyewaan }}</td>
+                            <td>Rp{{ number_format($row->total_pendapatan, 0, ',', '.') }}</td>
                         </tr>
-                    </thead>
+                        @php $totalPendapatan += $row->total_pendapatan; @endphp
+                    @endforeach
+                </tbody>
+            </table>
+
+            {{-- TOTAL --}}
+            <div class="d-flex justify-content-end mt-3">
+                <table class="tabel align-items-center mb-0">
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>Tenda</td>
-                            <td>Rp50.000,00</td>
-                            <td>10</td>
-                            <td>Rp500.000,00</td>
+                            <th class="text-uppercase">TOTAL PENDAPATAN:</th>
+                            <td class="ps-5">Rp{{ number_format($totalPendapatan, 0, ',', '.') }}</td>
+                        </tr>
+                        {{-- Tambahkan data periode sebelumnya jika kamu simpan --}}
+                        <tr>
+                            <th class="text-uppercase">PERIODE SEBELUMNYA:</th>
+                            <td class="ps-5">-</td>
                         </tr>
                         <tr>
-                            <td>2</td>
-                            <td>Kompor</td>
-                            <td>Rp60.000,00</td>
-                            <td>30</td>
-                            <td>Rp1.800.000,00</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Sepatu</td>
-                            <td>Rp35.000,00</td>
-                            <td>20</td>
-                            <td>Rp700.000,00</td>
+                            <th class="text-uppercase">PERBANDINGAN:</th>
+                            <td class="ps-5">-</td>
                         </tr>
                     </tbody>
                 </table>
-
-                <h5>Refund :</h5>
-                <table class="table table-bordered text-center table-striped">
-                    <thead class="table-secondary">
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Barang</th>
-                            <th>Harga per Item (50%)</th>
-                            <th>Penyewaan</th>
-                            <th>Pendapatan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Tenda</td>
-                            <td>Rp25.000,00</td>
-                            <td>2</td>
-                            <td>Rp50.000,00</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Kompor</td>
-                            <td>Rp30.000,00</td>
-                            <td>4</td>
-                            <td>Rp120.000,00</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Sepatu</td>
-                            <td>Rp17.500,00</td>
-                            <td>2</td>
-                            <td>Rp35.000,00</td>
-                        </tr>
-                    </tbody>
-                </table>              
-                <div class="d-flex justify-content-end">
-                  <table class="tabel align-items-center mb-0">
-                      <tbody>
-                          <tr>
-                              <th class="text-uppercase">TOTAL:</th>
-                              <td class="ps-5">Rp1.627.500.00</td>
-                          </tr>
-                          <tr>
-                              <th class="text-uppercase">PENDAPATAN</br> PERIODE SEBELUMNYA:</th>
-                              <td class="ps-5">Rp3.255.000.00</td>
-                          </tr>
-                          <tr>
-                              <th class="text-uppercase">PERBANDINGAN (%): 50%</th>
-                              <td class="ps-5">Rp3.255.000.00</td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
-
             </div>
+          </div>  
         </div>
     </div>
   </main>

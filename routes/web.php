@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\GearVentureController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Mail;
 
@@ -29,7 +31,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/verified  ', [GearVentureController::class, 'index'])->name('index');
+    Route::get('/verified  ', [GearVentureController::class, 'index']);
     // atau route dashboard lain
 });
 
@@ -50,6 +52,17 @@ Route::get('/signup', [GearVentureController::class, 'form'])->name('signup.form
 Route::post('/signup', [GearVentureController::class, 'simpan'])->name('signup'); // Proses pendaftaran
 Route::post('/logout', [GearVentureController::class, 'logout'])->name('logout');
 // route::delete('/user/{id}', [GearVentureController::class, 'destroy'])->name('user.destroy');
+
+//MIDTRANS
+Route::post('/place-order', [MidtransController::class, 'placeOrder']);
+Route::resource('/transaksi', OrderController::class);
+
+Route::get('/pesanbaru', [OrderController::class, 'getNotifikasiPesananBaru'])->name('pesanbaru');
+Route::get('/notifikasi/{id}/tandai', [OrderController::class, 'tandaiNotifikasiSudahDibaca'])->name('tandai.notifikasi');
+Route::get('/admin/status', [OrderController::class, 'statusView'])->name('status');
+Route::delete('/transaksi/{id}', [OrderController::class, 'hapus'])->name('transaksi.hapus');
+Route::get('/laporans', [OrderController::class, 'laporans'])->name('laporans');
+
 
 // PENYEWA
 // Route::get('/', [GearVentureController::class, 'signin'])->name('signin');
@@ -82,6 +95,7 @@ Route::post('/checkout', [GearVentureController::class, 'storecheckout'])->name(
 Route::get('/keranjang', [GearVentureController::class, 'keranjang'])->name('keranjang');
 Route::post('/keranjang/tambahkeranjang', [GearVentureController::class, 'tambahkeranjang'])->name('keranjang.tambah');
 Route::post('/keranjang/hapus/{id}', [GearVentureController::class, 'hapusKeranjang'])->name('keranjang.hapus');
+Route::resource('/pesanan', OrderController::class);
 
 // ADMIN
 Route::get('/admin/dashboard', [GearVentureController::class, 'dashboard'])->name('dashboard');

@@ -15,7 +15,6 @@
   <link id="pagestyle" href="{{ asset('css/iconify.css?v=1.1.0') }}" rel="stylesheet" >
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
-
 <body class="g-sidenav-show  bg-gray-100">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
     <div class="sidenav-header">
@@ -172,12 +171,22 @@
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">          
           </div>
           <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a class="btn btn-primary btn-sm mb-0 me-3" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-soft-ui-dashboard">Bulan</a>
-            </li>
-            <li class="nav-item d-flex align-items-center">
-              <a class="btn btn-white btn-sm mb-0 me-3 text-primary" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-soft-ui-dashboard">Tahun</a>
-            </li>
+            <div>
+            <label for="filterBulan" class="text-white">Bulan:</label>
+            <select id="filterBulan" class="form-control form-control-sm">
+              @for ($i = 1; $i <= 12; $i++)
+                <option value="{{ $i }}" @if ($i == date('m')) selected @endif>{{ date('F', mktime(0, 0, 0, $i, 10)) }}</option>
+              @endfor
+            </select>
+          </div>
+          <div>
+            <label for="filterTahun" class="text-white">Tahun:</label>
+              <select id="filterTahun" class="form-control form-control-sm">
+                @for ($i = 2020; $i <= date('Y'); $i++)
+                  <option value="{{ $i }}" @if ($i == date('Y')) selected @endif>{{ $i }}</option>
+                @endfor
+              </select>
+            </div>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
@@ -206,7 +215,7 @@
                         <span class="carbon--time"></span>
                       </div>
                       <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                        1600
+                        {{ $totalBarangDisewakan }}
                       </h5>
                       <span class="text-white text-sm">Barang Disewakan</span>
                     </div>
@@ -254,7 +263,7 @@
                         <span class="fa6-regular--face-smile"></span>
                       </div>
                       <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                        2300
+                        Rp {{ number_format($totalPendapatan, 0, ',', '.') }}
                       </h5>
                       <span class="text-white text-sm">Transaksi Berhasil</span>
                     </div>
@@ -301,19 +310,26 @@
                 </div>
                 <strong>Notifications</strong>
               </div>
-
-
               <!-- Bagian Pesanan Masuk -->
               <div class="notification-section" >
                 <p class="notification-title mb-0"><strong>Pesanan Masuk:</strong></p>
-                <div class="notification-content">
-                  <div class="notification-item">Pesanan Baru</div>
-                  <div class="notification-item">Pesanan Baru</div>
-                  <div class="notification-item">Pesanan Baru</div>
-                  <div class="notification-item">Pesanan Baru</div>
-                  <div class="notification-item">Pesanan Baru</div>
-                </div>
+                @if($notifikasiBaru->isEmpty())
+                    <p>Tidak ada notifikasi baru.</p>
+                @else
+                    <div class="notification-section mt-3">
+                        <div class="notification-content">
+                            @foreach($notifikasiBaru as $notifikasi)
+                                <div class="notification-item mb-2">
+                                    <a href="{{ route('tandai.notifikasi', $notifikasi->id) }}">
+                                       Pesanan Baru dari <strong>{{ $notifikasi->nama }}</strong> (ID: {{ $notifikasi->id }})
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
               </div>
+              
 
               <!-- Bagian Stock Barang -->
               <div class="notification-section">
@@ -373,47 +389,25 @@
     var ctx2 = document.getElementById("chart-line").getContext("2d");
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
-
     gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
     gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
-
-    var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
-    gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+    gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)');
 
     new Chart(ctx2, {
       type: "line",
       data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"],
         datasets: [{
-            label: "Mobile apps",
+            label: "Penyewaan Barang",
             tension: 0.4,
-            borderWidth: 0,
+            borderWidth: 3,
             pointRadius: 0,
             borderColor: "#cb0c9f",
-            borderWidth: 3,
             backgroundColor: gradientStroke1,
             fill: true,
-            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+            data: @json($penyewaanData), // Kirim array dari PHP ke JS
             maxBarThickness: 6
-
-          },
-          {
-            label: "Websites",
-            tension: 0.4,
-            borderWidth: 0,
-            pointRadius: 0,
-            borderColor: "#3A416F",
-            borderWidth: 3,
-            backgroundColor: gradientStroke2,
-            fill: true,
-            data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-            maxBarThickness: 6
-          },
-        ],
+        }],
       },
       options: {
         responsive: true,
@@ -471,7 +465,7 @@
         },
       },
     });
-  </script>
+</script>
 
 <script>
     var ctx = document.getElementById("genderPieChart").getContext("2d");
@@ -499,14 +493,94 @@
 </script>
 
   <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
+    let chartLine = null; // Mendeklarasikan variabel chart
+
+// Fungsi untuk memperbarui grafik
+function updateChart() {
+    const bulan = filterBulan.value;
+    const tahun = filterTahun.value;
+
+    fetch(`/api/grafik?bulan=${bulan}&tahun=${tahun}`)
+      .then(response => response.json())
+      .then(data => {
+        // Jika chart sudah ada, hancurkan chart lama
+        if (chartLine) {
+          chartLine.destroy();
+        }
+
+        // Membuat chart baru dengan data yang diterima
+        const ctx2 = document.getElementById("chart-line").getContext("2d");
+
+        chartLine = new Chart(ctx2, {
+          type: "line",
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"],
+            datasets: [{
+              label: "Penyewaan Barang",
+              data: data.penyewaanData, // Pastikan ini sesuai dengan data yang diterima dari server
+              borderColor: "#cb0c9f",
+              backgroundColor: 'rgba(203,12,159,0.2)',
+              fill: true,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+            },
+            scales: {
+              y: { beginAtZero: true }
+            },
+          },
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  // Jalankan update chart pada saat halaman pertama dimuat
+  updateChart();
+
+  // Update chart saat filter bulan atau tahun berubah
+  filterBulan.addEventListener('change', updateChart);
+  filterTahun.addEventListener('change', updateChart);
+
+
+  // Update chart data based on selected filter values
+  function updateChart() {
+    const bulan = filterBulan.value;
+    const tahun = filterTahun.value;
+
+    // Send the selected bulan and tahun to the backend (or adjust the data accordingly)
+    // Here, we assume you have a way to fetch the data via AJAX or passing it to the chart
+
+    // Example: Call your backend with the selected values (AJAX or with Laravel routes)
+    fetch(`/api/grafik?bulan=${bulan}&tahun=${tahun}`)
+      .then(response => response.json())
+      .then(data => {
+        // Update the chart with new data (adjust your chart update logic here)
+        const ctx2 = document.getElementById("chart-line").getContext("2d");
+        const chartLine = new Chart(ctx2, {
+          type: "line",
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"],
+            datasets: [{
+              label: "Penyewaan Barang",
+              data: data.penyewaanData, // Adjust with data from the backend
+              borderColor: "#cb0c9f",
+              backgroundColor: 'rgba(203,12,159,0.2)',
+              fill: true,
+            }]
+          },
+        });
+      });
+  }
+
+  // Automatically update chart on page load with current values
+  updateChart();
+</script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- <script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script> -->

@@ -18,7 +18,7 @@ class Barang extends Model
     protected $fillable = [
         'nama',
         'deskripsi',
-        'stok',
+        'stok',        
         'harga_sewa',
         'kategori_id',
     ];
@@ -50,6 +50,5 @@ class Barang extends Model
     {
         return $this->hasMany(FotoBarang::class, 'barang_id');
     }
-
 
 }

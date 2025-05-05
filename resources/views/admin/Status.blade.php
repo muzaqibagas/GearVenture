@@ -195,14 +195,14 @@
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
-          <h4>Pesanan Masuk</h4>          
-          <div class="card mb-4">                  
+          <h4>Pesanan Masuk</h4>
+          <div class="card mb-4">
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">id</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Pemesan</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Keterangan</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
@@ -211,110 +211,37 @@
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach ($transaksi as $trx)
                     <tr>
+                      <td><p class="ps-3">{{ $trx->id }}</p></td>
+                      <td><p class="text-xs font-weight-bold mb-0">{{ $trx->nama_pengguna }}</p></td>
+                      <td><p class="text-xs font-weight-bold mb-0">{{ $trx->produk->nama ?? '-' }}</p></td>
+                      <td><p class="text-xs font-weight-bold mb-0">Rp {{ number_format($trx->total_harga, 0, ',', '.') }}</p></td>
                       <td>
-                        <p class="ps-3">1</p>
+                        @if($trx->status === 'lunas')
+                          <span class="badge bg-success">Lunas</span>
+                        @else
+                          <span class="badge bg-danger">Belum Lunas</span>
+                        @endif
                       </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Rafael yusuf</p>
+                      <td>                        
+                        <form action="{{ route('transaksi.hapus', $trx->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn text-center text-white btn-sm btn-danger rounded mb-0">Hapus</button>
+                        </form>
+
                       </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Chesnut Dome</p>                        
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Rp 120.000.00</p>
-                      </td>
-                      <td>
-                        <span class="badge bg-danger">Belum Lunas</span>
-                      </td>                
-                      <td class="gap-1">                                                
-                        <a href="" class="btn text-center text-white btn-sm w-auto btn-info rounded mb-0">Konfirmasi</a>
-                        <a href="" class="btn text-center text-white btn-sm w-auto btn-danger rounded mb-0">Hapus</a>                        
-                      </td>
-                    </tr> 
-                    <tr>
-                      <td>
-                        <p class="ps-3">2</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Rafael yusuf</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Chesnut Dome</p>                        
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Rp 120.000.00</p>
-                      </td>
-                      <td>
-                        <span class="badge bg-success">Lunas</span>
-                      </td>                
-                      <td class="gap-1">                                                
-                        <a href="" class="btn text-center text-white btn-sm w-auto btn-info rounded mb-0">Konfirmasi</a>
-                        <a href="" class="btn text-center text-white btn-sm w-auto btn-danger rounded mb-0">Hapus</a>                        
-                      </td>
-                    </tr>                
+                    </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
+
         </div>
-      </div> 
-      <div class="d-flex w-100 gap-3">
-        <div class="w-50">
-            <h4>Pesanan Berjalan</h4>          
-            <div class="card mb-4">                  
-                <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">id</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Pemesan</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Keterangan</th>                      
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><p class="ps-3">1</p></td>
-                                    <td><p class="text-xs font-weight-bold mb-0">Rafael yusuf</p></td>
-                                    <td><p class="text-xs font-weight-bold mb-0">Chesnut Dome</p></td>                    
-                                </tr>                
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="w-50">
-            <h4>Pesanan Selesai</h4>          
-            <div class="card mb-4">                  
-                <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">id</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Pemesan</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>                      
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><p class="ps-3">1</p></td>
-                                    <td><p class="text-xs font-weight-bold mb-0">Rafael yusuf</p></td>
-                                    <td>
-                                      <span class="badge bg-info">Selesai</span>
-                                    </td>  
-                                </tr>                
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </div>    
+      </div>       
     </div>
   </main>
   <!--   Core JS Files   -->

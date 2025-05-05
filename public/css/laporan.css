@@ -2599,11 +2599,11 @@ progress {
 }
 
 .table th:nth-child(1), .table td:nth-child(1) { width: 10%; } /* ID */
-.table th:nth-child(2), .table td:nth-child(2) { width: 15%; } /* Nama Pemesanan */
-.table th:nth-child(3), .table td:nth-child(3) { width: 15%; } /* Keterangan */
-.table th:nth-child(4), .table td:nth-child(4) { width: 15%; } /* Harga */
-.table th:nth-child(5), .table td:nth-child(5) { width: 20%; } /* Status pembayaran */
-.table th:nth-child(6), .table td:nth-child(6) { width: 25%; } /* Ubah Status */
+.table th:nth-child(2), .table td:nth-child(2) { width: 10%; } /* Nama Pemesanan */
+.table th:nth-child(3), .table td:nth-child(3) { width: 10%; } /* Keterangan */
+.table th:nth-child(4), .table td:nth-child(4) { width: 10%; } /* Harga */
+.table th:nth-child(5), .table td:nth-child(5) { width: 10%; } /* Status pembayaran */
+.table th:nth-child(6), .table td:nth-child(6) { width: 10%; } /* Ubah Status */
 
 th, td {
   white-space: normal; 

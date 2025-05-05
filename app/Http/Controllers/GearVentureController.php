@@ -18,6 +18,7 @@ use App\Models\Keranjang;
 use App\Models\KeranjangItem;
 use App\Models\Konten;
 use App\Models\ProdukPopuler;
+use App\Models\Transaksi;
 use App\Models\User;
 use App\Mail\InvoiceMail;
 
@@ -369,51 +370,51 @@ class GearVentureController extends Controller
             'type_menu'=> 'selesai'
         ]);
     }    
-    public function checkout(){
-        $keranjangItems = Keranjang::where('user_id', Auth::id())->get();
-        $totalHarga = $keranjangItems->sum('subtotal');
+    public function checkout(Request $request)
+    {
+        $itemIds = $request->input('item_ids', []);
+    
+        // Pastikan ada item yang dipilih
+        if (empty($itemIds)) {
+            return redirect()->route('keranjang')->with('error', 'Pilih produk yang ingin dibeli.');
+        }
+    
+        // Ambil item keranjang berdasarkan user_id dan hanya yang dipilih (by id)
+        $keranjangItems = Keranjang::where('user_id', Auth::id())
+                                    ->whereIn('id', $itemIds)
+                                    ->get();
+    
+        $totalHarga = 0;
+    
+        // Hitung total harga dari item yang dipilih
+        foreach ($keranjangItems as $keranjang) {
+            foreach ($keranjang->items as $item) {
+                $tanggalMulai = \Carbon\Carbon::parse($keranjang->tanggal_mulai);
+                $tanggalSelesai = \Carbon\Carbon::parse($keranjang->tanggal_selesai);
+                $durasiHari = $tanggalMulai->diffInDays($tanggalSelesai) ?: 1;
+    
+                $hargaSatuan = $item->produk->harga_sewa ?? 0;
+                $diskon = $item->produk->konten->diskon ?? 0;
+                $hargaSetelahDiskon = $hargaSatuan * (100 - $diskon) / 100;
+    
+                $subtotalProduk = $hargaSetelahDiskon * $item->jumlah * $durasiHari;
+                $totalLayanan = $item->total_layanan ?? 0;
+                $totalItem = $subtotalProduk + $totalLayanan;
+    
+                $totalHarga += $totalItem; // Tambahkan ke total harga
+            }
+        }
+    
         return view('checkout', [
-            'type_menu'=> 'checkout',
-            'keranjangItems'=> $keranjangItems,
+            'type_menu' => 'checkout',
+            'keranjangItems' => $keranjangItems,
             'totalHarga' => $totalHarga,
         ]);
-    }    
-
-    public function storecheckout(Request $request)
-    {
-        // Validasi form
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'no_hp' => 'required|string|max:15',
-            'alamat' => 'required|string',
-            'email' => 'required|email|exists:users,email',
-        ]);
-
-        // Simpan transaksi
-        $transaksi = new Transaksi();
-        $transaksi->user_id = Auth::id();
-        $transaksi->nama_pengguna = $request->nama;
-        $transaksi->no_handphone = $request->no_hp;
-        $transaksi->alamat = $request->alamat;
-        $transaksi->email = $request->email;
-        $transaksi->status = 'belum lunas'; // Status transaksi
-        $transaksi->tanggal = now();
-        $transaksi->total_harga = $request->total_harga; // Pastikan total dihitung sesuai keranjang
-        $transaksi->save();
-
-        // Kirim email dengan invoice
-        Mail::to($request->email)->send(new InvoiceMail($transaksi));
-
-        // Update keranjang menjadi 'checked out'
-        Keranjang::where('user_id', Auth::id())->delete();
-
-        // Redirect atau beri response sukses
-        return redirect()->route('checkout');
-    }
+    }   
+    
     public function keranjang() {
         $user_id = Auth::id();
-    
-        
+        $produk = Barang::all();
         $keranjang = Keranjang::with('items.produk.fotoBarangs')
                 ->where('user_id', $user_id)
                 ->latest()
@@ -437,11 +438,13 @@ class GearVentureController extends Controller
             'type_menu' => 'keranjang',
             'keranjang' => $keranjang,
             'items' => $items,
-            'total' => $total
+            'total' => $total,
+            'produk' => $produk,
         ]);        
     }    
     
     public function tambahkeranjang(Request $request){
+        \Log::info('Masuk ke tambahkeranjang');
         $request->validate([
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after:tanggal_mulai',
@@ -529,16 +532,41 @@ class GearVentureController extends Controller
         return redirect()->route('keranjang')->with('success', 'Item berhasil dihapus.');
     }
 
-
-
 // ADMIN
     public function dashboard() {
+
+        $totalBarangDisewakan = Transaksi::where('status', 'lunas')->sum('jumlah');
+        $totalPendapatan = Transaksi::where('status', 'lunas')->sum('total_harga');
         $totalUsers = User::count();
         $totalProduk = Barang::count();
         $laki = User::where('jenis_kelamin', 'Laki-laki')->count();
         $perempuan = User::where('jenis_kelamin', 'Perempuan')->count();
 
-        return view('admin.dashboard', compact('laki', 'perempuan', 'totalUsers', 'totalProduk'));
+        $penyewaanPerBulan = Transaksi::selectRaw('MONTH(created_at) as bulan, SUM(jumlah) as total')
+            ->whereYear('created_at', now()->year)
+            ->where('status', 'lunas')
+            ->groupBy('bulan')
+            ->orderBy('bulan')
+            ->pluck('total', 'bulan');
+
+        $penyewaanData = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $penyewaanData[] = $penyewaanPerBulan[$i] ?? 0;
+        }
+
+        // Tambahkan notifikasi
+        $notifikasiBaru = Transaksi::where('is_new', true)->latest()->take(5)->get();
+
+        return view('admin.dashboard', compact(
+            'laki',
+            'perempuan',
+            'totalUsers',
+            'totalProduk',
+            'totalBarangDisewakan',
+            'totalPendapatan',
+            'penyewaanData',
+            'notifikasiBaru' // <- ini ditambahkan
+        ));
     }
 
     //BARANG
@@ -717,13 +745,40 @@ class GearVentureController extends Controller
         return redirect()->route('kategori')->with('Sukses','Kategori Berhasil Dihapus');
     }
 
-    public function laporan(){
-        return view('admin.laporan');
+    public function laporan(Request $request)
+    {
+        // Ambil tahun & bulan dari request, default ke tahun sekarang
+        $tahun = $request->input('tahun', Carbon::now()->year);
+        $bulan = $request->input('bulan'); // bisa null
+
+        // Ambil daftar tahun yang tersedia dari data transaksi
+        $tahunList = Transaksi::selectRaw('YEAR(created_at) as tahun')
+            ->distinct()
+            ->orderBy('tahun', 'desc')
+            ->pluck('tahun');
+
+        // Query transaksi lunas & dikelompokkan berdasarkan barang
+        $query = Transaksi::with('produk')
+            ->selectRaw('produk_id, SUM(jumlah) as total_penyewaan, SUM(total_harga) as total_pendapatan')
+            ->where('status', 'lunas')
+            ->whereYear('created_at', $tahun)
+            ->groupBy('produk_id');
+
+        if ($bulan) {
+            $query->whereMonth('created_at', $bulan);
+        }
+
+        $transaksi = $query->get();
+
+        return view('admin.laporan', compact('tahunList', 'tahun', 'bulan', 'transaksi'));
     }
 
-    public function status(){
-        return view('admin.status');
+    public function status()
+    {
+        $transaksi = Transaksi::latest()->get(); // atau tambahkan kondisi jika perlu
+        return view('admin.status', compact('transaksi'));
     }
+
 
     //KONTEN
     public function konten(){

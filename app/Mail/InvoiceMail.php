@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Transaksi;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -11,16 +10,24 @@ class InvoiceMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $transaksi;
+    public $transaksis;
 
-    public function __construct(Transaksi $transaksi)
+    /**
+     * Create a new message instance.
+     *
+     * @param array $transaksis
+     */
+    public function __construct($transaksis)
     {
-        $this->transaksi = $transaksi;
+        $this->transaksis = $transaksis;
     }
 
+    /**
+     * Build the message.
+     */
     public function build()
     {
-        return $this->view('emails.invoice')
-                    ->with(['transaksi' => $this->transaksi]);
+        return $this->subject('Invoice Pembayaran Sewa Barang')
+                    ->markdown('emails.invoice');
     }
 }

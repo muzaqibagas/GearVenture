@@ -37,7 +37,7 @@ class KeranjangItem extends Model
     // Relasi ke Produk
     public function produk()
     {
-        return $this->belongsTo(Barang::class, 'produk_id')->whereNotNull('konten');
+        return $this->belongsTo(Barang::class, 'produk_id');
     }
 
     
