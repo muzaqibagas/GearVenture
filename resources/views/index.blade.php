@@ -42,7 +42,11 @@
                         </div>
                         <a href="{{ route('detail', $dabar->id) }}" class="promo-button px-4">Lihat Selengkapnya</a>
                     </div>
-                    <img src="{{ asset('pict/'.$dabar->foto)}}" alt="Tenda" class="promo-image">
+                    @if ($dabar->fotoBarangs->count() > 0)
+                        <img src="{{ asset('pict/'.$dabar->fotoBarangs->first()->foto) }}" class="promo-image" alt="{{ $dabar->nama }}">
+                    @else
+                        <img src="{{ asset('pict/default-image.jpg') }}" class="card-img-top" alt="No Image">
+                    @endif                       
                 </div>
             @endforeach                      
             </div>         
@@ -53,7 +57,11 @@
             <div class="catalog-container">
                 @foreach($dakat as $item)
                     <div class="catalog-card">
-                        <img src="{{ asset('pict/'.$item->produk->foto) }}" alt="Kursi Kramat" class="catalog-image">
+                        @if ($dabar->fotoBarangs->count() > 0)
+                            <img src="{{ asset('pict/'.$dabar->fotoBarangs->first()->foto) }}" class="catalog-image" alt="{{ $dabar->nama }}">
+                        @else
+                            <img src="{{ asset('pict/default-image.jpg') }}" class="card-img-top" alt="No Image">
+                        @endif                           
                         <div class="catalog-title">                            
                             <a href="{{ route('detail', $item->produk->id) }}" class="catalog-title text-decoration-none">{{ $item->produk->nama ?? 'Nama tidak tersedia' }}</a>
                         </div>                        

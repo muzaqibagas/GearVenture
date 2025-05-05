@@ -137,7 +137,11 @@
                                 {{ number_format($hargaDiskon, 0, ',', '.') }}
                             </small>
                         </div>
-                        <img src="{{ asset('pict/'.$dabar->foto)}}" class="position-absolute rounded end-0" style="width: 50px; height: 50px">
+                        @if ($dabar->fotoBarangs->count() > 0)
+                            <img src="{{ asset('pict/'.$dabar->fotoBarangs->first()->foto) }}" class="position-absolute rounded end-0" style="width: 50px; height: 50px" alt="{{ $dabar->nama }}">
+                        @else
+                            <img src="{{ asset('pict/default-image.jpg') }}" class="card-img-top" alt="No Image">
+                        @endif                             
                     </li>
                 @endforeach                                      
                 </ul>
@@ -159,7 +163,11 @@
                                 @endfor                        
                             </div>
                         </div>
-                        <img src="{{ asset('pict/'.$item->produk->foto) }}" class="position-absolute rounded end-0" style="width: 50px; height: 50px">
+                        @if ($dabar->fotoBarangs->count() > 0)
+                            <img src="{{ asset('pict/'.$dabar->fotoBarangs->first()->foto) }}" class="position-absolute rounded end-0" style="width: 50px; height: 50px" alt="{{ $dabar->nama }}">
+                        @else
+                            <img src="{{ asset('pict/default-image.jpg') }}" class="card-img-top" alt="No Image">
+                        @endif                          
                     </li>
                 @endforeach                                          
                 </ul>

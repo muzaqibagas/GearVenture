@@ -139,7 +139,7 @@
                                     <br><small class="text-muted">(Termasuk tambahan Rp {{ number_format($totalLayanan, 0, ',', '.') }})</small>
                                 </td>
                                 <td>
-                                    <form action="{{ route('keranjang.hapus', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus item ini?')">
+                                    <form action="{{ route('transaksi.hapus', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus item ini?')">
                                         @csrf
                                         <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                     </form>
