@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InvoiceMail;
+use App\Models\Barang;
 use App\Models\Keranjang;
+use App\Models\KeranjangItem;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -32,55 +35,81 @@ class OrderController extends Controller
      */    
 
      public function store(Request $request)
-     {
-         $request->validate([
-             'id' => 'required|string',
-             'nama' => 'required|string|max:255',
-             'no_hp' => 'required|string|max:15',
-             'alamat' => 'required|string',
-             'email' => 'required|email',
-             'produk_id' => 'required|array',
-             'jumlah' => 'required|array',
-             'durasi' => 'nullable|array',
-             'tanggal' => 'required|array',
-             'total_harga' => 'required|array',
-             'tambahan' => 'nullable|array',
-             'qty_tambahan' => 'nullable|array',
-         ]);
-     
-         $transaksiData = [];
-     
-         foreach ($request->produk_id as $index => $produkId) {
-     
-             // Ambil tambahan dan qty_tambahan hanya untuk produk saat ini
-             $tambahanPerItem = isset($request->tambahan[$index]) ? $request->tambahan[$index] : [];
-             $qtyTambahanPerItem = isset($request->qty_tambahan[$index]) ? $request->qty_tambahan[$index] : [];
-     
-             $transaksi = Transaksi::create([
-                 'id'             => $request->id,
-                 'user_id'        => Auth::id(),
-                 'produk_id'      => $produkId,
-                 'nama_pengguna'  => $request->nama,
-                 'no_handphone'   => $request->no_hp,
-                 'alamat'         => $request->alamat,
-                 'email'          => $request->email,
-                 'durasi'         => $request->durasi[$index],
-                 'jumlah'         => $request->jumlah[$index],
-                 'tanggal'        => $request->tanggal[$index],
-                 'total_harga'    => $request->total_harga[$index],
-                 'tambahan'       => json_encode($tambahanPerItem),
-                 'qty_tambahan'   => json_encode($qtyTambahanPerItem),
-                 'status'         => 'lunas',
-             ]);
-     
-             $transaksiData[] = $transaksi;
-         }
-     
-         $this->sendInvoice($request->id);
-     
-         Keranjang::where('user_id', Auth::id())->delete();
-         return redirect()->route('catalog')->with('success', 'Checkout berhasil! Invoice telah dikirim ke email.');
-     }
+    {
+        $request->validate([
+            'id' => 'required|string',
+            'nama' => 'required|string|max:255',
+            'no_hp' => 'required|string|max:15',
+            'alamat' => 'required|string',
+            'email' => 'required|email',
+            'produk_id' => 'required|array',
+            'jumlah' => 'required|array',
+            'durasi' => 'nullable|array',
+            'tanggal' => 'required|array',
+            'total_harga' => 'required|array',
+            'tambahan' => 'nullable|array',
+            'qty_tambahan' => 'nullable|array',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $transaksiData = [];
+
+            foreach ($request->produk_id as $index => $produkId) {
+
+                $produk = Barang::find($produkId);
+
+                // Validasi stok tersedia
+                if (!$produk || $produk->stok < $request->jumlah[$index]) {
+                    throw new \Exception("Stok untuk produk {$produk->nama} tidak mencukupi.");
+                }
+
+                // Kurangi stok
+                $produk->stok -= $request->jumlah[$index];
+                $produk->save();
+
+                // Tambahan
+                $tambahanPerItem = $request->tambahan[$index] ?? [];
+                $qtyTambahanPerItem = $request->qty_tambahan[$index] ?? [];
+
+                // Buat transaksi
+                $transaksi = Transaksi::create([
+                    'id'             => $request->id,
+                    'user_id'        => Auth::id(),
+                    'produk_id'      => $produkId,
+                    'nama_pengguna'  => $request->nama,
+                    'no_handphone'   => $request->no_hp,
+                    'alamat'         => $request->alamat,
+                    'email'          => $request->email,
+                    'durasi'         => $request->durasi[$index],
+                    'jumlah'         => $request->jumlah[$index],
+                    'tanggal'        => $request->tanggal[$index],
+                    'total_harga'    => $request->total_harga[$index],
+                    'tambahan'       => json_encode($tambahanPerItem),
+                    'qty_tambahan'   => json_encode($qtyTambahanPerItem),
+                    'status'         => 'belum lunas',
+                ]);
+
+                $transaksiData[] = $transaksi;
+            }
+
+            // Hapus keranjang user
+            Keranjang::where('user_id', Auth::id())->delete();
+
+            // Kirim invoice
+            $this->sendInvoice($request->id);
+
+            DB::commit();
+
+            return redirect()->route('catalog')->with('success', 'Checkout berhasil! Invoice telah dikirim ke email.');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return back()->with('error', 'Gagal memproses transaksi: ' . $e->getMessage());
+        }
+    }
      
 
     /**
@@ -110,10 +139,16 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        \Log::info("Menghapus item dengan ID: " . $id);
+
+        $item = Transaksi::findOrFail($id);
+        $item->delete();
+
+        return redirect()->back()->with('success', 'Item berhasil dihapus.');
     }
+
 
     public function sendInvoice($orderId)
     {
@@ -154,13 +189,7 @@ class OrderController extends Controller
         $transaksi = Transaksi::all(); // ambil semua pesanan
         return view('admin.status', compact('transaksi'));
     }
-    public function hapus($id)
-    {
-        $transaksi = Transaksi::findOrFail($id);
-        $transaksi->delete();
-
-        return redirect()->route('admin.status')->with('success', 'Transaksi berhasil dihapus');
-    }
+    
     public function laporans(Request $request)
     {
         // Ambil semua tahun dan bulan dari transaksi
@@ -187,4 +216,19 @@ class OrderController extends Controller
 
         return view('admin.laporan-tahunan', compact('transaksi', 'tahunList', 'bulanList', 'tahun', 'bulan'));
     }
+    public function updateJumlah(Request $request)
+    {
+        $item = KeranjangItem::find($request->item_id);
+
+        if (!$item) {
+            return response()->json(['success' => false, 'message' => 'Item not found.']);
+        }
+
+        // Pastikan jumlah tidak kurang dari 1
+        $item->jumlah = max(1, min($request->jumlah, 99));
+        $item->save();
+
+        return response()->json(['success' => true, 'message' => 'Jumlah berhasil diperbarui.']);
+    }
+
 }

@@ -209,25 +209,22 @@
               <div class="card">
                 <span class="mask bg-dark opacity-10 border-radius-lg"></span>
                 <div class="card-body p-3 position-relative">
-                  <div class="row">
-                    <div class="col-8 text-start">
+                  <div class="column">
+                    <div class="col-8 text-start w-100">
                       <div class="icon d-flex icon-shape bg-white shadow text-center border-radius-2xl align-items-center justify-content-center">
-                        <span class="carbon--time"></span>
+                        <span class="fa6-regular--face-smile"></span>
                       </div>
                       <h5 class="text-white font-weight-bolder mb-0 mt-3">
                         {{ $totalBarangDisewakan }}
                       </h5>
-                      <span class="text-white text-sm">Barang Disewakan</span>
                     </div>
-                    <div class="col-4">
-                      <div class="dropdown text-end mb-7">                    
-                      </div>
-                      <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">/bulan</p>
+                    <div class="col-4 w-100 d-flex justify-content-between align-items-center">   
+                      <span class="text-white text-sm">Barang Disewa {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</span>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </div>            
             <div class="col-lg-6 col-md-6 col-12 mt-4 mt-md-0">
               <div class="card">
                 <span class="mask bg-primary opacity-10 border-radius-lg"></span>
@@ -244,8 +241,7 @@
                     </div>
                     <div class="col-4">
                       <div class="dropstart text-end mb-7">                        
-                      </div>
-                      <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">/bulan</p>
+                      </div>                      
                     </div>
                   </div>
                 </div>
@@ -257,20 +253,17 @@
               <div class="card">
                 <span class="mask bg-primary opacity-10 border-radius-lg"></span>
                 <div class="card-body p-3 position-relative">
-                  <div class="row">
-                    <div class="col-8 text-start">
+                  <div class="column">
+                    <div class="col-8 text-start w-100">
                       <div class="icon d-flex icon-shape bg-white shadow text-center border-radius-2xl align-items-center justify-content-center">
                         <span class="fa6-regular--face-smile"></span>
                       </div>
                       <h5 class="text-white font-weight-bolder mb-0 mt-3">
                         Rp {{ number_format($totalPendapatan, 0, ',', '.') }}
                       </h5>
-                      <span class="text-white text-sm">Transaksi Berhasil</span>
                     </div>
-                    <div class="col-4">
-                      <div class="dropdown text-end mb-7">                        
-                      </div>
-                      <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">/bulan</p>
+                    <div class="col-4 w-100 d-flex justify-content-between align-items-center">   
+                      <span class="text-white text-sm">Pendapatan Bulan {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</span>
                     </div>
                   </div>
                 </div>
@@ -292,8 +285,7 @@
                     </div>
                     <div class="col-4">
                       <div class="dropstart text-end mb-7">                        
-                      </div>
-                      <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">/bulan</p>
+                      </div>                      
                     </div>
                   </div>
                 </div>
@@ -332,17 +324,18 @@
               
 
               <!-- Bagian Stock Barang -->
-              <div class="notification-section">
+              <div class="notification-section mt-3">
                 <p class="notification-title mb-0"><strong>Stock Barang:</strong></p>
                 <div class="notification-content">
-                  <div class="notification-item">Stok Tenda Habis!</div>
-                  <div class="notification-item">Stok Kompor Habis!</div>
-                  <div class="notification-item">Stok Flysheet Habis!</div>
-                  <div class="notification-item">Stok Matras Habis!</div>
-                  <div class="notification-item">Stok Gas Habis!</div>
+                  @forelse ($barangHabis as $barang)
+                    <a href="{{ route('editbarang', $barang->id) }}" class="notification-item text-danger d-block text-decoration-none fw-bold">
+                      Stok {{ $barang->nama }} habis! 
+                    </a>
+                  @empty
+                    <div class="notification-item text-success">Semua barang tersedia.</div>
+                  @endforelse
                 </div>
-              </div>
-
+              </div>    
             </div>
           </div>
        
@@ -352,7 +345,7 @@
         <div class="col-lg-7">
           <div class="card z-index-2">
             <div class="card-header pb-0">
-              <h6>Grafik Penyewaan Barang(/thn)</h6>              
+              <h6>Grafik Penyewaan Barang</h6>              
             </div>
             <div class="card-body p-3">
               <div class="chart">
@@ -388,82 +381,103 @@
   <script>
     var ctx2 = document.getElementById("chart-line").getContext("2d");
 
-    var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
-    gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)');
+    var gradientNow = ctx2.createLinearGradient(0, 230, 0, 50);
+    gradientNow.addColorStop(1, 'rgba(203,12,159,0.2)');
+    gradientNow.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    gradientNow.addColorStop(0, 'rgba(203,12,159,0)');
+
+    var gradientLast = ctx2.createLinearGradient(0, 230, 0, 50);
+    gradientLast.addColorStop(1, 'rgba(20,23,39,0.2)');
+    gradientLast.addColorStop(0.2, 'rgba(20,23,39,0.0)');
+    gradientLast.addColorStop(0, 'rgba(20,23,39,0)');
 
     new Chart(ctx2, {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"],
-        datasets: [{
-            label: "Penyewaan Barang",
-            tension: 0.4,
-            borderWidth: 3,
-            pointRadius: 0,
-            borderColor: "#cb0c9f",
-            backgroundColor: gradientStroke1,
-            fill: true,
-            data: @json($penyewaanData), // Kirim array dari PHP ke JS
-            maxBarThickness: 6
-        }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
+        type: "line",
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"],
+            datasets: [
+                {
+                    label: "Tahun {{ now()->year }}",
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    borderColor: "#cb0c9f",
+                    backgroundColor: gradientNow,
+                    fill: true,
+                    data: @json($penyewaanDataNow),
+                    maxBarThickness: 6
+                },
+                {
+                    label: "Tahun {{ now()->subYear()->year }}",
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    borderColor: "#344767",
+                    backgroundColor: gradientLast,
+                    fill: true,
+                    data: @json($penyewaanDataLast),
+                    maxBarThickness: 6
+                }
+            ],
         },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: true,
-              drawOnChartArea: true,
-              drawTicks: false,
-              borderDash: [5, 5]
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                    labels: {
+                        color: 'white'
+                    }
+                }
             },
-            ticks: {
-              display: true,
-              padding: 10,
-              color: '#b2b9bf',
-              font: {
-                size: 11,
-                family: "Inter",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-              borderDash: [5, 5]
+            interaction: {
+                intersect: false,
+                mode: 'index',
             },
-            ticks: {
-              display: true,
-              color: '#b2b9bf',
-              padding: 20,
-              font: {
-                size: 11,
-                family: "Inter",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
+            scales: {
+                y: {
+                    grid: {
+                        drawBorder: false,
+                        display: true,
+                        drawOnChartArea: true,
+                        drawTicks: false,
+                        borderDash: [5, 5]
+                    },
+                    ticks: {
+                        display: true,
+                        padding: 10,
+                        color: '#b2b9bf',
+                        font: {
+                            size: 11,
+                            family: "Inter",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                    }
+                },
+                x: {
+                    grid: {
+                        drawBorder: false,
+                        display: false,
+                        drawOnChartArea: false,
+                        drawTicks: false,
+                        borderDash: [5, 5]
+                    },
+                    ticks: {
+                        display: true,
+                        color: '#b2b9bf',
+                        padding: 20,
+                        font: {
+                            size: 11,
+                            family: "Inter",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                    }
+                },
+            },
         },
-      },
     });
 </script>
 

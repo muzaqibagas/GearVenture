@@ -203,11 +203,11 @@
                                   <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
                               @endforeach
                           </select>
-                      </div>                          
+                      </div>                                              
                       <div class="mb-1">
                           <label class="form-label">Harga Sewa</label>
-                          <input type="text" name="harga_sewa" class="form-control" placeholder="Rp">
-                      </div>                                                                     
+                          <input type="text" name="harga_sewa" class="form-control" placeholder="Rp" value="">
+                      </div>                                            
                   </div>
                   <div class="col-md-6 text-center">                          
                       <label class="form-label">Gambar</label>

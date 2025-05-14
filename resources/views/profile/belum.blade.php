@@ -12,7 +12,7 @@
         <aside class="sidenav navbar-vertical navbar-expand-xs border-0 border-radius-xl fixed-start rounded p-3 " style="width:230px" id="sidenav-main">
             <div class="sidebar d-flex flex-column text-dark">
                 <div class="text-center mb-4">
-                    <img src="{{ asset('img/profile.jpg') }}" alt="logo" class="logo mb-2 rounded-circle" style="width:100px; height:100px">
+                    <img src="{{ Auth::guard('web')->user()->foto ? asset('foto/user/' . Auth::guard('web')->user()->foto) : asset('foto/user/default.jpg') }}" alt="Foto Profil" class="rounded-circle img-fluid" style="width: 120px; height: 120px; object-fit: cover;">
                     <div class="fw-semibold border-bottom pb-3">Hi, {{ Auth::guard('web')->user()->username }}</div>
                 </div>
 
@@ -102,31 +102,60 @@
                     <table class="table custom-table text-white text-center">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Barang</th>
                                 <th>Durasi Sewa</th>
                                 <th>Harga</th>
-                                <th>Sisa Hari</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($transaksis as $transaksi)
                             <tr class="align-middle border-top">
-                                <td class="d-flex align-items-center gap-3">
-                                <img class="rounded" src="{{ asset('img/profile.jpg') }}" width="100" height="100" style="object-fit: cover;" alt="Bangku">
-                                Bangku
+                                <td>
+                                    @if ($transaksi->produk && $transaksi->produk->fotoBarangs->first())
+                                        <img 
+                                            src="{{ asset('pict/' . $transaksi->produk->fotoBarangs->first()->foto) }}" 
+                                            class="rounded" 
+                                            style="width: 100px; height: 100px; object-fit: cover;" 
+                                            alt="{{ $transaksi->produk->nama }}">
+                                    @else
+                                        <img 
+                                            src="{{ asset('images/default.png') }}" 
+                                            class="rounded" 
+                                            style="width: 100px; height: 100px; object-fit: cover;" 
+                                            alt="Default">
+                                    @endif
                                 </td>
-                                <td>12/08/2023 s/d 15/08/2023</td>
-                                <td>Rp. 20.000</td>
-                                <td><span class="badge bg-danger rounded-pill px-3 py-2">Menunggu</span></td>
-                            </tr>
-                            <tr class="align-middle border-top">
-                                <td class="d-flex align-items-center gap-3">
-                                <img class="rounded" src="{{ asset('img/profile.jpg') }}" width="100" height="100" style="object-fit: cover;" alt="Bangku 4P">
-                                Bangku 4P
+                                <td>
+                                    {{ $transaksi->produk->nama }}
+                                    <br><br>
+                                    @if (!empty($transaksi->tambahan) && is_array($transaksi->tambahan))
+                                        Layanan tambahan:<br>
+                                        @foreach ($transaksi->tambahan as $layanan => $value)
+                                            {{ ucwords(str_replace('_', ' ', $layanan)) }}<br>
+                                        @endforeach
+                                    @endif
                                 </td>
-                                <td>22/04/2023 s/d 25/04/2023</td>
-                                <td>Rp. 133.000</td>
-                                <td><span class="badge bg-warning rounded-pill px-3 py-2">bayar</span></td>
+                                <td>{{ \Carbon\Carbon::parse($transaksi->tanggal)->format('d/m/Y') }} s/d 
+                                    {{ \Carbon\Carbon::parse($transaksi->tanggal)->addDays($transaksi->durasi)->format('d/m/Y') }}
+                                </td>
+                                <td>Rp. {{ number_format($transaksi->total_harga, 0, ',', '.') }}</td>
+                                <td>
+                                    @if($transaksi->status === 'belum lunas')
+                                        <a href="{{ route('pembayaran.unggah', $transaksi->id) }}" style="text-decoration: none;">
+                                            <span class="badge bg-danger rounded-pill px-3 py-2 text-white" style="cursor: pointer;">
+                                                {{ $transaksi->status }}
+                                            </span>
+                                        </a>
+                                    @else
+                                        <span class="badge bg-success rounded-pill px-3 py-2 text-white">
+                                            {{ $transaksi->status }}
+                                        </span>
+                                    @endif
+                                </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

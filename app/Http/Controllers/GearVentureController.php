@@ -149,7 +149,7 @@ class GearVentureController extends Controller
             ->whereHas('konten', function($q){
                 $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
             })->get();
-        $dakat = ProdukPopuler::with('produk')->get();    
+        $dakat = ProdukPopuler::with(['produk.fotoBarangs'])->get();    
         return view('catalog', [
             'type_menu'=> 'catalog', 
             'data' => $data, 
@@ -204,15 +204,15 @@ class GearVentureController extends Controller
                 $q->whereNotNull('diskon')->where('diskon', '>', 0); // hanya yang ada diskon
             })->get();
 
-        $dacak = Barang::with('kategori')
-            ->where('kategori_id', $data->kategori_id)
+        $dacak = Barang::with(['kategori', 'fotoBarangs'])
+            ->where('kategori_id','!=', $data->kategori_id)
             ->where('id', '!=', $id)
             ->inRandomOrder()
             ->take(4)
             ->get();  
-
+        // dd($dacak);
         return view('detail', [
-            'type_menu' => 'detail',
+            'type_menu' => 'catalog',
             'data' => $data,
             'dakon' => $dakon,
             'dacak' => $dacak,
@@ -355,19 +355,90 @@ class GearVentureController extends Controller
     }    
 
   
-    public function belum(){
+    public function belum() {
+        $user = Auth::user();
+
+        $transaksi = \App\Models\Transaksi::all();
+
+        foreach ($transaksi as $trx) {
+            if (is_string($trx->tambahan)) {
+                $decoded = json_decode($trx->tambahan, true);
+
+                if (is_string($decoded)) {
+                    $decoded = json_decode($decoded, true);
+                }
+
+                $trx->tambahan = $decoded;
+                $trx->save();
+            }
+        }
+
+        $transaksis = Transaksi::with(['produk.fotoBarangs'])
+            ->where('user_id', $user->id)            
+            ->get();
+
         return view('profile.belum', [
-            'type_menu'=> 'belum'
+            'type_menu' => 'belum',
+            'transaksis' => $transaksis,
+            'transaksi' => $transaksi,
         ]);
-    }    
+    }   
     public function sewa(){
+        $user = Auth::user();
+
+        $transaksi = \App\Models\Transaksi::all();
+
+        foreach ($transaksi as $trx) {
+            if (is_string($trx->tambahan)) {
+                $decoded = json_decode($trx->tambahan, true);
+
+                if (is_string($decoded)) {
+                    $decoded = json_decode($decoded, true);
+                }
+
+                $trx->tambahan = $decoded;
+                $trx->save();
+            }
+        }
+
+        $transaksis = Transaksi::with(['produk.fotoBarangs'])
+            ->where('user_id', $user->id)  
+            ->where('status_peminjaman', '!=', 'selesai')          
+            ->get();
+
         return view('profile.sewa', [
-            'type_menu'=> 'sewa'
+            'type_menu'=> 'sewa',
+            'transaksis' => $transaksis,
+            'transaksi' => $transaksi,
         ]);
     }    
     public function selesai(){
+        $user = Auth::user();
+
+        $transaksi = \App\Models\Transaksi::all();
+
+        foreach ($transaksi as $trx) {
+            if (is_string($trx->tambahan)) {
+                $decoded = json_decode($trx->tambahan, true);
+
+                if (is_string($decoded)) {
+                    $decoded = json_decode($decoded, true);
+                }
+
+                $trx->tambahan = $decoded;
+                $trx->save();
+            }
+        }
+
+        $transaksis = Transaksi::with(['produk.fotoBarangs'])
+            ->where('user_id', $user->id)  
+            ->where('status_peminjaman', 'selesai')          
+            ->get();
+
         return view('profile.selesai', [
-            'type_menu'=> 'selesai'
+            'type_menu'=> 'selesai',
+            'transaksis' => $transaksis,
+            'transaksi' => $transaksi,
         ]);
     }    
     public function checkout(Request $request)
@@ -535,23 +606,46 @@ class GearVentureController extends Controller
 // ADMIN
     public function dashboard() {
 
-        $totalBarangDisewakan = Transaksi::where('status', 'lunas')->sum('jumlah');
-        $totalPendapatan = Transaksi::where('status', 'lunas')->sum('total_harga');
+        $tahunSekarang = now()->year;
+        $tahunLalu = now()->subYear()->year;
+
+        $totalBarangDisewakan = Transaksi::where('status', 'lunas')
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', $tahunSekarang)
+            ->sum('jumlah');
+
+        $totalPendapatan = Transaksi::where('status', 'lunas')
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', $tahunSekarang)
+            ->sum('total_harga');
+
         $totalUsers = User::count();
         $totalProduk = Barang::count();
         $laki = User::where('jenis_kelamin', 'Laki-laki')->count();
         $perempuan = User::where('jenis_kelamin', 'Perempuan')->count();
+        $barangHabis = Barang::where('stok', '<=', 0)->get();
 
-        $penyewaanPerBulan = Transaksi::selectRaw('MONTH(created_at) as bulan, SUM(jumlah) as total')
-            ->whereYear('created_at', now()->year)
+        // Tahun sekarang
+        $penyewaanPerBulanNow = Transaksi::selectRaw('MONTH(created_at) as bulan, SUM(jumlah) as total')
+            ->whereYear('created_at', $tahunSekarang)
             ->where('status', 'lunas')
             ->groupBy('bulan')
             ->orderBy('bulan')
             ->pluck('total', 'bulan');
 
-        $penyewaanData = [];
+        // Tahun lalu
+        $penyewaanPerBulanLast = Transaksi::selectRaw('MONTH(created_at) as bulan, SUM(jumlah) as total')
+            ->whereYear('created_at', $tahunLalu)
+            ->where('status', 'lunas')
+            ->groupBy('bulan')
+            ->orderBy('bulan')
+            ->pluck('total', 'bulan');
+
+        $penyewaanDataNow = [];
+        $penyewaanDataLast = [];
         for ($i = 1; $i <= 12; $i++) {
-            $penyewaanData[] = $penyewaanPerBulan[$i] ?? 0;
+            $penyewaanDataNow[] = $penyewaanPerBulanNow[$i] ?? 0;
+            $penyewaanDataLast[] = $penyewaanPerBulanLast[$i] ?? 0;
         }
 
         // Tambahkan notifikasi
@@ -564,8 +658,10 @@ class GearVentureController extends Controller
             'totalProduk',
             'totalBarangDisewakan',
             'totalPendapatan',
-            'penyewaanData',
-            'notifikasiBaru' // <- ini ditambahkan
+            'penyewaanDataNow',
+            'penyewaanDataLast',
+            'notifikasiBaru',
+            'barangHabis'
         ));
     }
 
@@ -748,8 +844,9 @@ class GearVentureController extends Controller
     public function laporan(Request $request)
     {
         // Ambil tahun & bulan dari request, default ke tahun sekarang
-        $tahun = $request->input('tahun', Carbon::now()->year);
-        $bulan = $request->input('bulan'); // bisa null
+        $tahun = $request->input('tahun', Carbon::now()->year);        
+        $bulan = (int) $request->input('bulan');
+
 
         // Ambil daftar tahun yang tersedia dari data transaksi
         $tahunList = Transaksi::selectRaw('YEAR(created_at) as tahun')
@@ -764,21 +861,53 @@ class GearVentureController extends Controller
             ->whereYear('created_at', $tahun)
             ->groupBy('produk_id');
 
+        // Filter berdasarkan bulan jika ada
         if ($bulan) {
             $query->whereMonth('created_at', $bulan);
         }
 
         $transaksi = $query->get();
 
+        // Kembalikan tampilan dengan variabel-variabel yang dibutuhkan
         return view('admin.laporan', compact('tahunList', 'tahun', 'bulan', 'transaksi'));
     }
 
     public function status()
     {
-        $transaksi = Transaksi::latest()->get(); // atau tambahkan kondisi jika perlu
-        return view('admin.status', compact('transaksi'));
-    }
+        $user_id = Auth::id();
+        $keranjang = Keranjang::with('items.produk')
+                ->where('user_id', $user_id)
+                ->latest()
+                ->get();
+         $items = $keranjang->flatMap(function ($keranjang_item) {
+            return $keranjang_item->items;
+        });
+    
+        $total = 0;
+    
+        foreach ($keranjang as $keranjang_item) {
+        foreach ($keranjang_item->items as $item) {
+            $total_produk = $item->jumlah * $item->harga_setelah_diskon;
+            $total_layanan = $item->total_layanan ?? 0;
+            $total += $total_produk + $total_layanan;
+            }
+        }
+        $transaksi = \App\Models\Transaksi::all();
 
+        foreach ($transaksi as $trx) {
+            if (is_string($trx->tambahan)) {
+                $decoded = json_decode($trx->tambahan, true);
+
+                if (is_string($decoded)) {
+                    $decoded = json_decode($decoded, true);
+                }
+
+                $trx->tambahan = $decoded;
+                $trx->save();
+            }
+        }
+        return view('admin.status', compact('transaksi', 'keranjang','items', 'total'));
+    }
 
     //KONTEN
     public function konten(){
@@ -853,8 +982,8 @@ class GearVentureController extends Controller
     }
 
     //KATALOG POPULER
-    public function katalog(){
-        $dakat = ProdukPopuler::with('produk')->get();
+    public function katalog(){                
+        $dakat = ProdukPopuler::with('produk.fotoBarangs')->get();        
         return view('admin.katalog', compact('dakat'));
     }
     
@@ -1092,6 +1221,57 @@ class GearVentureController extends Controller
     
         return back()->with('success', 'Password berhasil diperbarui.');
     }    
+    public function updateStatusPembayaran($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->status = 'lunas';
+        $transaksi->save();
+
+        return redirect()->back()->with('success', 'Status pembayaran berhasil diubah menjadi lunas.');
+    }
+    public function updateStatusPeminjaman(Request $request, $id)
+    {   
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->status_peminjaman = $request->status_peminjaman;
+        $transaksi->save();
+
+        return redirect()->back()->with('success', 'Status peminjaman berhasil diperbarui.');
+    }
+    public function unggah($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $type_menu = 'transaksi';
+        return view('unggah', compact('transaksi', 'type_menu'));
+    }
+
+    public function upload(Request $request, $id)
+    {
+        $request->validate([
+            'bukti_pembayaran' => 'required|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
+
+        $transaksi = Transaksi::findOrFail($id);
+
+        // Tentukan folder tujuan di dalam public
+        $destinationPath = public_path('bukti_pembayaran');
+
+        // Pastikan folder tujuan ada
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0755, true);
+        }
+
+        // Simpan file langsung ke public/bukti_pembayaran
+        $file = $request->file('bukti_pembayaran');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->move($destinationPath, $fileName);
+
+        // Simpan path file di database (pastikan ada kolom `bukti_pembayaran`)
+        $transaksi->bukti_pembayaran = 'bukti_pembayaran/' . $fileName;
+        $transaksi->status = 'belum lunas';
+        $transaksi->save();
+
+        return redirect()->back()->with('success', 'Bukti pembayaran berhasil diunggah!');
+    }
 }
 
 

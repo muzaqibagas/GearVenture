@@ -167,7 +167,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
             <li class="breadcrumb-item text-sm text-dark" aria-current="page">Pengaturan Website</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Konten</h6>
+          <h6 class="font-weight-bolder mb-0">Diskon</h6>
         </nav>  
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">          
@@ -193,7 +193,7 @@
           <div class="card-header pb-0">
             <ul class="navbar-nav d-flex flex-row gap-3">
                 <li class="nav-item d-flex align-items-center justify-content-start pb-3">
-                    <a href="{{ route('konten') }}" class="btn btn-white btn-sm w-100 mb-0 active">Konten</a>
+                    <a href="{{ route('konten') }}" class="btn btn-white btn-sm w-100 mb-0 active">Diskon</a>
                 </li>
                 <li class="nav-item d-flex align-items-center justify-content-start pb-3">
                     <a href="{{ route('katalog') }}" class="btn btn-primary btn-sm w-100 mb-0">Katalog Populer</a>
@@ -251,8 +251,12 @@
                       <td>
                         <p class="ps-3">{{ $no++ }}</p>
                       </td>
-                      <td>                        
-                        <img src="{{ asset('pict/'.$dabar->foto)}}" class="rounded" style="height:100px; width:100px" alt="user1">
+                      <td>
+                          @if ($dabar->fotoBarangs->isNotEmpty())
+                              <img src="{{ asset('pict/' . $dabar->fotoBarangs->first()->foto) }}" class="rounded" style="height:100px; width:100px" alt="foto barang">
+                          @else
+                              <img src="{{ asset('pict/default.jpg') }}" class="rounded" style="height:100px; width:100px" alt="foto barang">
+                          @endif
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">{{$dabar->nama}}</p>                        

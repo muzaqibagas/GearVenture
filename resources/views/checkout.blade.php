@@ -20,11 +20,11 @@
 
                 <div class="mb-3">
                     <label class="form-label">Nama</label>
-                    <input type="text" name="nama" class="form-control" value="{{ Auth::user()->name }}" placeholder="Nama Lengkap" required>
+                    <input type="text" name="nama" class="form-control" value="{{ Auth::user()->nama }}" placeholder="Nama Lengkap" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">No. HP</label>
-                    <input type="text" name="no_hp" class="form-control" placeholder="No Handphone" required>
+                    <input type="number" name="no_hp" class="form-control" placeholder="No Handphone" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Alamat</label>

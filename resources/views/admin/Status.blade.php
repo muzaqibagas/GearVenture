@@ -201,36 +201,127 @@
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
                   <thead>
-                    <tr>
+                    <tr>                      
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Pemesan</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama</th>                      
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Keterangan</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Bukti TF</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jumlah</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Layanan Tambahan</th> 
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status Pembayaran</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status bayar</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status Pinjam</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Ubah Status</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    @foreach ($transaksi as $trx)
-                    <tr>
+                  <tbody>                      
+                    @foreach ($transaksi as $trx)                      
+                    <tr>                      
                       <td><p class="ps-3">{{ $trx->id }}</p></td>
                       <td><p class="text-xs font-weight-bold mb-0">{{ $trx->nama_pengguna }}</p></td>
-                      <td><p class="text-xs font-weight-bold mb-0">{{ $trx->produk->nama ?? '-' }}</p></td>
-                      <td><p class="text-xs font-weight-bold mb-0">Rp {{ number_format($trx->total_harga, 0, ',', '.') }}</p></td>
+                      <td><p class="text-xs font-weight-bold mb-0">{{ $trx->produk->nama ?? '-' }}</p></td>                      
                       <td>
-                        @if($trx->status === 'lunas')
-                          <span class="badge bg-success">Lunas</span>
+                        <p class="text-xs font-weight-bold mb-0">
+                          @if ($trx->bukti_pembayaran)
+                            <button class="btn btn-primary text-white rounded mb-0" style="font-size: 10px; padding: 7px 25px;"onclick="showBuktiModal('{{ asset($trx->bukti_pembayaran) }}')">Lihat</button>
+                          @else
+                            <span class="text-muted">Belum ada</span>
+                          @endif
+                        </p>
+                      </td>                     
+                      <td><p class="text-xs font-weight-bold mb-0">{{ $trx->jumlah}}</p></td>
+                      <td>
+                        @php
+                          $harga_layanan = [
+                            // Layanan Tambahan
+                            'meja_lipat' => 10000,
+                            'kursi_lipat' => 5000,
+                            'hammock' => 20000,
+                            // Pencahayaan
+                            'lampu_led' => 8000,
+                            'senter_kepala' => 6000,
+                            'lentera_gantung' => 7000,
+                            // Perlindungan
+                            'flysheet' => 15000,
+                            'ground_sheet' => 10000,
+                            'terpal' => 12000,
+                          ];
+                        @endphp
+
+                        @if (!empty($trx->tambahan) && is_array($trx->tambahan))
+                          <ul class="mb-0 ps-3" style="font-size: 13px;">
+                            @foreach ($trx->tambahan as $key => $val)
+                              @php
+                                $nama = ucwords(str_replace('_', ' ', $key));
+                                $qty = $trx->qty_tambahan[$key] ?? 0;
+                                $harga = $harga_layanan[$key] ?? 0;
+                                $subtotal = $qty * $harga;
+                              @endphp
+                              <li class="mb-1">
+                                <strong>{{ $nama }}</strong><br>                                
+                              </li>
+                            @endforeach
+                          </ul>
                         @else
-                          <span class="badge bg-danger">Belum Lunas</span>
+                          <p class="mb-0">-</p>
                         @endif
                       </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">
+                          Rp {{ number_format($trx->total_harga, 0, ',', '.') }}
+                        </p>
+                      </td>                    
+                      <td>
+                          @if($trx->status === 'lunas')
+                              <span class="badge bg-success">Lunas</span>
+                          @else
+                              <form action="{{ route('transaksi.updateStatusPembayaran', $trx->id) }}" method="POST" id="status-form-{{ $trx->id }}">
+                                  @csrf
+                                  @method('PATCH')
+                                  <span class="badge bg-danger" style="cursor:pointer;" onclick="confirmStatusChange('{{ $trx->id }}')">
+                                      Belum<br>Lunas
+                                  </span>
+                              </form>
+                          @endif
+                      </td>   
+                      <td>
+                        @php
+                            $statusPeminjaman = $trx->status_peminjaman ?? 'belum_dipinjam';
+
+                            $statusMap = [
+                                'belum_dipinjam' => ['label' => 'Belum<br>Dipinjam', 'class' => 'bg-warning text-white'],
+                                'sedang_dipinjam' => ['label' => 'Sedang<br>Dipinjam', 'class' => 'bg-primary'],
+                                'selesai' => ['label' => 'Selesai', 'class' => 'bg-success'],
+                            ];
+
+                            // Tentukan status selanjutnya
+                            $nextStatus = match($statusPeminjaman) {
+                                'belum_dipinjam' => 'sedang_dipinjam',
+                                'sedang_dipinjam' => 'selesai',
+                                default => 'belum_dipinjam',
+                            };
+                        @endphp
+
+                        <form id="form-status-{{ $trx->id }}" action="{{ route('transaksi.updateStatusPeminjaman', $trx->id) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="status_peminjaman" value="{{ $nextStatus }}">
+                            <span
+                                class="badge {{ $statusMap[$statusPeminjaman]['class'] }}"
+                                style="cursor: pointer;"
+                                onclick="submitStatus('{{ $trx->id }}')"
+                                title="Klik untuk ubah status menjadi '{{ ucfirst(str_replace('_', ' ', $nextStatus)) }}'"
+                            >
+                                {!! $statusMap[$statusPeminjaman]['label'] !!}
+                            </span>
+                        </form>
+                      </td>              
                       <td>                        
-                        <form action="{{ route('transaksi.hapus', $trx->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('transaksi.destroy', $trx->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn text-center text-white btn-sm btn-danger rounded mb-0">Hapus</button>
+                            <button type="hidden" name="_method"  class="btn btn-danger text-white rounded mb-0" style="font-size: 10px; padding: 7px 15px;" value="DELETE">Hapus</button>
                         </form>
-
                       </td>
                     </tr>
                     @endforeach
@@ -244,156 +335,52 @@
       </div>       
     </div>
   </main>
+  <!-- Modal untuk bukti transfer -->
+  <div class="modal fade" id="buktiModal" tabindex="-1" aria-labelledby="buktiModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark">
+        <div class="modal-body text-center">
+          <img id="modalImage" src="" alt="Bukti Transfer" class="img-fluid rounded" style="max-height: 90vh;">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!--   Core JS Files   -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scrollbar/8.6.3/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   <script>
-    var ctx2 = document.getElementById("chart-line").getContext("2d");
-
-    var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
-
-    var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
-    gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
-
-    new Chart(ctx2, {
-      type: "line",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-            label: "Mobile apps",
-            tension: 0.4,
-            borderWidth: 0,
-            pointRadius: 0,
-            borderColor: "#cb0c9f",
-            borderWidth: 3,
-            backgroundColor: gradientStroke1,
-            fill: true,
-            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-            maxBarThickness: 6
-
-          },
-          {
-            label: "Websites",
-            tension: 0.4,
-            borderWidth: 0,
-            pointRadius: 0,
-            borderColor: "#3A416F",
-            borderWidth: 3,
-            backgroundColor: gradientStroke2,
-            fill: true,
-            data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-            maxBarThickness: 6
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: true,
-              drawOnChartArea: true,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              padding: 10,
-              color: '#b2b9bf',
-              font: {
-                size: 11,
-                family: "Inter",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              color: '#b2b9bf',
-              padding: 20,
-              font: {
-                size: 11,
-                family: "Inter",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-        },
-      },
-    });
-  </script>
-
-  <script>
-    var ctx = document.getElementById("genderPieChart").getContext("2d");
-
-    var genderPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-            labels: ["Laki-laki", "Perempuan"],
-            datasets: [{
-                data: [120, 90], // Ganti dengan data asli
-                backgroundColor: ["#6366f1", "#ec4899"], // Biru untuk pria, merah untuk wanita
-                hoverBackgroundColor: ["#2980b9", "#c0392b"]
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: "bottom"
-                }
-            }
-        }
-    });
-  </script>
-
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    function showBuktiModal(src) {
+      const modalImage = document.getElementById('modalImage');
+      modalImage.src = src;
+      const modal = new bootstrap.Modal(document.getElementById('buktiModal'));
+      modal.show();
     }
   </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- <script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script> -->
-  <script src="https://cdn.jsdelivr.net/gh/creativetimofficial/soft-ui-dashboard/assets/js/soft-ui-dashboard.min.js"></script>
-  
+  <script>
+    function toggleBukti(id) {
+      var el = document.getElementById('bukti-' + id);
+      el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+  </script>
+  <script>
+      function confirmStatusChange(id) {
+          if (confirm('Apakah Anda yakin transaksi ini sudah lunas?')) {
+              document.getElementById('status-form-' + id).submit();
+          }
+      }
+  </script>
+  <script>
+    function submitStatus(id) {
+        if (confirm('Apakah Anda yakin ingin mengubah status peminjaman?')) {
+            document.getElementById('form-status-' + id).submit();
+        }
+    }
+</script>
+
 </body>
 
 </html>

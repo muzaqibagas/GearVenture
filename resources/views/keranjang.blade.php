@@ -8,9 +8,8 @@
 @section('main')
 <section class="catalog py-5 d-flex flex-column align-items-center">
     <a href="javascript:history.back()" class="btn text-white rounded-pill mb-3 align-self-start" style="background-color:#383d1f">&larr; Kembali</a>
-
-    <!-- Container card -->
     <form action="{{ route('checkout') }}" method="GET">
+    <!-- Container card -->    
         <div class="card shadow-sm rounded-3 border-0 p-3" style="width:100%;">
             <!-- Header tabel -->
             <div class="table-responsive">
@@ -134,13 +133,14 @@
                                     @endif
                                 </td>
                                 <td>{{ $item->jumlah }}</td>
-                                <td>
+                                <td class="text-total-item" data-id="{{ $item->id }}">
                                     Rp {{ number_format($totalItem, 0, ',', '.') }}
                                     <br><small class="text-muted">(Termasuk tambahan Rp {{ number_format($totalLayanan, 0, ',', '.') }})</small>
                                 </td>
                                 <td>
-                                    <form action="{{ route('transaksi.hapus', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus item ini?')">
+                                    <form action="{{ route('keranjang.hapus', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus item ini?')">
                                         @csrf
+                                        @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                     </form>
                                 </td>
@@ -172,16 +172,16 @@
                             $total_semua += $total_produk + $total_layanan;
                         @endphp
                     @endforeach
-                @endforeach
-
+                @endforeach                            
                 <span class="me-3">
                     Total terpilih (<span id="jumlah-terpilih">0</span> produk): 
-                    <strong id="total-terpilih">Rp. 0</strong>                    
+                    <strong id="total-terpilih">Rp. 0</strong>     
+                    <input type="hidden" id="item-ids-input" name="item_ids_hidden">                                       
                     <button class="btn text-white rounded-pill ms-3" style="background-color:#383d1f">Buat Pesanan</button>
-                </span>
+                </span>                    
             </div>
-        </div>
-    </form>
+        </div>   
+    </form> 
 </section>
 
 @endsection
@@ -243,6 +243,6 @@
 
         // Panggil hitungTotal ketika halaman dimuat pertama kali untuk memastikan total sudah dihitung
         hitungTotal();
-    });
+    });    
 </script>
 @endpush

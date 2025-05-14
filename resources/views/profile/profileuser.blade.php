@@ -12,7 +12,7 @@
         <aside class="sidenav navbar-vertical navbar-expand-xs border-0 border-radius-xl fixed-start rounded p-3 " style="width:230px" id="sidenav-main">
             <div class="sidebar d-flex flex-column text-dark">
                 <div class="text-center mb-4">
-                    <img src="{{ asset('img/profile.jpg') }}" alt="logo" class="logo mb-2 rounded-circle" style="width:100px; height:100px">
+                    <img src="{{ Auth::guard('web')->user()->foto ? asset('foto/user/' . Auth::guard('web')->user()->foto) : asset('foto/user/default.jpg') }}" alt="Foto Profil" class="rounded-circle img-fluid" style="width: 120px; height: 120px; object-fit: cover;">
                     <div class="fw-semibold border-bottom pb-3">Hi, {{ Auth::guard('web')->user()->username }}</div>
                 </div>
 

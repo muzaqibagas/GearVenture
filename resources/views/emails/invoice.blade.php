@@ -69,6 +69,11 @@
         </table>
 
         <h4 style="text-align: right;">Total Bayar: Rp {{ number_format($items->sum('total_harga'), 0, ',', '.') }}</h4>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{{ route('pembayaran.unggah', $transaksi->id)}}">
+                Unggah Bukti Pembayaran
+            </a>
+        </div>
     </div>
 </body>
 </html>

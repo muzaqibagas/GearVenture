@@ -27,10 +27,13 @@ return new class extends Migration
             $table->integer('durasi');
             $table->json('tambahan')->nullable(); // jika ingin simpan sebagai JSON
             $table->json('qty_tambahan')->nullable();        
+            $table->string('bukti_pembayaran')->nullable();
+            $table->string('status_peminjaman')->default('belum_dipinjam');
+            $table->foreignId('keranjang_id')->nullable()->constrained('keranjang')->onDelete('set null');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('produk_id')->references('id')->on('produk')->onDelete('cascade');
+            $table->foreign('produk_id')->references('id')->on('produk')->onDelete('cascade');            
         });
     }
 

@@ -12,7 +12,7 @@
   <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link id="pagestyle" href="{{ asset('css/pengaturan.css?v=1.1.0') }}" rel="stylesheet" >
+  <link id="pagestyle" href="{{ asset('css/katalog.css?v=1.1.0') }}" rel="stylesheet" >
   <link id="pagestyle" href="{{ asset('css/iconify.css?v=1.1.0') }}" rel="stylesheet" >
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -231,12 +231,15 @@
                         <p class="ps-3">{{ $no++ }}</p>
                       </td>
                       <td>
-                          @if ($item->produk)
-                              <img src="{{ asset('pict/'.$item->produk->foto) }}" class="rounded" style="height:100px; width:100px" alt="user1">
+                          @if ($item->produk && $item->produk->fotoBarangs->isNotEmpty())
+                              <img src="{{ asset('pict/' . $item->produk->fotoBarangs->first()->foto) }}"
+                                  class="rounded"
+                                  style="height:100px; width:100px"
+                                  alt="foto produk">
                           @else
                               <span class="text-danger">Foto tidak tersedia</span>
                           @endif
-                      </td>
+                      </td>                      
                       <td>
                           <p class="text-xs font-weight-bold mb-0">{{ $item->produk->nama ?? 'Nama tidak tersedia' }}</p>                        
                       </td>

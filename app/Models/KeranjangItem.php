@@ -31,7 +31,7 @@ class KeranjangItem extends Model
     // Relasi ke Keranjang
     public function keranjang()
     {
-        return $this->belongsTo(Keranjang::class);
+        return $this->belongsTo(Keranjang::class, 'keranjang_id');
     }
 
     // Relasi ke Produk

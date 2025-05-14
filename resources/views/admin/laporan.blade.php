@@ -192,9 +192,9 @@
       </div>
     </nav>
     <!-- End Navbar -->
-    <div class="container fluid py-4">
-        <div class="card shadow-sm p-4">
-          <form method="GET" action="{{ route('laporans') }}" class="row g-3 mb-4">
+    <div class="container-fluid py-4">
+      <div class="card shadow-sm p-4">
+          <form method="GET" action="{{ route('laporan') }}" class="row g-3 mb-4">
               <div class="col-md-3">
                   <label for="tahun" class="form-label">Tahun</label>
                   <select name="tahun" id="tahun" class="form-select" onchange="this.form.submit()">
@@ -217,61 +217,61 @@
           </form>          
 
           <div class="p-3 border rounded bg-white">
-            <h4>GearVenture</h4>
-            <div class="d-flex justify-content-between">
-                <p>Alamat : <br>Kec Bogor Tengah<br>Kota Bogor<br>Prov. Jawa Barat</p>
-                <p><strong>Laporan Keuangan</strong><br>Jenis: Tahunan<br>Tahun: {{ $tahun }}<br>Bulan: {{ $bulan ? \Carbon\Carbon::create()->month($bulan)->translatedFormat('F') : 'Semua' }}</p>
-                <p class="text-end">Tanggal: {{ \Carbon\Carbon::now()->translatedFormat('j F Y') }}</p>
-            </div>
+              <h4>GearVenture</h4>
+              <div class="d-flex justify-content-between">
+                  <p>Alamat : <br>Kec Bogor Tengah<br>Kota Bogor<br>Prov. Jawa Barat</p>
+                  <p><strong>Laporan Keuangan</strong><br>Jenis: Tahunan<br>Tahun: {{ $tahun }}<br>Bulan: {{ $bulan ? \Carbon\Carbon::create()->month($bulan)->translatedFormat('F') : 'Semua' }}</p>
+                  <p class="text-end">Tanggal: {{ \Carbon\Carbon::now()->translatedFormat('j F Y') }}</p>
+              </div>
 
-            <table class="table table-bordered text-center table-striped">
-                <thead class="table-secondary">
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Barang</th>
-                        <th>Harga per Item</th>
-                        <th>Penyewaan</th>
-                        <th>Pendapatan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $totalPendapatan = 0; @endphp
-                    @foreach ($transaksi as $i => $row)
-                        <tr>
-                            <td>{{ $i + 1 }}</td>
-                            <td>{{ $row->produk->nama ?? '-' }}</td>
-                            <td>Rp{{ number_format($row->produk->harga_sewa ?? 0, 0, ',', '.') }}</td>
-                            <td>{{ $row->total_penyewaan }}</td>
-                            <td>Rp{{ number_format($row->total_pendapatan, 0, ',', '.') }}</td>
-                        </tr>
-                        @php $totalPendapatan += $row->total_pendapatan; @endphp
-                    @endforeach
-                </tbody>
-            </table>
+              <table class="table table-bordered text-center table-striped">
+                  <thead class="table-secondary">
+                      <tr>
+                          <th>No</th>
+                          <th>Nama Barang</th>
+                          <th>Harga per Item</th>
+                          <th>Penyewaan</th>
+                          <th>Pendapatan</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @php $totalPendapatan = 0; @endphp
+                      @foreach ($transaksi as $i => $row)
+                          <tr>
+                              <td>{{ $i + 1 }}</td>
+                              <td>{{ $row->produk->nama ?? '-' }}</td>
+                              <td>Rp{{ number_format($row->produk->harga_sewa ?? 0, 0, ',', '.') }}</td>
+                              <td>{{ $row->total_penyewaan }}</td>
+                              <td>Rp{{ number_format($row->total_pendapatan, 0, ',', '.') }}</td>
+                          </tr>
+                          @php $totalPendapatan += $row->total_pendapatan; @endphp
+                      @endforeach
+                  </tbody>
+              </table>
 
-            {{-- TOTAL --}}
-            <div class="d-flex justify-content-end mt-3">
-                <table class="tabel align-items-center mb-0">
-                    <tbody>
-                        <tr>
-                            <th class="text-uppercase">TOTAL PENDAPATAN:</th>
-                            <td class="ps-5">Rp{{ number_format($totalPendapatan, 0, ',', '.') }}</td>
-                        </tr>
-                        {{-- Tambahkan data periode sebelumnya jika kamu simpan --}}
-                        <tr>
-                            <th class="text-uppercase">PERIODE SEBELUMNYA:</th>
-                            <td class="ps-5">-</td>
-                        </tr>
-                        <tr>
-                            <th class="text-uppercase">PERBANDINGAN:</th>
-                            <td class="ps-5">-</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+              {{-- TOTAL --}}
+              <div class="d-flex justify-content-end mt-3">
+                  <table class="tabel align-items-center mb-0">
+                      <tbody>
+                          <tr>
+                              <th class="text-uppercase">TOTAL PENDAPATAN:</th>
+                              <td class="ps-5">Rp{{ number_format($totalPendapatan, 0, ',', '.') }}</td>
+                          </tr>
+                          {{-- Tambahkan data periode sebelumnya jika kamu simpan --}}
+                          <tr>
+                              <th class="text-uppercase">PERIODE SEBELUMNYA:</th>
+                              <td class="ps-5">-</td>
+                          </tr>
+                          <tr>
+                              <th class="text-uppercase">PERBANDINGAN:</th>
+                              <td class="ps-5">-</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
           </div>  
-        </div>
-    </div>
+      </div>
+  </div>
   </main>
   <!--   Core JS Files   -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>

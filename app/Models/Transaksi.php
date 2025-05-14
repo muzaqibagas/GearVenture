@@ -18,6 +18,7 @@ class Transaksi extends Model
         'id',
         'user_id',
         'produk_id',
+        'keranjang_id',
         'nama_pengguna',
         'no_handphone',
         'alamat',
@@ -27,6 +28,18 @@ class Transaksi extends Model
         'tanggal',
         'total_harga',
         'status',
+        'is_new',        
+        'tambahan',
+        'qty_tambahan',
+        'bukti_pembayaran',
+        'status_peminjaman',
+    ];
+
+    protected $casts = [
+        'tambahan' => 'array',
+        'qty_tambahan' => 'array',
+        'tanggal' => 'date',
+        'total_harga' => 'decimal:2',
     ];
 
     // Relasi ke User
@@ -39,5 +52,11 @@ class Transaksi extends Model
     public function produk()
     {
         return $this->belongsTo(Barang::class);
+    }
+
+    // Relasi ke Keranjang
+    public function keranjang()
+    {
+        return $this->belongsTo(Keranjang::class);
     }
 }

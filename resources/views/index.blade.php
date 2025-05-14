@@ -57,11 +57,11 @@
             <div class="catalog-container">
                 @foreach($dakat as $item)
                     <div class="catalog-card">
-                        @if ($dabar->fotoBarangs->count() > 0)
-                            <img src="{{ asset('pict/'.$dabar->fotoBarangs->first()->foto) }}" class="catalog-image" alt="{{ $dabar->nama }}">
+                        @if ($item->produk && $item->produk->fotoBarangs->isNotEmpty())
+                            <img src="{{ asset('pict/' . $item->produk->fotoBarangs->first()->foto) }}" class="catalog-image" alt="{{ $dabar->nama }}">
                         @else
-                            <img src="{{ asset('pict/default-image.jpg') }}" class="card-img-top" alt="No Image">
-                        @endif                           
+                            <span class="text-danger">Foto tidak tersedia</span>
+                        @endif                        
                         <div class="catalog-title">                            
                             <a href="{{ route('detail', $item->produk->id) }}" class="catalog-title text-decoration-none">{{ $item->produk->nama ?? 'Nama tidak tersedia' }}</a>
                         </div>                        

@@ -60,9 +60,8 @@ Route::resource('/transaksi', OrderController::class);
 Route::get('/pesanbaru', [OrderController::class, 'getNotifikasiPesananBaru'])->name('pesanbaru');
 Route::get('/notifikasi/{id}/tandai', [OrderController::class, 'tandaiNotifikasiSudahDibaca'])->name('tandai.notifikasi');
 Route::get('/admin/status', [OrderController::class, 'statusView'])->name('status');
-Route::delete('/transaksi/{id}', [OrderController::class, 'hapus'])->name('transaksi.hapus');
 Route::get('/laporans', [OrderController::class, 'laporans'])->name('laporans');
-
+Route::delete('transaksi/{id}', [OrderController::class, 'destroy'])->name('transaksi.destroy');
 
 // PENYEWA
 // Route::get('/', [GearVentureController::class, 'signin'])->name('signin');
@@ -94,8 +93,12 @@ Route::get('/checkout', [GearVentureController::class, 'checkout'])->name('check
 Route::post('/checkout', [GearVentureController::class, 'storecheckout'])->name('checkout.store');
 Route::get('/keranjang', [GearVentureController::class, 'keranjang'])->name('keranjang');
 Route::post('/keranjang/tambahkeranjang', [GearVentureController::class, 'tambahkeranjang'])->name('keranjang.tambah');
-Route::post('/keranjang/hapus/{id}', [GearVentureController::class, 'hapusKeranjang'])->name('keranjang.hapus');
+Route::delete('/keranjang/hapus/{id}', [GearVentureController::class, 'hapusKeranjang'])->name('keranjang.hapus');
 Route::resource('/pesanan', OrderController::class);
+Route::patch('/transaksi/{id}/status-pembayaran', [GearVentureController::class, 'updateStatusPembayaran'])->name('transaksi.updateStatusPembayaran');
+Route::patch('/transaksi/{id}/status-peminjaman', [GearVentureController::class, 'updateStatusPeminjaman'])->name('transaksi.updateStatusPeminjaman');
+Route::get('/pembayaran/unggah/{id}', [GearVentureController::class, 'unggah'])->name('pembayaran.unggah');
+Route::post('/pembayaran/upload/{id}', [GearVentureController::class, 'upload'])->name('pembayaran.upload');
 
 // ADMIN
 Route::get('/admin/dashboard', [GearVentureController::class, 'dashboard'])->name('dashboard');
@@ -128,6 +131,8 @@ Route::get('/api/produk/{id}', function($id) {
 
     return response()->json([
         'deskripsi' => $produk->deskripsi,
+        'nama' => $produk->nama,
+        'harga_sewa' => $produk->harga_sewa,
         'foto' => $foto ? $foto->foto : null,  // Kembalikan nama foto jika ada, atau null
     ]);
 });

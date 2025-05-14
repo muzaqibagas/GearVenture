@@ -163,8 +163,8 @@
                                 @endfor                        
                             </div>
                         </div>
-                        @if ($dabar->fotoBarangs->count() > 0)
-                            <img src="{{ asset('pict/'.$dabar->fotoBarangs->first()->foto) }}" class="position-absolute rounded end-0" style="width: 50px; height: 50px" alt="{{ $dabar->nama }}">
+                        @if ($item->produk && $item->produk->fotoBarangs->count() > 0)
+                            <img src="{{ asset('pict/'.$item->produk->fotoBarangs->first()->foto) }}" class="position-absolute rounded end-0" style="width: 50px; height: 50px" alt="{{ $item->nama }}">
                         @else
                             <img src="{{ asset('pict/default-image.jpg') }}" class="card-img-top" alt="No Image">
                         @endif                          
