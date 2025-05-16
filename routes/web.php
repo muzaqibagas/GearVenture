@@ -45,7 +45,7 @@ Route::get('/test-email', function () {
 
 
 
-Route::get('/', [GearVentureController::class, 'masuk'])->name('signin.form');
+Route::get('/', [GearVentureController::class, 'masuk'])->name('login');
 Route::post('/signin', [GearVentureController::class, 'signin'])->name('signin');
 
 Route::get('/signup', [GearVentureController::class, 'form'])->name('signup.form'); // Form pendaftaran
