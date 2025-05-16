@@ -112,7 +112,7 @@ class GearVentureController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('signin.form');
+        return redirect()->route('login');
     }
 
     public function destroy($id){
@@ -345,10 +345,10 @@ class GearVentureController extends Controller
         if ($user) {
             $user->delete();
             Auth::logout();
-            return redirect()->route('signin.form')->with('message', 'Akun berhasil dihapus.');
+            return redirect()->route('login')->with('message', 'Akun berhasil dihapus.');
         }
     
-        return redirect()->route('signin.form')->withErrors(['error' => 'Tidak ada user yang login.']);
+        return redirect()->route('login')->withErrors(['error' => 'Tidak ada user yang login.']);
     }    
 
   
