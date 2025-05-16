@@ -1,10 +1,3 @@
-<?php
-session_start();
-if(!isset($_SESSION['users'])) {
-    header('location:signin.blade.php');
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
