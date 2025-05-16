@@ -61,7 +61,6 @@ Route::get('/pesanbaru', [OrderController::class, 'getNotifikasiPesananBaru'])->
 Route::get('/notifikasi/{id}/tandai', [OrderController::class, 'tandaiNotifikasiSudahDibaca'])->name('tandai.notifikasi');
 Route::get('/admin/status', [OrderController::class, 'statusView'])->name('status');
 Route::get('/laporans', [OrderController::class, 'laporans'])->name('laporans');
-Route::delete('transaksi/{id}', [OrderController::class, 'destroy'])->name('transaksi.destroy');
 
 // PENYEWA
 // Route::get('/', [GearVentureController::class, 'signin'])->name('signin');
