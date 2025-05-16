@@ -60,10 +60,7 @@ class GearVentureController extends Controller
         $user->sendEmailVerificationNotification();
 
         // Login dulu supaya bisa ke halaman verifikasi
-        Auth::login($user);
-
-        // Kirim email verifikasi
-        $user->sendEmailVerificationNotification();
+        Auth::login($user);        
 
         return redirect()->route('verification.notice');
     }
