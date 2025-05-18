@@ -59,7 +59,7 @@ Route::resource('/transaksi', OrderController::class);
 
 Route::get('/pesanbaru', [OrderController::class, 'getNotifikasiPesananBaru'])->name('pesanbaru');
 Route::get('/notifikasi/{id}/tandai', [OrderController::class, 'tandaiNotifikasiSudahDibaca'])->name('tandai.notifikasi');
-Route::get('/admin/status', [OrderController::class, 'statusView'])->name('status');
+Route::get('/admin/status', [OrderController::class, 'statusView'])->name('admin.status');
 Route::get('/laporans', [OrderController::class, 'laporans'])->name('laporans');
 
 // PENYEWA
