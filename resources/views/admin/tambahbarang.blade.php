@@ -210,11 +210,11 @@
                   <div class="col-md-6">
                       <div class="mb-1">
                           <label class="form-label">Nama Produk</label>
-                          <input type="text" name="nama" class="form-control" placeholder="Nama produk">
+                          <input type="text" name="nama" class="form-control" placeholder="Nama produk" required>
                       </div>
                       <div class="mb-1">
                           <label class="form-label">Kategori</label>
-                          <select class="form-select" name="kategori_id">
+                          <select class="form-select" name="kategori_id" required>
                             <option value="">Kategori</option>
                             @foreach($kategori as $k)
                                 <option value="{{ $k->id}}">
@@ -225,20 +225,20 @@
                       </div>
                       <div class="mb-1">
                           <label class="form-label">Harga</label>
-                          <input type="text" name="harga_sewa" class="form-control" placeholder="Rp">
+                          <input type="text" name="harga_sewa" class="form-control" placeholder="Rp" required>
                       </div>                          
                       <label class="form-label">Stok</label>
                       <div class="d-flex stock-container gap-3">
-                          <input type="number" id="stockInput" name="stok" class="form-control" placeholder="0" min="0">
+                          <input type="number" id="stockInput" name="stok" class="form-control" placeholder="0" min="0" required>
                       </div>                        
                       <div class="mb-3">
                           <label class="form-label">Keterangan</label>
-                          <textarea class="form-control" name="deskripsi" rows="3" placeholder="Keterangan Produk"></textarea>
+                          <textarea class="form-control" name="deskripsi" rows="3" placeholder="Keterangan Produk" required></textarea>
                       </div>
                   </div>
                   <div class="col-md-6 text-center">
                       <label class="form-label">Gambar</label>
-                      <input type="file" name="foto[]" class="form-control mb-3" multiple>
+                      <input type="file" name="foto[]" class="form-control mb-3" multiple required>
                       <img src="#" alt="" class="img-fluid border rounded" style="max-height: 200px;">
                       <div class="text-end d-flex justify-content-center gap-3">
                           <a href="#" class="btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
