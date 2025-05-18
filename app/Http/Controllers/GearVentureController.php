@@ -903,7 +903,7 @@ class GearVentureController extends Controller
                 $trx->save();
             }
         }
-        return view('admin.status', compact('transaksi', 'keranjang','items', 'total'));
+        return view('status', compact('transaksi', 'keranjang','items', 'total'));
     }
 
     //KONTEN

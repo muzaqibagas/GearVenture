@@ -169,34 +169,7 @@
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">          
-          </div>
-          <ul class="navbar-nav  justify-content-end">
-            <div>
-            <label for="filterBulan" class="text-white">Bulan:</label>
-            <select id="filterBulan" class="form-control form-control-sm">
-              @for ($i = 1; $i <= 12; $i++)
-                <option value="{{ $i }}" @if ($i == date('m')) selected @endif>{{ date('F', mktime(0, 0, 0, $i, 10)) }}</option>
-              @endfor
-            </select>
-          </div>
-          <div>
-            <label for="filterTahun" class="text-white">Tahun:</label>
-              <select id="filterTahun" class="form-control form-control-sm">
-                @for ($i = 2020; $i <= date('Y'); $i++)
-                  <option value="{{ $i }}" @if ($i == date('Y')) selected @endif>{{ $i }}</option>
-                @endfor
-              </select>
-            </div>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                </div>
-              </a>
-            </li>            
-          </ul>
+          </div>          
         </div>
       </div>
     </nav>
@@ -504,96 +477,6 @@
             }
         }
     });
-</script>
-
-  <script>
-    let chartLine = null; // Mendeklarasikan variabel chart
-
-// Fungsi untuk memperbarui grafik
-function updateChart() {
-    const bulan = filterBulan.value;
-    const tahun = filterTahun.value;
-
-    fetch(`/api/grafik?bulan=${bulan}&tahun=${tahun}`)
-      .then(response => response.json())
-      .then(data => {
-        // Jika chart sudah ada, hancurkan chart lama
-        if (chartLine) {
-          chartLine.destroy();
-        }
-
-        // Membuat chart baru dengan data yang diterima
-        const ctx2 = document.getElementById("chart-line").getContext("2d");
-
-        chartLine = new Chart(ctx2, {
-          type: "line",
-          data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"],
-            datasets: [{
-              label: "Penyewaan Barang",
-              data: data.penyewaanData, // Pastikan ini sesuai dengan data yang diterima dari server
-              borderColor: "#cb0c9f",
-              backgroundColor: 'rgba(203,12,159,0.2)',
-              fill: true,
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-            },
-            scales: {
-              y: { beginAtZero: true }
-            },
-          },
-        });
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }
-
-  // Jalankan update chart pada saat halaman pertama dimuat
-  updateChart();
-
-  // Update chart saat filter bulan atau tahun berubah
-  filterBulan.addEventListener('change', updateChart);
-  filterTahun.addEventListener('change', updateChart);
-
-
-  // Update chart data based on selected filter values
-  function updateChart() {
-    const bulan = filterBulan.value;
-    const tahun = filterTahun.value;
-
-    // Send the selected bulan and tahun to the backend (or adjust the data accordingly)
-    // Here, we assume you have a way to fetch the data via AJAX or passing it to the chart
-
-    // Example: Call your backend with the selected values (AJAX or with Laravel routes)
-    fetch(`/api/grafik?bulan=${bulan}&tahun=${tahun}`)
-      .then(response => response.json())
-      .then(data => {
-        // Update the chart with new data (adjust your chart update logic here)
-        const ctx2 = document.getElementById("chart-line").getContext("2d");
-        const chartLine = new Chart(ctx2, {
-          type: "line",
-          data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"],
-            datasets: [{
-              label: "Penyewaan Barang",
-              data: data.penyewaanData, // Adjust with data from the backend
-              borderColor: "#cb0c9f",
-              backgroundColor: 'rgba(203,12,159,0.2)',
-              fill: true,
-            }]
-          },
-        });
-      });
-  }
-
-  // Automatically update chart on page load with current values
-  updateChart();
 </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
