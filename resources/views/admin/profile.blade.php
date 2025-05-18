@@ -194,8 +194,8 @@
                         <!-- Foto Profil -->
                         <h4 class="mb-3 px-4">Profil Saya</h4>
                         <div class="col-md-3 text-center position-relative">
-                            <img src="{{ asset('img/profile.jpg') }}" alt="Foto Profil" class="rounded-circle img-fluid" style="width: 120px; height: 120px; object-fit: cover;">
-                            
+                            <img src="{{ asset(Auth::guard('admin')->user()->foto) }}" alt="Foto Profil" style="width: 120px; height: 120px; object-fit: cover;" class="rounded-circle mb-2">                            
+
                             <!-- Tombol Edit Profil -->
                             <a href="{{ route('editprofile') }}" class="position-absolute top-50 start-50 translate-middle bg-success text-white rounded-circle d-flex align-items-center justify-content-center" 
                                 style="width: 36px; height: 36px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
