@@ -222,7 +222,7 @@
                         <input type="file" class="form-control mb-3" name="gambar">
                         <img src="{{ asset('pict/'.$data->gambar)}}" alt="Tenda Dome" class="img-fluid border rounded" style="max-height: 200px;">
                         <div class="text-end d-flex justify-content-center gap-3">
-                          <a href="#" class=" btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
+                          <a href="{{ route('events') }}" class=" btn btn-dark btn-sm w-25 mt-3 mb-0">Batal</a>
                           <button type="submit" class="btn btn-primary btn-sm w-25 mt-3 mb-0">Simpan</button>
                       </div>
                     </div>
